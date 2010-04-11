@@ -64,6 +64,27 @@
 	\section{Das Strahlungstransportproblem}
 	TODO: Strahlungsgr"o"sen, Me"sgleichung, STG in diff. Form erkl"aren, "Ubersicht benutzter L"osungsverfahren
 	
+	Das Verhalten von Licht l"asst sich (nach heutigem wissenschaftlichen Stand) durch die {\em Quantenelektrodynamik} in allen Details vollst"andig beschreiben. Es beinhaltet solche Ph"anomene wie Dispersion, Brechung, Interferenz, Photon--Photon--Interaktion, etc. Diese Effekte sind h"aufig dann am bedeutendsten, wenn die Ausma"se der betrachteten Objekte von der Gr"o"senordnung der Wellenl"ange des Lichtes sind. Auf der anderen Seite beschreibt die {\em geometrische Optik} die rein makroskopische lineare Ausbreitung gro"ser Mengen von Photonen ohne obengenannte Wellen--Ph"anomene zu ber"ucksichtigen.
+	
+	Beim Strahlungstransportproblem (STP) sind wir an einer {\em ph"anomenologischen} Beschreibung interessiert. Das heisst wir wollen die Effekte des Lichtes modellieren, die in typischen Anwendungen durch optische Instrumente (Auge, Teleskope mit Photoplatten/CCD--Chips) gemessen werden k"onnen. Dies bedeutet, das wir haupts"achlich eine geometrische Beschreibung des Lichtes in Form eines Partikeltransportproblems ansetzen aber relevante quantenmechanische Effekte wie Photonen--Streuung in erster Ordnung lokal mitber"ucksichtigen (z.B. in Form einer Streuphasenfunktion).
+	
+	\subsection{Das Strahlungstransportproblem als Partikeltransportproblem}
+	Um Strahlungstransport als Partikeltransportproblem behandeln zu k"onnen m"ussen folgende Bedingungen erf"ullt sein
+	\begin{itemize}
+		\item{Die Partikel m"ussen so klein und zahlreich sein, das ihre statistische Verteilung als kontinuierlich angesehen werden kann}
+		\item{Zu jedem Zeitpunkt l"asst sich ein Partikel komplett durch seinen Positionsvektor, Geschwindigkeitsvektor und eventuelle interne Zust"ande (wie Polarisation, Frequenz, Ladung, Spin, etc.) charakterisieren}
+	\end{itemize}
+	Diese Annahmen sind f"ur Photonen und die uns interessierenden r"aumlichen Entfernungen erf"ullt.
+	Dar"uber hinausgehend machen wir im Rahmen dieser Arbeit folgende Annahmen:
+	\begin{itemize}
+		\item{Die Materialeigenschaften variieren bei Variation des Ortes in der Gr"o"senordnung der Wellenl"ange nur wenig}
+		\item{Das Strahlungsintensit"atsfeld ist station"ar (d.h. innerhalb der typischen Zeiten, die ein Photon braucht um das Simulationsgebiet zu durchqueren, k"onnen die Materialeigenschaften als statisch angenommen werden)}
+		\item{Photonen werden ausschliesslich elastisch gestreut}
+		\item{der Raum wird als euklidisch angenommen (d.h. es werden keine relativistischen Effekte ber"ucksichtigt)}
+	\end{itemize}
+	
+	
+	
 	\section{Pfadintegralformulierung der Strahlungstransportgleichung}
 	TODO: STG in diff. Form, STG in integraler From, STG in Operator--Form, Messungen als Pfadintegrale
 	\subsection{Strahlungstransport als Integrationsproblem}
