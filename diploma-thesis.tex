@@ -17,7 +17,7 @@
 	\publishers{betreut durch Prof. Sebastian Wolf}
 	\date{Version vom \today}
 	\maketitle
-	
+	% standard-titelblatt verf"ugbar?
 
 	\tableofcontents
 	\vfill
@@ -29,6 +29,7 @@
 	
 	\section{Einleitung}
 	\subsection{Motivation}
+	TODO: astrophysikalischer Kontext $\rightarrow$ Begr"undung der in Sektion (\ref{sec:radiative_transfer}) gemachten Annahmen
 	\subsection{Ziele der Arbeit}
 	In dieser Arbeit soll eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet werden, sowie dessen Nutzen f"ur Monte--Carlo--Verfahren zur L"osung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt werden.
 	
@@ -63,17 +64,19 @@
 	
 	
 	\section{Das Strahlungstransportproblem}
-	TODO: Strahlungsgr"o"sen, Me"sgleichung, STG in diff. Form erkl"aren, "Ubersicht benutzter L"osungsverfahren
+	\label{sec:radiative_transfer}
 	
 	Das Verhalten von Licht l"asst sich (nach heutigem wissenschaftlichen Stand) durch die {\em Quantenelektrodynamik} in allen Details vollst"andig beschreiben. Es beinhaltet solche Ph"anomene wie Dispersion, Brechung, Interferenz, Photon--Photon--Interaktion, etc. Diese Effekte sind h"aufig dann am bedeutendsten, wenn die Ausma"se der betrachteten Objekte von der Gr"o"senordnung der Wellenl"ange des Lichtes sind. Auf der anderen Seite beschreibt die {\em geometrische Optik} die rein makroskopische lineare Ausbreitung gro"ser Mengen von Photonen ohne obengenannte Wellen--Ph"anomene zu ber"ucksichtigen.
 	
-	Beim Strahlungstransportproblem (STP) sind wir an einer {\em ph"anomenologischen} Beschreibung interessiert. Das heisst wir wollen die Effekte des Lichtes modellieren, die in typischen Anwendungen durch optische Instrumente (Auge, Teleskope mit Photoplatten/CCD--Chips) gemessen werden k"onnen. Dies bedeutet, das wir haupts"achlich eine geometrische Beschreibung des Lichtes in Form eines Partikeltransportproblems ansetzen aber relevante quantenmechanische Effekte wie Photonen--Streuung in erster Ordnung lokal mitber"ucksichtigen (z.B. in Form einer Streuphasenfunktion).
+	Beim Strahlungstransportproblem (STP) sind wir an einer {\em ph"anomenologischen} Beschreibung interessiert. Das heisst wir wollen die Effekte des Lichtes modellieren, die in typischen Anwendungen durch optische Instrumente (Auge, Teleskope mit Photoplatten/CCD--Chips) gemessen werden k"onnen. Dies bedeutet, das wir haupts"achlich eine geometrische Beschreibung des Lichtes in Form eines Teilchentransportproblems ansetzen aber relevante quantenmechanische Effekte wie Photonen--Streuung in erster Ordnung lokal mitber"ucksichtigen (z.B. in Form einer Streuphasenfunktion).
 	
-	\subsection{Das Strahlungstransportproblem als Partikeltransportproblem}
-	Um Strahlungstransport als Partikeltransportproblem behandeln zu k"onnen m"ussen folgende Bedingungen erf"ullt sein
+	Die folgende Darstellung und Herleitung orientiert sich an \citep{Arvo:1993p9035}
+	
+	\subsection{Das Strahlungstransportproblem als Teilchentransportproblem}
+	Um Strahlungstransport als Teilchentransportproblem behandeln zu k"onnen m"ussen folgende Bedingungen erf"ullt sein
 	\begin{itemize}
-		\item{Die Partikel m"ussen so klein und zahlreich sein, das ihre statistische Verteilung als kontinuierlich angesehen werden kann}
-		\item{Zu jedem Zeitpunkt l"asst sich ein Partikel komplett durch seinen Positionsvektor, Geschwindigkeitsvektor und eventuelle interne Zust"ande (wie Polarisation, Frequenz, Ladung, Spin, etc.) charakterisieren}
+		\item{Die Teilchen m"ussen so klein und zahlreich sein, das ihre statistische Verteilung als kontinuierlich angesehen werden kann}
+		\item{Zu jedem Zeitpunkt l"asst sich ein Teilchen komplett durch seinen Positionsvektor, Geschwindigkeitsvektor und eventuelle interne Zust"ande (wie Polarisation, Frequenz, Ladung, Spin, etc.) charakterisieren}
 	\end{itemize}
 	Diese Annahmen sind f"ur Photonen und die uns interessierenden r"aumlichen Entfernungen erf"ullt.
 	Dar"uber hinausgehend machen wir im Rahmen dieser Arbeit folgende Annahmen:
@@ -83,8 +86,11 @@
 		\item{Photonen werden ausschliesslich elastisch gestreut}
 		\item{der Raum wird als euklidisch angenommen (d.h. es werden keine relativistischen Effekte ber"ucksichtigt)}
 	\end{itemize}
-	\subsection{Die Me"sgleichung}
+	\subsection{Die Messgleichung}
+	\subsection{Ph"anomenologische Strahlungsgr"o"sen}
 	\subsection{Strahlungstransportgleichung in differentieller Form}
+	\subsection{"Ubersicht etablierter L"osungsverfahren}
+	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
 	\section{Pfadintegralformulierung der Strahlungstransportgleichung}
 	TODO: STG in diff. Form, STG in integraler From, STG in Operator--Form, Messungen als Pfadintegrale
@@ -102,7 +108,7 @@
 	TODO: Begriffe aus Wahrscheinlichkeitsrechnung und Statistik einf"uhren
 	\subsection{Das Integrationsproblem}
 	TODO: Das Integrationsproblem
-	\subsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}
+	\subsubsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}
 	TODO: (Curse~of~Dimensionality / Konvergenzraten)
 	\subsection{Importance--Sampling}
 
@@ -122,21 +128,23 @@
 	
 	TODO: Pfadgenerierung, Sch"atzer
 	
-	\section{Testf"alle}
+	\section{Testf"alle und Resultate}
 	\subsection{Homogene streuende Kugel}
+	TODO: Motivation? tau=0.01,1,10
 	\subsubsection{analytische L"osung}
-	\subsection{Einfaches Scheibenmodell}
-	
-	\section{Programmbeschreibung}
-	TODO: Programmbeschreibung in Worten bzw. Pseudocode
-	
-	\section{Resultate}
-	\subsection{Homogen streuende Kugel}
+	\subsubsection{Resultate}
 	TODO: Vergleich mit analytischer L"osung und MC3D (Ergebnis+Geschwindigkeit)
 	\subsection{Einfaches Scheibenmodell}
+	\subsubsection{Resultate}
 	TODO: Vergleich mit MC3D (Ergebnis und Geschwindigkeit)
+	\subsection{Einordnung der Resultate}
+	TODO: Gesamtvergleich zwischen MC3D und PIRaTE
+	
+	\section{Programmbeschreibung}
+	TODO: Programmbeschreibung in Worten bzw. Pseudocode, Modulbeschreibung, Details in evtl. Anhang auslagern.
 	
 	\section{Zusammenfassung und Ausblick}
+	TODO: Ausblick: Normierung, physikalisch relevante Streuphasenfunktionen, polychromatische Bilder/SEDs
 
 	\bibliographystyle{chicago}
 	\bibliography{bibliography}
