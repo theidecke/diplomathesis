@@ -119,7 +119,9 @@
 	\begin{equation}\label{eq:k_norm_req}
 	  \int_{\mathcal{S}^2} k(\location{r},\omega,\omega')\,d\omega'=1,
 	\end{equation}
-	die z.B. durch die isotrope Streuphasenfunktion $$k_\text{iso}(\location{r},\omega,\omega')=\frac{1}{4\pi}$$ erf"ullt wird. Wie bei der Absorption, nehmen wir an, da"s die Wahrscheinlichkeit eines Teilchens gestreut zu werden sehr wohl von der durch das Medium zur"uckgelegten Distanz, nicht aber von der Bewegungsrichtung abh"angt. Wir teilen $\mathbf{C}_\text{sca}$ weiter auf, in einen Teil
+	die z.B. durch die isotrope Streuphasenfunktion $$k_\text{iso}(\location{r},\omega,\omega')=\frac{1}{4\pi}$$ erf"ullt wird. Ausserdem ist $k$ symmetrisch bez"uglich der Vertauschung der Bewegungsrichtungen vor und nach der Streuung:
+	$$k(\location{r},\omega,\omega')=k(\location{r},\omega',\omega)\quad \forall\:\omega,\omega'\in\mathcal{S}^2$$
+	Wie bei der Absorption, nehmen wir an, da"s die Wahrscheinlichkeit eines Teilchens gestreut zu werden von der durch das Medium zur"uckgelegten Distanz, nicht aber von der Bewegungsrichtung abh"angt. Wir teilen $\mathbf{C}_\text{sca}$ weiter auf, in einen Teil
 	$$\mathbf{C}_\text{out}=\int_\Omega \int_V \int_{\mathcal{S}^2} \sigma{(\location{r})}k(\location{r},\omega,\omega')\phi(\location{r},\omega)\,d\omega'\,d\location{r}\,d\omega,$$
 	der herausgestreute Teilchen ber"ucksichtigt, sowie einen Teil
 	$$\mathbf{C}_\text{in}=\int_\Omega \int_V \int_{\mathcal{S}^2} \sigma{(\location{r})}k(\location{r},\omega',\omega)\phi(\location{r},\omega')\,d\omega'\,d\location{r}\,d\omega$$
@@ -139,10 +141,55 @@
 	  \omega\cdot\nabla\phi(\location{r},\omega)+\left(\kappa(\location{r})+\sigma(\location{r})\right)\phi(\location{r},\omega)
 	  =q(\location{r},\omega)+\sigma(\location{r})\int_{\mathcal{S}^2}k(\location{r},\omega',\omega)\phi(\location{r},\omega')d\omega'
 	\end{equation}
+	Die Bilanzgleichung hat die Gestalt einer Integro--Differentialgleichung in $\phi$.
+	Im folgenden Abschnitt stellen wir den Bezug zwischen unseren abstrakten Teilchentransportgr"o"sen und messbaren Gr"o"sen her.
+
+	\subsection{Ph"anomenologische Strahlungsgr"o"sen}
+	Im vorigen Abschnitt haben wir das Strahlungstransportproblem bewu"st auf ein Teilchentransportproblem mit abstrakten Teilchen statt Photonen reduziert um einerseits eine klarere Herleitung zu erm"oglichen und um andererseits die Verwandtschaft zu anderen Transportproblemen (wie z.B. Neutronentransport) offensichtlich zu machen. Um nun den Anschlu"s zu radiometrischen Strahlungsgr"o"sen zu bekommen, ersetzen wir unsere abstrakten Teilchen wieder durch Photonen. Photonen haben u.a. zwei Eigenschaften die wir daher ber"ucksichtigen. Sie bewegen sich konstant mit Lichtgeschwindigkeit, d.h. wir k"onnen die vorher gebrauchte allgemeine Teilchengeschwindigkeit $v$ gleich $\text{c}$ setzten. Ausserdem besitzt jedes Photon eine Energie, die durch seine Frequenz $\nu$ durch 
+	$$E=h\nu \qquad[J]$$
+	bestimmt ist. Dabei bezeichnet $h$ das Planck'sche Wirkungsquantum.
+	Jeder Frequenz $\nu$ k"onnen wir ein monochromatisches Transportproblem zuordnen, dessen L"osung in Form eines Phasenraumflusses $\phi_\nu$ die Photonenfrequenz als Index tr"agt.
+	Die {\em spezifische Intensit"at} $I_\nu(\location{r},\omega)$ erhalten wir nun aus dem Phasenraumflu"s bzw. der Phasenraumdichte gem"a"s
+	\begin{align}\label{eq:intensity_def}
+		I_\nu(\location{r},\omega)d\nu & = h\nu\,\phi_\nu(\location{r},\omega)\\
+		                       & = c h\nu\,n_\nu(\location{r},\omega) \qquad \left[\frac{\text{W}}{\text{m}^2\text{sr}}\right] \nonumber
+	\end{align}
+	Sie gibt an, wieviel Joule am Ort $\location{r}$ pro Sekunde durch eine Einheitsfl"ache mit Fl"achennormale $\omega$ pro Einheitsraumwinkel in Richtung $\omega$ und pro Frequenzintervall durch Photonen mit Frequenz $\nu$ transportiert wird:
+	$$dE_\nu=I_\nu(\location{r},\omega) dA\,dt\,d\omega\,d\nu.$$
+	Wir f"uhren au"serdem die {\em spezifische Emissivit"at} $\varepsilon_\nu$ ein. Wir erhalten Sie aus der abstrakten Phasenraumquellfunktion $q_\nu$ durch
+	\begin{equation}\label{eq:emissivity_def}
+		\varepsilon_\nu(\location{r},\omega)d\nu = h\nu\,q_\nu(\location{r},\omega) \qquad \left[\frac{\text{W}}{\text{m}^3\text{sr}}\right]
+	\end{equation}
+	
+	Multiplizieren wir unsere abstrakte Transportgleichung (\ref{eq:particle_balance_equation}) mit $h\nu$ und benutzen wir die Beziehungen (\ref{eq:intensity_def},\ref{eq:emissivity_def}) erhalten wir mit
+	\begin{equation}\label{eq:stg_diff}
+	  \omega\cdot\nabla I_\nu(\location{r},\omega)+\left(\kappa_\nu(\location{r})+\sigma_\nu(\location{r})\right)I_\nu(\location{r},\omega)
+	  =\varepsilon_\nu(\location{r},\omega)+\sigma_\nu(\location{r})\int_{\mathcal{S}^2}k_\nu(\location{r},\omega',\omega)I_\nu(\location{r},\omega')d\omega'
+	\end{equation}
+	die {\em Strahlungstransportgleichung in differentieller Form}. Sie stellt eine Integro--Differentialgleichung f"ur $I_\nu$ auf unserem 5--dimensionalen Phasenraum $\mathbb{R}^3 \times \mathcal{S}^2$ dar und kann f"ur jede Frequenz $\nu$ getrennt gel"ost werden. Sie gibt f"ur jede Kombination aus Ort $\location{r}$ und Photonen--Ausbreitungsrichtung $\omega$ das lokal zu erf"ullende Gleichgewicht aus Verlusten (linke Seite) und Zuw"achsen (rechte Seite) an.
+	
+	Wir fassen die Verluste durch Absorption und Streuung durch die neue Gr"o"se {\em Extinktion}
+	$$\xi_\nu(\location{r}):=\kappa_\nu(\location{r})+\sigma_\nu(\location{r}) \qquad\left[\frac{1}{m}\right]$$
+	zusammen, wodurch wir (\ref{eq:stg_diff}) auch als
+	\begin{equation}\label{eq:stg_diff2}
+	  \omega\cdot\nabla I_\nu(\location{r},\omega)+\xi_\nu(\location{r})I_\nu(\location{r},\omega)
+	  =\varepsilon_\nu(\location{r},\omega)+\sigma_\nu(\location{r})\int_{\mathcal{S}^2}k_\nu(\location{r},\omega',\omega)I_\nu(\location{r},\omega')d\omega'
+	\end{equation}
+	schreiben k"onnen.
+	Ausserdem definieren wir die dimensionslose {\em optische Tiefe}
+	\begin{equation*}
+		\tau_\nu(\location{r}_1,\location{r}_2):=\int_{s=0}^{||\location{r}_2-\location{r}_1||} \xi_\nu(\location{r}_1+s(\location{r}_2 - \location{r}_1))\,ds,
+	\end{equation*}
+	die ein Ma"s f"ur die Undurchsichtigkeit des Mediums bei der Frequenz $\nu$ zwischen zwei Orten $\location{r}_1$ und $\location{r}_2$ ist. Nehmen wir uns Gleichung (\ref{eq:stg_diff2}) und betrachten nur die Verluste (indem wir die rechte Seite zu Null setzten), w"ahlen eine beliebige Richtung $\omega$ gelangen wir zur gew"ohnlichen Differentialgleichung
+	$$I_\nu'(s)+\xi_\nu(s)I_\nu(s)=0$$
+	die durch
+	$$I_\nu(s)=I_\nu(0)\:\text{exp}\left(-\int_{s'=0}^s \xi_\nu(s')\right)=I_\nu(0)\:\text{exp}\left(-\tau_\nu(0,s)\right)$$
+	gel"ost wird und zeigt, da"s die optische Tiefe zu einer exponentiellen Abschw"achung der Intensit"at f"uhrt.
+	
+	
+	
 	
 	\subsection{Die Messgleichung}
-	\subsection{Ph"anomenologische Strahlungsgr"o"sen}
-	\subsection{Strahlungstransportgleichung in differentieller Form}
 	\subsection{"Ubersicht etablierter L"osungsverfahren}
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
