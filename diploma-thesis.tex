@@ -33,7 +33,7 @@
 	\subsection{Ziele der Arbeit}
 	In dieser Arbeit soll eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet werden, sowie dessen Nutzen f"ur Monte--Carlo--Verfahren zur L"osung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt werden.
 	
-	\subsection{Nomenklatur}
+	\subsection{Nomenklatur}\label{subsec:nomenklatur}
 	Im folgenden Text werden die in Tabelle \ref{tab:nomenklatur} angegebenen Schreibweisen benutzt.
 
 	\begin{table}
@@ -51,12 +51,13 @@
 			$k(\location{r},\omega',\omega)$ & Phasenfunktion am Ort $\location{r}$ f"ur ein Teilchen, & $\left[1/\text{sr}\right]$ \\
 				&das sich vor der Streuung in Richtung $\omega'$&\\
 				&und nach der Streuung in Richtung $\omega$ bewegt& \\
-			$\scatter{i}$ & Phasenfunktion am Ort $\location{r}_i$ f"ur ein aus Richtung $\location{r}_{i-1}$&\\ 
+			$\scatter{i}$ & Produkt aus Volumenstreuquerschnitt und&\\
+			  & Streuphasenfunktion am Ort $\location{r}_i$ f"ur ein aus Richtung $\location{r}_{i-1}$&\\ 
 				&kommendes und in Richtung $\location{r}_{i+1}$ gestreutes Teilchen&\\
-				&("aquivalent zu $k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})$)& \\
-			$\tau_{i,j}$ & Optische Tiefe zwischen $\location{r}_i$ und $\location{r}_j$ & \\
-			$\varepsilon_{i,j}$ & Emissivit"at am Ort $\location{r}_i$ in Richtung $\location{r}_j$ & \\
-			$W_{j,i}$ & Sensitivit"at am Ort $\location{r}_i$ in Richtung $-\normalized{\location{r}_j-\location{r}_i}$ &
+				&("aquivalent zu $\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})$)& \\
+			$\tau_{(i,j)}$ & Optische Tiefe zwischen $\location{r}_i$ und $\location{r}_j$ & \\
+			$\varepsilon_{(i,j)}$ & Emissivit"at am Ort $\location{r}_i$ in Richtung $\location{r}_j$ & \\
+			$W_{(i,j)}$ & Sensitivit"at am Ort $\location{r}_j$ f"ur Strahlung in Richtung $\normalized{\location{r}_j-\location{r}_i}$ &
 		\end{tabular}
 		\end{center}
 		\label{tab:nomenklatur}
@@ -199,10 +200,17 @@
 	
 	Mit diesem funktionalanalytischem Handwerkszeug definieren wir eine Messung als das Skalarprodukt zwischen unserem Strahlungsintensit"atsfeld $I$ und einer {\em Sensitivit"atsfunktion} $W$, welche die St"arke der Gewichtung angibt, mit der die spezifische Intensit"at der Frequenz $\nu$ am Ort $\location{r}$ in Richtung $\omega$ in den Me"swert eingeht. Die entsprechende Formel
 	\begin{equation}\label{eq:messgleichung}
-		M^{(i)}:=\langle W_i,I\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W(\nu,\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}\,d\nu
+		M^{(i)}:=\langle W^{(i)},I\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W^{(i)}(\nu,\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}\,d\nu
 	\end{equation}
-	nennen wir {\em Me"sgleichung} (f"ur den $i$--ten Sensor).
-	
+	nennen wir {\em Me"sgleichung} (f"ur den $i$--ten Sensor). F"ur monochromatische Messungen f"uhren wir zus"atzlich noch 
+	\begin{equation}\label{eq:messgleichung_mono}
+		M_\nu^{(i)}:=\langle W_\nu^{(i)},I_\nu\rangle=\int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W_\nu^{(i)}(\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}
+	\end{equation}
+	ein, womit wir (\ref{eq:messgleichung}) auch als
+	\begin{equation}\label{eq:messgleichung_frommonos}
+		M^{(i)}=\int_{\mathbb{R}_{\geq 0}} M_\nu^{(i)}\,d\nu
+	\end{equation}
+	schreiben k"onnen
 	Die Tatsache, da"s wir die Sensitivit"atsfunktion nicht n"aher spezifizieren, erlaubt uns die gr"o"stm"ogliche Freiheit beim kreieren virtueller Sensoren. Beispielsweise k"onnte $W$ nur f"ur einen kleines Volumen und einen kleinen Raumwinkel aber bei allen Frequenzen nichtverschwindend sein, und so einen virtuellen Sensor zur Messung der Gesamt--Intensit"at an einem bestimmten Ort in eine bestimmte Richtung repr"asentieren. Ebenso kann durch gleichstarke Gewichtung aller Raumrichtungen die mittlere Intensit"at gemessen werden.
 	
 	Was hier vielleicht als ein nur theoretisch interessantes Konstrukt ohne praktischen Nutzen erscheint, erweist sich sp"ater insbesondere in Verbindung mit Monte--Carlo--Sampling als ein gleichzeitig vielseitiges und effizientes Werkzeug.	
@@ -212,14 +220,155 @@
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
 	\section{Pfadintegralformulierung der Strahlungstransportgleichung}
-	TODO: STG in diff. Form, STG in integraler From, STG in Operator--Form, Messungen als Pfadintegrale
+	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer L"osung (genau genommen, Messungen im Sinne von (\ref{eq:messgleichung}) der L"osung) andererseits her. Dies f"uhrt uns durch die verschiedenen eingenommenen Blickwinkel auf das Problem hoffentlich zu einem besseren Verst"andnis von Strahlungstransport und gibt uns dar"uber hinaus einen neuen Ansatzpunkt zur effizienten L"osung des Strahlungstransportproblems.
+	
+	Die Idee zu dieser Formulierung kommt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberfl"achen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt ausserdem die Herleitung der integralen Form der Strahlungstransportgleichung.
+	
+	
 	\subsection{Strahlungstransportgleichung in integraler Form}
-	TODO: STG in integraler From
-	\subsection{Strahlungstransportgleichung in Operator--Form}
-	TODO: STG in Operator--Form
+	In differentieller Form nimmt die Strahlungstransportgleichung, wie wir in Abschnitt (\ref{subsec:strahlungsgroessen}) gesehen haben, folgende Gestalt an:
+		\begin{equation}
+			\omega \cdot \nabla I(\location{r},\omega)+\overbrace{\left(\kappa(\location{r})+\sigma(\location{r})\right)}^{=:\xi(\location{r})}I(\location{r},\omega)=\varepsilon(\location{r},\omega)+\sigma(\location{r}) \int_{\mathcal{S}^2} k(\location{r},\omega',\omega)I(\location{r},\omega') d\omega'.
+			\label{eq:diff.STG}
+		\end{equation}
+	F"ur diesen und die folgenden Abschnitte lassen wir dabei den Index $\nu$ aus "Ubersichtsgr"unden weg, womit gemeint ist, da"s wir stellvertretend f"ur alle Frequenzen ein einzelnes monochromatisches Strahlungstransportproblem einer beliebigen Frequenz nehmen. Wenn wir zum polychromatischen Fall zur"uckkommen f"uhren wir die Indizes wieder ein.
+	
+	Schreiben wir das Skalarprodukt zwischen $\omega$ und dem $\nabla$--Operator als Richtungsableitung
+	\newcommand{\dds}{\frac{\text{d}}{\text{d}s}}
+	\newcommand{\ddszero}{\left. \dds \right|_{s=0}}
+	\begin{equation*}
+		\omega \cdot \nabla I(\location{r},\omega)
+		=  \ddszero I(\location{r}+s\,\omega,\omega)
+		=  -\ddszero I(\location{r}-s\,\omega,\omega)
+	\end{equation*}
+	k"onnen wir (\ref{eq:diff.STG}) als
+	\begin{multline}
+		\dds I(\location{r}-s\,\omega,\omega) - \xi(\location{r}-s\,\omega)I(\location{r}-s\,\omega,\omega) = \\-\varepsilon(\location{r}-s\,\omega,\omega) -\sigma(\location{r}-s\,\omega) \int_{\mathcal{S}^2} k(\location{r}-s\,\omega,\omega',\omega)I(\location{r}-s\,\omega,\omega') \text{d}\omega'
+		\label{eq:diff.STGtranslated}
+	\end{multline}
+	umschreiben. Dabei haben wir die Beschr"ankung $s=0$ fallengelassen, was die Korrektheit der Umformung aber nicht "andert. Mit den Abk"urzungen
+	\begin{align*}
+		{\hat I}(s)&:=I(\location{r}-s\,\omega,\omega) \\
+		Q(\location{r},\omega)&:= \varepsilon(\location{r},\omega)+\sigma(\location{r}) \int_{\mathcal{S}^2} k(\location{r},\omega',\omega)I(\location{r},\omega') d\omega' \\
+		{\hat Q}(s)&:=Q(\location{r}-s\,\omega,\omega)\\
+		{\hat \xi}(s)&:=\xi(\location{r}-s\,\omega) \\
+		{\hat \tau}(s)&:= \int_{s'=0}^{s} {\hat \xi}(s') \text{d}s'
+	\end{align*}
+	wird aus (\ref{eq:diff.STGtranslated})
+	\begin{equation}
+		\dds {\hat I}(s) - {\hat \xi}(s){\hat I}(s)= -{\hat Q}(s) \qquad |\cdot e^{-{\hat \tau}(s)}.
+		\label{eq:diff.STGhatted}
+	\end{equation}
+	Gleichung (\ref{eq:diff.STGhatted}) ist eine gew"ohnliche Differentialgleichung die sich mit
+	\begin{align}
+		(\ref{eq:diff.STGhatted})\Leftrightarrow\qquad \dds \left(e^{-{\hat \tau}(s)} {\hat I}(s)\right)&= -e^{-{\hat \tau}(s)} {\hat Q}(s) \qquad | \int_{s'=0}^s (\cdot)\text{d}s' \nonumber \\
+		\Leftrightarrow\qquad e^{-{\hat \tau}(s)} {\hat I}(s) - {\hat I}(0) &= -\int_{s'=0}^s e^{-{\hat \tau}(s')} {\hat Q}(s') \text{d}s' \nonumber \\
+		\Leftrightarrow\qquad {\hat I}(0) &= e^{-{\hat \tau}(s)} {\hat I}(s) + \int_{s'=0}^s e^{-{\hat \tau}(s')} {\hat Q}(s') \text{d}s' \label{eq:diff.STGpreintegral}
+	\end{align}
+	leicht nach ${\hat I}(0)$ aufl"osen l"asst. Obwohl ${\hat Q}(s)$ lokal die Intensit"at $I$ "uber alle Raumrichtungen integriert, d"urfen wir f"ur die L"osung von (\ref{eq:diff.STGhatted}) $Q$ als unab"angig von $I$ behandeln, da die Schnittmenge zwischen der Geraden im Raum, auf der wir die Differentialgleichung l"osen, und der Menge aller Raumrichtungen $\mathcal{S}^2$ bei der Integration "uber alle Raumrichtungen eine Nullmenge ist und somit f"ur physikalisch relevante Strahlungsintensit"atsfelder (d.h. solche, die hinreichend stetig/beschr"ankt bzw. keine Delta--Distribution sind) keinen Beitrag zum Integral leistet.
+	Setzen wir in (\ref{eq:diff.STGpreintegral}) f"ur die Abk"urzungen wieder die urspr"unglichen Ausdr"ucke ein, erhalten wir die {\em Strahlungstransportgleichung in integraler Form}:
+	\begin{multline}
+		I(\location{r},\omega) = e^{-\tau(\location{r},\location{r}-s\,\omega)} {\hat I}(\location{r},\location{r}-s\,\omega) + \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s\,\omega)} \;\cdot \\
+		\quad\cdot\left( \varepsilon(\location{r}-s'\,\omega,\omega) + \sigma(\location{r}-s'\,\omega)
+		\left[ \int_{\mathcal{S}^2} k(\location{r}-s'\,\omega,\omega',\omega)I(\location{r}-s'\,\omega,\omega') \text{d}\omega'\right] \right) \text{d}s'
+		\label{eq:int.STG}
+	\end{multline}
+	Nehmen wir nun als Randbedingungen an, da"s in unendlich gro"ser Entfernung keine Lichtquellen existieren, d.h. $\forall \omega \in \mathcal{S}^2 : I(\location{r}=-\infty\cdot\omega,\omega)=0$, dann vereinfacht sich (\ref{eq:int.STG}) zu
+	\begin{multline}
+		I(\location{r},\omega) = \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s\,\omega)} \;\cdot \\
+		\quad\cdot\left( \varepsilon(\location{r}-s'\,\omega,\omega) + \sigma(\location{r}-s'\,\omega)
+		\left[ \int_{\mathcal{S}^2} k(\location{r}-s'\,\omega,\omega',\omega)I(\location{r}-s'\,\omega,\omega') \text{d}\omega'\right] \right) \text{d}s'
+		\label{eq:int.STGdarkbg}
+	\end{multline}
+
+
+	\subsection{Strahlungstransportgleichung in Operator--Form und formale L"osung des Strahlungstransportproblems}
+	Schauen wir uns die einzelnen Teile der Gleichung (\ref{eq:int.STGdarkbg}) genauer an.
+	Der innere Teil von (\ref{eq:int.STGdarkbg}) in eckigen Klammern summiert an einem festen Ort ($\location{r}-s'\,\omega$) mit der Streuphasenfunktion $k$ gewichtet die einfallenden Intensit"aten auf, die in Richtung $\omega$ gestreut werden. Anschliessend skaliert der Volumenstreuquerschnitt die aufintegrierte Intensit"at entsprechend dem lokal vorhandenen Medium und gibt dabei dem Ausdruck die Einheit einer Emissivit"at.
+	Der restliche "aussere Teil der Gleichung addiert die eben gewonnene Emissivit"at durch Einstreuung zu der lokal durch Ausstrahlung erzeugten Emissivit"at an jedem Punkt auf einer Geraden hinter dem Punkt $\location{r}$ und summiert, die mit einem der optischen Tiefe entsprechenden Abschw"achungsfaktor gewichteten, in Richtung $\omega$ zeigenden, Emissivit"aten, entlang der Geraden zur Gesamtintensit"at am Ort $\location{r}$ in Richtung $\omega$ auf.
+	Der Gesamtausdruck l"asst sich durch Einf"uhrung zweier neuer Operatoren
+	\begin{align*}
+		\left(\mathbf{G}\varepsilon\right)(\location{r},\omega)&:=\int_{s'=0}^\infty e^{-\tau(\location{r}-s' \omega,\location{r})}\varepsilon(\location{r}-s' \omega,\omega) ds' \\
+		\left(\mathbf{K}I\right)(\location{r},\omega)&:=\sigma(\location{r})\int_{S^2} k(\location{r},\omega',\omega) I(\location{r},\omega') d\omega'
+	\end{align*}
+	\begin{equation*}
+		\mathbf{G} : \varepsilon(\location{r},\omega) \mapsto I(\location{r},\omega) , \qquad
+		\mathbf{K} : I(\location{r},\omega) \mapsto \varepsilon(\location{r},\omega)
+	\end{equation*}
+	in elementarere Prozesse aufteilen. Wir nennen $\mathbf{G}$ den sogenannten {\em Fortpflanzungs--Operator} und $\mathbf{K}$ den {\em Streu--Operator}. Beides sind Integraloperatoren auf dem Raum der Funktionen $f : \mathbb{R}^3 \times \mathcal{S}^2 \to \mathbb{R}_{\geq 0}$, die vom Teilchen--Phasenraum auf die positiven reellen Zahlen abbilden. Beide haben komplement"are Lokalit"aten. W"ahrend $\mathbf{K}$ lokal im Ort "uber alle Raumrichtungen integriert, ist $\mathbf{G}$ lokal in der Raumrichtung und integriert "uber alle Orte entlang einer Geraden im Raum. Dabei bildet $\mathbf{K}$ von einem Strahlungsintensit"atsfeld in ein Emissivit"atsfeld ab. Bei $\mathbf{G}$ ist es umgekehrt, es macht aus einem Emissivit"atsfeld wieder ein Strahlungsintensit"atsfeld.
+	Mit diesen neuen Operatoren wird aus Gleichung (\ref{eq:int.STGdarkbg}) die {\em Operatorform der Strahlungstransportgleichung}
+	\begin{equation}
+		I=\mathbf{G}(\varepsilon + \mathbf{K}I),
+		\label{eq:op.STG}
+	\end{equation}
+	die wir nun formal nach $I$ aufl"osen k"onnen:
+	\begin{align}
+		(\ref{eq:op.STG}) \Leftrightarrow I&=\mathbf{G}\varepsilon + \mathbf{GK}I \nonumber \\
+		\Leftrightarrow (\mathbf{1}-\mathbf{GK})I &= \mathbf{G}\varepsilon \nonumber \\
+		\Leftrightarrow I &= (\mathbf{1}-\mathbf{GK})^{-1}\mathbf{G}\varepsilon \label{eq:op.STGinvert} \\
+		\Leftrightarrow I &= \sum_{k=0}^\infty (\mathbf{GK})^k \mathbf{G}\varepsilon \label{eq:op.STGneumann} \\
+		&=\mathbf{G}\varepsilon + \mathbf{GKG}\varepsilon + \mathbf{GKGKG}\varepsilon + \hdots \label{eq:op.STGneumann.explicit} \\
+		\Leftrightarrow I &=\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon \label{eq:op.STGkg}
+	\end{align}
+	Damit ist das Strahlungstransportproblem formal gel"ost! Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist dann zul"assig wenn die Operatornorm des Operators $\mathbf{GK}$ kleiner als eins ist und damit sichergestellt ist, da"s die Neumann--Reihe konvergiert. F"ur alle praktisch relevanten Probleme ist dies der Fall \citep[siehe][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch l"asst sich das Gleichgewichts--Strahlungsintensit"atsfeld als Summe aus Intensit"atsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung mit einem Me"sinstrument entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei m"ussen Pfade jeder m"oglichen L"ange (sprich Anzahl an Streuereignissen) ber"ucksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ nach links ausgeklammert um den $\mathbf{KG}$--Operator herauszustellen.
+	
+	
 	\subsection{KG--Operator in Volumenform}
+	Schauen wir uns den $\mathbf{KG}$--Operator genauer an. $\mathbf{KG}$ bildet ein Emissivit"atsfeld nach Fortpflanzung und Aufintegration zu einem Intensit"atsfeld und anschliessender Streuung auf ein neues Emissivit"atsfeld ab:
+	\begin{equation*}
+		\mathbf{KG} : \varepsilon(\location{r},\omega) \mapsto \varepsilon(\location{r},\omega)
+	\end{equation*}
+
+	Setzen wir die Definitionen der Operatoren ein und formen ein wenig um:
+	\begin{align*}
+		\left(\mathbf{KG}\varepsilon\right)(\location{r},\omega)&=\sigma(\location{r}) \int_{\mathcal{S}^2} k(\location{r},\omega',\omega)\left[\int_{s'=0}^\infty e^{-\tau(\location{r}-s' \omega',\location{r})}\varepsilon(\location{r}-s' \omega',\omega') \text{d}s'\right] \text{d}\omega' \\
+		&=\sigma(\location{r}) \int_{\mathcal{S}^2} \int_{s'=0}^\infty k(\location{r},\omega',\omega) e^{-\tau(\location{r}-s' \omega',\location{r})}\varepsilon(\location{r}-s' \omega',\omega') \underbrace{\text{d}s' \text{d}\omega'}_{=\frac{\text{d}\location{r}'}{s'^2}} \\
+		&=\sigma(\location{r}) \int_{\mathbb{R}^3} k(\location{r},\omega',\omega) \frac{e^{-\tau(\location{r}',\location{r})}}{\|\location{r}-\location{r}'\|^2}\varepsilon(\location{r}',\omega') \,\text{d}\location{r}'
+	\end{align*}
+	Da wir durch Kombination der Integration "uber alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, k"onnen wir die beiden Integrale zugunsten eines Volumenintegrals "uber den gesamten Raum sowie eines geometrischen Verd"unnungsfaktors tauschen. Mit dem Ziel sp"ater alle Integrationen zu Volumenintegralen zusammenzufassen schreiben wir den $\mathbf{KG}$--Operator so um, da"s alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
+	\begin{multline}
+		\left(\mathbf{KG}\varepsilon\right)(\location{r}_i \rightarrow\location{r}_{i+1})=\\
+		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\varepsilon(\location{r}_{i-1} \rightarrow\location{r}_i)d\location{r}_{i-1}
+		\label{eq:KGvolume_intermediate}
+	\end{multline}
+	beziehungsweise (mit den in Abschnitt \ref{subsec:nomenklatur} eingef"uhrten Schreibweisen) noch kompakter:
+	\begin{equation}
+		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\frac{e^{-\tau_{(i-1,i)}}}{d_{(i-1,i)}^2}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
+		\label{eq:KGvolume}
+	\end{equation}
+
+
 	\subsection{Pfadintegrall"osung der Strahlungstransportgleichung}
-	TODO: Messungen als Pfadintegrale
+	Wir setzen die Neumann--Reihen--L"osung (\ref{eq:op.STGkg}) in die monochromatische Me"sgleichung (\ref{eq:messgleichung_mono}) ein und erhalten
+	\begin{align}
+		M_\nu&=\int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\sum_{l=1}^\infty \mathbf{G} (\mathbf{KG})^{(l-1)} \varepsilon\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
+		&=\sum_{l=1}^\infty \int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\mathbf{G} (\mathbf{KG})^{(l-1)} \varepsilon\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
+		&=\sum_{l=1}^\infty \int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \int_{s'=0}^\infty e^{-\tau(\location{r}-s' \omega,\location{r})} \left((\mathbf{KG})^{(l-1)} \varepsilon\right)(\location{r},\omega) \underbrace{\text{d}s' \,\text{d}\omega}_{=\frac{\text{d}\location{r}'}{s'^2}} \,\text{d}\location{r} \nonumber \\
+		&=\sum_{l=1}^\infty \int_{\mathbb{R}^3}\int_{\mathbb{R}^3}W_\nu(\location{r}'\rightarrow\location{r}) \frac{e^{-\tau(\location{r}',\location{r})}}{\|\location{r}'-\location{r}\|^2} \left((\mathbf{KG})^{(l-1)} \varepsilon\right)(\location{r}'\rightarrow\location{r}) \,\text{d}\location{r}' \,\text{d}\location{r}.
+		\label{eq:STGprepathsolution}
+	\end{align}
+	Durch rekursives Einsetzen von (\ref{eq:KGvolume}) in (\ref{eq:STGprepathsolution}) und Neuanordnung der Terme erhalten wir dann als Ergebnis einer monochromatischen Messung:
+	\begin{equation}
+		M_\nu=\sum_{l=1}^\infty \underbrace{\idotsint}_{(l+1)\text{--mal}}\varepsilon_{(0,1)}\left[\prod_{i=1}^{l-1}\frac{e^{-\tau_{(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{(l-1,l)}}}{d_{(l-1,l)}^2} W_{\nu,(l-1,l)} \;\text{d}\location{r}_0 \dotsm \text{d}\location{r}_l .
+		\label{eq:STGpathsolution}
+	\end{equation}
+	Das Ergebnis ist eine Summe aus reinen $(l+1)$--fachen Volumenintegralen "uber den ganzen Raum, wobei jedes Volumenintegral "uber den m"oglichen Endpunkt oder Streupunkt innerhalb des Photonenpfades integriert.
+	Anschaulich m"ussen wir also die Beitr"age von Pfaden jeder L"ange und jeder m"oglichen Anordnung von Streuorten aufsummieren. Dies wird vieleicht klarer wenn wir die ersten Terme der Summe explizit ausformulieren:
+	\begin{align*}
+		M_\nu&=\iint_{(\mathbb{R}^3)^2}\varepsilon_{(0,1)}\frac{e^{-\tau_{(0,1)}}}{d_{(0,1)}^2} W_{\nu,(0,1)} \;\text{d}\location{r}_0\text{d}\location{r}_1 \\
+		&+\iiint_{(\mathbb{R}^3)^3}\varepsilon_{(0,1)}\frac{e^{-\tau_{(0,1)}}}{d_{(0,1)}^2}\scatter{1}\frac{e^{-\tau_{(1,2)}}}{d_{(1,2)}^2} W_{\nu,(1,2)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2 \\
+		&+\iiiint_{(\mathbb{R}^3)^4}\varepsilon_{(0,1)}\frac{e^{-\tau_{(0,1)}}}{d_{(0,1)}^2}\scatter{1}\frac{e^{-\tau_{(1,2)}}}{d_{(1,2)}^2}\scatter{2}\frac{e^{-\tau_{(2,3)}}}{d_{(2,3)}^2} W_{\nu,(2,3)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2\text{d}\location{r}_3 \\
+		&+\hdots
+	\end{align*}
+	Diese Form der L"osung des Strahlungstransportproblems hat mehrere Vorteile:
+	\begin{itemize}
+		\item{Die L"osung besitzt eine anschauliche Interpretation}
+		\item{Die L"osung ist explizit, es muss keine implizite Integro--Differentialgleichung wie (\ref{eq:stg_diff}) gel"ost werden}
+		\item{Die L"osung ist ein reines Integrationsproblem und somit ein gutes Gegenst"uck zu hochdimensionalen Monte--Carlo--Integrations--Verfahren}
+	\end{itemize}
+	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
+
+
 	\subsection{Strahlungstransport als Integrationsproblem}
 	
 	\section{Monte--Carlo--Integration}
