@@ -331,11 +331,17 @@
 		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\varepsilon(\location{r}_{i-1} \rightarrow\location{r}_i)d\location{r}_{i-1}
 		\label{eq:KGvolume_intermediate}
 	\end{multline}
-	beziehungsweise (mit den in Abschnitt \ref{subsec:nomenklatur} eingef"uhrten Schreibweisen) noch kompakter:
+	Wir f"uhren zus"atzlich noch die Abk"urzung
+	\begin{align*}
+		\scatter{i}\;&:=\sigma(\location{r}_i)k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\\
+			&=\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})
+	\end{align*}
+	ein, so da"s wir (\ref{eq:KGvolume_intermediate}) zusammen mit den in Abschnitt \ref{subsec:nomenklatur} eingef"uhrten Schreibweisen noch kompakter als
 	\begin{equation}
 		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\frac{e^{-\tau_{(i-1,i)}}}{d_{(i-1,i)}^2}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
 		\label{eq:KGvolume}
 	\end{equation}
+	schreiben k"onnen.
 
 
 	\subsection{Pfadintegrall"osung der Strahlungstransportgleichung}
@@ -364,7 +370,7 @@
 	\begin{itemize}
 		\item{Die L"osung besitzt eine anschauliche Interpretation}
 		\item{Die L"osung ist explizit, es muss keine implizite Integro--Differentialgleichung wie (\ref{eq:stg_diff}) gel"ost werden}
-		\item{Die L"osung ist ein reines Integrationsproblem und somit ein gutes Gegenst"uck zu hochdimensionalen Monte--Carlo--Integrations--Verfahren}
+		\item{Die L"osung ist ein reines Integrationsproblem und somit ein gutes Gegenst"uck zu hochdimensionalen Monte--Carlo--Integrations--Verfahren, wie wir in Abschnitt \ref{subsec:integrationsproblem_comparison} sehen werden}
 	\end{itemize}
 	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
 
@@ -374,9 +380,9 @@
 	\section{Monte--Carlo--Integration}
 	\subsection{Grundlegende Begriffe aus der Statistik}
 	TODO: Begriffe aus Wahrscheinlichkeitsrechnung und Statistik einf"uhren
-	\subsection{Das Integrationsproblem}
+	\subsection{Das Integrationsproblem}\label{subsec:integrationsproblem}
 	TODO: Das Integrationsproblem
-	\subsubsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}
+	\subsubsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}\label{subsec:integrationsproblem_comparison}
 	TODO: (Curse~of~Dimensionality / Konvergenzraten)
 	\subsection{Importance--Sampling}
 
