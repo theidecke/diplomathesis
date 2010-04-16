@@ -188,9 +188,26 @@
 	gel"ost wird. Die L"osung zeigt, da"s die optische Tiefe zu einer exponentiellen Abschw"achung der Intensit"at f"uhrt.
 	
 	
-	
-	
 	\subsection{Die Messgleichung}
+	Mit dem Strahlungsintensit"atsfeld, da"s aus der Gesamtheit aller spezifischen Intensit"aten $I_\nu$ besteht, meinen wir die Funktion
+	$$I:\mathbb{R}_{\geq 0}\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_{\geq 0}\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
+	die vom 6--dimensionalen Raum aller Photonenfrequenzen, Orte und Raumrichtungen auf die dort herrschende spezifische Intensit"at abbildet.
+	
+	Funktionen dieser Art bilden einen Skalarproduktraum. Das Null--Element ist die konstant auf Null abbildende Funktion. Zwei Funktionen lassen sich punktweise addieren und ergeben so eine neue Funktion die auch nach $\mathbb{R}_{\geq 0}$ abbildet. Das Skalarprodukt zwischen zwei Funktionen $f$ und $g$ ist schlie"slich mit
+	$$\langle f,g\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} f(\nu,\location{r},\omega)g(\nu,\location{r},\omega)\,d\omega\,d\location{r}\,d\nu$$
+	gegeben.
+	
+	Mit diesem funktionalanalytischem Handwerkszeug definieren wir eine Messung als das Skalarprodukt zwischen unserem Strahlungsintensit"atsfeld $I$ und einer {\em Sensitivit"atsfunktion} $W$, welche die St"arke der Gewichtung angibt, mit der die spezifische Intensit"at der Frequenz $\nu$ am Ort $\location{r}$ in Richtung $\omega$ in den Me"swert eingeht. Die entsprechende Formel
+	\begin{equation}\label{eq:messgleichung}
+		M^{(i)}:=\langle W_i,I\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W(\nu,\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}\,d\nu
+	\end{equation}
+	nennen wir {\em Me"sgleichung} (f"ur den $i$--ten Sensor).
+	
+	Die Tatsache, da"s wir die Sensitivit"atsfunktion nicht n"aher spezifizieren, erlaubt uns die gr"o"stm"ogliche Freiheit beim kreieren virtueller Sensoren. Beispielsweise k"onnte $W$ nur f"ur einen kleines Volumen und einen kleinen Raumwinkel aber bei allen Frequenzen nichtverschwindend sein, und so einen virtuellen Sensor zur Messung der Gesamt--Intensit"at an einem bestimmten Ort in eine bestimmte Richtung repr"asentieren. Ebenso kann durch gleichstarke Gewichtung aller Raumrichtungen die mittlere Intensit"at gemessen werden.
+	
+	Was hier vielleicht als ein nur theoretisch interessantes Konstrukt ohne praktischen Nutzen erscheint, erweist sich sp"ater insbesondere in Verbindung mit Monte--Carlo--Sampling als ein gleichzeitig vielseitiges und effizientes Werkzeug.	
+	
+	
 	\subsection{"Ubersicht etablierter L"osungsverfahren}
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
