@@ -32,12 +32,36 @@
 	
 	
 	\section{Monte--Carlo--Integration}
-	\subsection{Grundlegende Begriffe aus der Statistik}
-	TODO: Begriffe aus Wahrscheinlichkeitsrechnung und Statistik einf"uhren
+	Monte--Carlo--Verfahren liegt die Idee zugrunde, zu einem numerischen Problem ein passendes Zufallsexperiment so zu konstruieren, da"s der Erwartungswert einer Zufallsvariable des Experiments das numerische Problem l"ost.
+	
+	Die Idee ist nicht neu, so f"uhrte {\em Buffon} 1777 folgendes Experiment durch: Eine Nadel der L"ange $L$ wird wiederholt auf eine plane Fl"ache mit parallelen Linien im Abstand $d>L$ fallengelassen und jeweils notiert, ob die Nadel eine der Linien kreuzt. Er zeigte, da"s der Erwartungswert f"ur die Wahrscheinlichkeit der Nadel, die Linie zu kreuzen $$p=\frac{2L}{\pi d}$$ betr"agt. Laplace wies sp"ater darauf hin, da"s  man die H"aufigkeit, mit der die Nadeln die Linien kreuzen, auch Nutzen kann, um den Wert von $\pi$ zu sch"atzen (siehe Abb. \ref{fig:buffon}): $$\pi=\frac{2L}{p d}\approx \frac{2L}{\frac{k}{N}d}$$
+	(\text{N Experimente, davon k mal eine Linie gekreuzt}).
+	\begin{figure}
+		\centering
+		\includegraphics[height=0.3\textheight]{buffonsneedles.eps}
+		\caption{Beispiel f"ur eine Realisierung des Buffon--Nadel--Experiments mit 100 geworfenen Nadeln. Der erhaltene Sch"atzwert f"ur $\pi$ ist bei so wenigen Nadeln nicht sehr genau.}
+		\label{fig:buffon}
+	\end{figure}
+	
 	\subsection{Das Integrationsproblem}\label{subsec:integrationsproblem}
-	TODO: Das Integrationsproblem
-	\subsubsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}\label{subsec:integrationsproblem_comparison}
+	Betrachten wir das Integral
+	$$I=\int_\Omega f(x) d\mu(x),$$
+	wobei $\Omega$ das Integrationsgebiet, $f : \Omega \to \mathbb{R}$ eine reellwertige Funktion und $\mu$ ein Ma"s auf $\Omega$ ist. F"ur die folgende Darstellung nehmen wir an, da"s $$\Omega=[0,1]^d$$ der $d$--dimensionale Einheitsw"urfel und $I_d$ das zugeh"orige Integral ist. Die klassische numerische Herangehensweise (wenn keine analytische L"osung m"oglich oder praktikabel ist) sind {\em Tensor--Produkt--Verfahren}. Die Idee dabei ist, f"ur jede Dimension ein eindimensionales Quadratur--Verfahren zu w"ahlen (verschiedene oder das gleiche) und diese zu einem mehrdimensionalen Verfahren zu kombinieren. Ein eindimensionales Verfahren stellt eine gewichtete Summe von Funktionswerten an $M$ (vor dem Auswerten der Funktion) festgelegten St"utzstellen dar:
+	$${\tilde I}_1=\sum_{i=1}^M w_i\,f(x_i).$$
+	Bekannte Vertreter dieser eindimensionalen Quadraturregeln sind z.B. die {\em Newton--Cotes}- und {\em Gauss--Legendre}--Verfahren. Ein hieraus konstruiertes Tensor--Produkt--Verfahren (wobei wir der Einfachheit halber f"ur alle Dimensionen dasselbe eindimensionale Verfahren zugrundelegen) hat dann die Form:
+	$${\tilde I}_d=\sum_{i_1}^M\cdots\sum_{i_d}^M w_{i_1}w_{i_2}\cdots w_{i_d}f(x_{i_1},\cdots,x_{i_D}).$$
+	\begin{figure}
+		\centering
+		\includegraphics[height=0.25\textheight]{tensorproduct_quadrature.eps}
+		\caption{St"utzstellen eines 1D 7--Punkt--Gauss--Legendre--Verfahrens und entsprechender Tensor--Produkt--Verfahren f"ur 2 bzw. 3 Dimensionen. Die Gewichte der St"utzstellen sind durch ihre Gr"o"se kenntlich gemacht.}
+		\label{fig:tensorproduct}
+	\end{figure}
+	Aus einem eindimensionalen Verfahren mit $M$ St"utzstellen erhalten wir also ein $d$--dimensionales Verfahren mit $M^d$ St"utzstellen (Siehe Abb. {\ref{fig:tensorproduct}}).
+	
+	
+	\subsection{Vergleich von Tensor--Produkt--Verfahren und einfacher Monte--Carlo--Integration}\label{subsec:integrationsproblem_comparison}
 	TODO: (Curse~of~Dimensionality / Konvergenzraten)
+	
 	\subsection{Importance--Sampling}
 
 	\subsection{Monte--Carlo--Markov--Chain--Verfahren}
