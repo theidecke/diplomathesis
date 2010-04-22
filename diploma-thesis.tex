@@ -92,13 +92,75 @@
 	$$\mathcal{O}(1)=V=N h^d \Rightarrow h=\mathcal{O}\left(\left(\frac{1}{N}\right)^{1/d}\right)=\mathcal{O}\left(N^{-1/d}\right)$$	
 	und damit f"ur die Konvergenzrate in Bezug auf die Gesamtst"utzstellenzahl
 	$$\mathcal{O}(h^{2n})=\mathcal{O}(N^{-2n/d}).$$
-	Dies bedeutet, da"s Tensor--Produktverfahren mit steigender Dimension des Integrationsgebietes an Effizienz verlieren. Bei hochdimensionalen Problemen kann dies kaum durch Verfahren h"oherer Ordnung ausgeglichen werden, da Verfahren h"oherer Ordnung, wie oben in (\ref{eq:quadrature_error}) zu sehen auch gr"o"sere Anforderungen an die Glattheit der Funktion stellen. Ausserdem kann die exponentiell steigende Anzahl aller $N \geq n^d$ mindestens n"otigen Funktionsaufrufe zu einem Problem werden. Der Effekt wird bei steigender Dimension und Ordnung des Verfahrens nur noch schlimmer, was ein Ausgleichen der schlechteren Konvergenzrate bei h"oheren Dimensionen durch Erh"ohen der Ordnung des Verfahrens schnell praktisch unm"oglich werden l"asst. Dies wird h"aufig als {\em Curse of Dimensionality} (Fluch der Dimensionalit"at) bezeichnet. 
+	Dies bedeutet, da"s Tensor--Produktverfahren mit steigender Dimension des Integrationsgebietes an Effizienz verlieren. Bei hochdimensionalen Problemen kann dies kaum durch Verfahren h"oherer Ordnung ausgeglichen werden, da Verfahren h"oherer Ordnung, wie oben in (\ref{eq:quadrature_error}) zu sehen auch gr"o"sere Anforderungen an die Glattheit der Funktion stellen. Ausserdem kann die exponentiell steigende Anzahl aller $N \geq n^d$ mindestens n"otigen Funktionsaufrufe zu einem Problem werden. Der Effekt wird bei steigender Dimension und Ordnung des Verfahrens nur noch schlimmer, was ein Ausgleichen der schlechteren Konvergenzrate bei h"oheren Dimensionen durch Erh"ohen der Ordnung des Verfahrens schnell praktisch unm"oglich werden l"asst. Dies wird h"aufig als {\em Curse~of~Dimensionality} (Fluch der Dimensionalit"at) bezeichnet.
+	
+	Bei der Monte--Carlo--Integration k"onnen wir die Konvergenzrate anhand der Varianz unseres Monte--Carlo--Sch"atzers (\ref{eq:mc_integral}) bestimmen \citep[][2.4.1]{Veach:1997p9136}. Nennen wir der "Ubersicht wegen
+	$$Y_i=\frac{f(X_i)}{p(X_i)}$$
+	und den MC--Sch"atzer mit $N$ gezogenenen Werten
+	$$F_N=\frac{1}{N}\sum_{i=0}^{N-1} Y_i.$$
+	Dann gilt f"ur die Varianz eines beliebigen Samples
+	\begin{equation}
+		V[Y_i]=E[(Y_i-E[Y_i])^2]=E[Y_i^2]-E[Y_i]^2=\int_\Omega \frac{f(x)^2}{p(x)}d\mu(x)-I^2.
+		\label{eq:mc_variance}
+	\end{equation}
+	Da die Werte unabh"angig gezogen sind gilt f"ur die Varianz des Sch"atzer mit $N$ Werten
+	$$V[F_N]=V\left[\frac{1}{N}\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}V\left[\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}\sum_{i=0}^{N-1}V[Y_i]=\frac{1}{N}V[Y_i],$$
+	d.h. die Varianz des Sch"atzers sinkt invers mit der Anzahl $N$ an gezogenen Werten. Daraus folgt sofort die Standardabweichung
+	$$\sigma[F_N]=\frac{1}{\sqrt{N}}\sigma[Y_i],$$
+	was einer Konvergenzrate von $\mathcal{O}(N^{-1/2})$ entspricht. Die Konvergenzrate des Monte--Carlo--Sch"atzers ist im Gegensatz zur Konvergenzrate der Tensor--Produkt--Verfahren also unabh"angig von der Dimension des Integrationsgebietes, d.h. das Verfahren leidet {\em nicht} unter dem {\em Curse~of~Dimensionality}! Ausserdem mussten wir nirgendwo Bedingungen an die Glattheit der Funktion stellen, was bei Funktionen mit Diskontinuit"aten von Vorteil ist.
+	
+	Zusammenfassend k"onnen wir also feststellen, da"s Monte--Carlo--Integration bei hochdimensionalen Integrationsproblemen und Funktionen mit Diskontinuit"aten klar gegen"uber klassischen Tensor--Produktverfahren vorzuziehen ist. F"ur niedrigdimensionale ($d\lessapprox 7$) Gebiete mit glatten Integranden sind die klassischen Methoden hingegen besser geeignet.
+	
 	
 	\subsection{Importance--Sampling}
-
+	Wir sind bei unserem MC--Sch"atzer (\ref{eq:mc_integral}) nicht darauf beschr"ankt eine gleichf"ormige Wahrscheinlichkeitsdichte $p$ zu w"ahlen. Es kann sogar die Effizienz des Verfahrens betr"achtlich verbessern, wenn wir eine geeignete Wahrscheinlichkeitsdichte $p$ w"ahlen. Schauen wir uns daher die Formel (\ref{eq:mc_variance}) f"ur die Varianz nochmal an, da"s es zu minimieren gilt, um zu verstehen, was ``geeignet'' bedeutet. Nimmt die Wahrscheinlichkeitsdichte beispielsweise die ideale Form
+	\begin{equation}
+		p(x)=\frac{|f(x)|}{\int_\Omega |f(z)|d\mu(z)}
+		\label{eq:ideal_importance_pdf}
+	\end{equation}
+	an, kann man mit der {\em Jensenschen~Ungleichung} zeigen, da"s dann das Integral in (\ref{eq:mc_variance}) und damit die Varianz insgesamt minimal wird. Nimmt $f$ keine negativen Werte an, verschwindet die Varianz dieses Sch"atzers sogar, da in (\ref{eq:mc_integral}) dann nur noch "uber die konstante L"osung (in Form der Normierungskonstanten) gemittelt wird. Wenn wir das Normierungs--Integral im Nenner von (\ref{eq:ideal_importance_pdf}) l"osen k"onnten, w"are allerdings auch die urspr"ungliche Integration (\ref{eq:integration_problem}) kein Problem! Daher suchen wir in der Praxis nach einem $p$, das m"oglichst "ahnlich zu $|f|$ und gleichzeitig normierbar ist.
+	
+	
 	\subsection{Monte--Carlo--Markov--Chain--Verfahren}
+	Bisher sind wir bei unserem Monte--Carlo--Sch"atzer (\ref{eq:mc_integral}) von einer zugrundeliegenden Stichprobe aus $N$ unabh"angigen und identisch gem"a"s $p$ verteilten St"utzstellen ausgegangen, deren zugeh"rige Funktionswerte gemittelt als Sch"atzer f"ur den Wert des Integrals (\ref{eq:integration_problem}) dienen. Wenn wir aber unsere Funktionswerte in jedem Fall mitteln, dann ist die Unabh"angigkeit der gezogenen St"utzstellen nicht relevant, da die Reihenfolge, in der sie gezogen werden, den Mittelwert nicht beeinflusst. Essentiell ist also lediglich, dass sie identisch gem"a"s $p$ verteilt sind.
+	
+	Diese Freiheit nutzen sogenannte Monte--Carlo--Markov--Chain--Verfahren (MCMC--Verfahren). Sie stellen ein Verfahren dar, um aus einem Zustandsraum $\Omega$ gem"a"s einer gegebenen Wahrscheinlichkeitsdichte $p$ verteilte Werte zu ziehen. Dies wird durch die Konstruktion eines Zufallspfads ({\em random~walk}) im Zustandsraum, dirigiert durch eine Markov--Kette, erreicht. Dabei mu"s sichergestellt werden, da"s die so erzeugten Werte auch gem"a"s $p$ verteilt sind und insbesondere jeder Punkt im Zustandsraum, auf dem $p$ nicht verschwindet, auch erreicht werden kann.
+	
+	Wie im n"achsten Abschnitt gezeigt wird, ist dies mit erstaunlich wenig Aufwand m"oglich. Die Kombination aus Vielseitigkeit, M"achtigkeit und Einfachheit hat MCMC--Verfahren in vielen Bereichen\footnote{Beispiele finden sich u.a. in der statistischen Physik, in der Finanzmathematik und zur Berechnung von A--posteriori--Wahrscheinlichkeiten in der Bayes'schen Statistik \citep{Geweke:1989p10465}, z.B. mit Anwendungen in der Bioinformatik und Medizin. Weitere interessante und ungew"ohnliche Anwendungen finden sich in \citep{Diaconis:2009p4122}} zu einem Hauptverfahrensbestandteil gemacht.
+	
+	
 	\subsubsection{Metropolis--Hastings--Algorithmus}
-	TODO: Metropolis--Hastings--Algorithmus
+	Unter den MCMC--Verfahren ist eines der bekanntesten der {\em Metropolis--Hastings--Algorithmus} (MH), der durch eine Arbeit in der statistischen Physik von \citet{Metropolis:1953p3364} in einer einfachen Form vorgestellt und sp"ater durch \citet{Hastings:1970p3387} verallgemeinert wurde.
+
+	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gem"a"s der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_{\geq 0}$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir ver"andern dazu den aktuellen Zustand $x$ nach einem frei w"ahlbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
+	Dabei stellen wir folgende Bedingungen an eine Mutation:
+	\begin{itemize}
+		\item{wenn der "Ubergang vom Zustand $x$ nach $x'$ m"oglich ist, muss auch der "Ubergang zur"uck von $x'$ nach $x$ m"oglich sein}
+		\item{es muss jeder Zustand $x \in \Omega$ durch eine Kette von "Uberg"angen erreichbar sein (Ergodizit"at)}
+		\item{Die "Ubergangswahrscheinlichkeit $T(x'|x)$ durch unser Mutations--Schema von Zustand $x$ zum Zustand $x'$ zu kommen muss f"ur gegebenes $x$ und $x'$ berechenbar sein}
+	\end{itemize}
+	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ sicherzustellen. Die M"oglichkeit, die wir betrachten, ist das Ablehnen des neuen Zustandes $x'$ mit einer bestimmten Wahrscheinlichkeit. Genauer nehmen wir den neuen Zustand $x'$ mit der Akzeptanzwahrscheinlichkeit $a(x'|x)$ an, ansonsten behalten wir f"ur die n"achste Ziehung den letzten Zustand bei. Um die Akzeptanzwahrscheinlichkeit zu bestimmen verlangen wir f"ur die "Ubergangsraten zwischen allen m"oglichen Zust"anden {\em Detailed Balance}, d.h. wir verlangen
+	\begin{equation}
+		\forall x,x' \in \Omega :\quad f(x)T(x'|x)a(x'|x) = f(x')T(x|x')a(x|x')
+		\label{eq:detailedbalance}
+	\end{equation}
+	Dies l"asst noch immer verschiedene M"oglichkeiten zu, die Akzeptanzwahrscheinlichkeit zu bestimmen. Eine effiziente und dadurch beliebte Wahl ist dabei Folgende: ist $f(x')>f(x)$ nehmen wir den neuen Zustand auf jeden Fall an, ansonsten mit der Wahrscheinlichkeit $(f(x')T(x|x'))/(f(x)T(x'|x))$. Dies l"asst sich zusammenfassen zu
+	\begin{equation}
+		a(x'|x)=\text{min}\left(1,\frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)
+		\label{eq:acceptanceratio}
+	\end{equation}
+	Als Pseudocode sieht der Algorithmus also wie folgt aus:
+	\begin{verbatim}
+	  for i=1 to N do
+		  ziehe x' gem"a"s T(x'|x_i)
+		  a(x'|x_i) = min(1, f(x')T(x|x')/(f(x)T(x'|x)))
+		  generiere Zufallszahl u aus [0,1]
+		  if (u < a(x'|x_i))
+		    then x_{i+1}=x'
+		    else x_{i+1}=x_i
+	\end{verbatim}
+	Als Ergebnis erhalten wir eine Liste von Samples, die gem"a"s $f$ verteilt sind. Die Samples sind allerdings nicht unabh"angig, sondern im Gegenteil h"aufig hochkorreliert. Wenn wir nur an statistischen Kenngr"o"sen wie dem Mittelwert oder der Varianz einer Stichprobe interessiert sind ist die Korrelation aber irrelevant und stellt somit f"ur uns kein Problem dar. Die Tatsache, da"s die Normierung von $f$ f"ur die Funktion des Verfahrens nicht notwendig ist, bedeutet allerdings auch, da"s wir uns bei Bedarf eine Normierung auf andere Weise beschaffen m"ussen.
+	
 	\subsubsection{Detailed Balance}
 	TODO: Detailed Balance
 	\subsubsection{Generalisierter Metropolis--Hastings--Algorithmus}
