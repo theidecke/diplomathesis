@@ -78,7 +78,7 @@
 	  =q(\location{r},\omega)+\sigma(\location{r})\int_{\mathcal{S}^2}k(\location{r},\omega',\omega)\phi(\location{r},\omega')d\omega'
 	\end{equation}
 	Die Bilanzgleichung hat die Gestalt einer Integro--Differentialgleichung in $\phi$.
-	Im folgenden Abschnitt stellen wir den Bezug zwischen unseren abstrakten Teilchentransportgr"o"sen und messbaren Gr"o"sen her.
+	Im folgenden Abschnitt stellen wir den Bezug zwischen unseren abstrakten Teilchentransportgr"o"sen und physikalischen Strahlungsgr"o"sen her.
 
 	\subsection{Ph"anomenologische Strahlungsgr"o"sen}\label{subsec:strahlungsgroessen}
 	Im vorigen Abschnitt haben wir das Strahlungstransportproblem bewu"st auf ein Teilchentransportproblem mit abstrakten Teilchen statt Photonen reduziert um einerseits eine klarere Herleitung zu erm"oglichen und um andererseits die Verwandtschaft zu anderen Transportproblemen (wie z.B. Neutronentransport) offensichtlich zu machen. Um nun den Anschlu"s zu radiometrischen Strahlungsgr"o"sen zu bekommen, ersetzen wir unsere abstrakten Teilchen wieder durch Photonen. Photonen haben u.a. zwei Eigenschaften die wir daher ber"ucksichtigen. Sie bewegen sich konstant mit Lichtgeschwindigkeit, d.h. wir k"onnen die vorher gebrauchte allgemeine Teilchengeschwindigkeit $v$ gleich $\text{c}$ setzten. Ausserdem besitzt jedes Photon eine Energie, die durch seine Frequenz $\nu$ mit 
@@ -154,7 +154,7 @@
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
 	\section{Pfadintegralformulierung der Strahlungstransportgleichung}
-	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer L"osung (genau genommen, Messungen im Sinne von (\ref{eq:messgleichung}) der L"osung) andererseits her. Dies f"uhrt uns, durch die verschiedenen, auf das Problem eingenommenen, Blickwinkel, zu einem besseren Verst"andnis von Strahlungstransport und gibt uns dar"uber hinaus einen neuen Ansatzpunkt zur effizienten L"osung des Strahlungstransportproblems.
+	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer L"osung (genau genommen, Messungen der L"osung im Sinne von (\ref{eq:messgleichung})) andererseits her. Dies f"uhrt uns durch die verschiedenen, auf das Problem eingenommenen Blickwinkel, zu einem besseren Verst"andnis von Strahlungstransport und gibt uns dar"uber hinaus einen neuen Ansatzpunkt zur effizienten L"osung des Strahlungstransportproblems.
 	
 	Die Idee zu dieser Formulierung kommt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberfl"achen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt ausserdem die Herleitung der integralen Form der Strahlungstransportgleichung.
 	
@@ -293,7 +293,7 @@
 		\label{eq:STGpathsolution}
 	\end{equation}
 	Das Ergebnis ist eine Summe aus reinen $(k+2)$--fachen Volumenintegralen "uber den ganzen Raum, wobei "uber den m"oglichen Start- und Endpunkt sowie die $k$ Streupunkte innerhalb des Photonenpfades integriert wird.
-	Anschaulich m"ussen wir also die Beitr"age von Pfaden jeder Anzahl an Streupunkten und jeder m"oglichen Anordnung von Emissions-, Streu- und Messorten aufsummieren. Dies wird vielleicht klarer wenn wir die ersten Terme der Summe explizit ausformulieren:
+	Anschaulich m"ussen wir also die Beitr"age von Pfaden jeder Anzahl an Streupunkten und jeder m"oglichen Anordnung von Emissions-, Streu- und Mess\-orten aufsummieren. Dies wird vielleicht klarer wenn wir die ersten Terme der Summe explizit ausformulieren:
 	\begin{align*}
 		M_\nu&=\iint_{(\mathbb{R}^3)^2}\varepsilon_{\nu,(0,1)}\frac{e^{-\tau_{\nu,(0,1)}}}{d_{(0,1)}^2} W_{\nu,(0,1)} \;\text{d}\location{r}_0\text{d}\location{r}_1 \\
 		&+\iiint_{(\mathbb{R}^3)^3}\varepsilon_{\nu,(0,1)}\frac{e^{-\tau_{\nu,(0,1)}}}{d_{(0,1)}^2}\scatter{1}\frac{e^{-\tau_{\nu,(1,2)}}}{d_{(1,2)}^2} W_{\nu,(1,2)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2 \\
