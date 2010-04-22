@@ -6,6 +6,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{algorithmic}
 \usepackage{natbib}
 \bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 
@@ -113,7 +114,7 @@
 	
 	
 	\subsection{Importance--Sampling}
-	Wir sind bei unserem MC--Sch"atzer (\ref{eq:mc_integral}) nicht darauf beschr"ankt eine gleichf"ormige Wahrscheinlichkeitsdichte $p$ zu w"ahlen. Es kann sogar die Effizienz des Verfahrens betr"achtlich verbessern, wenn wir eine geeignete Wahrscheinlichkeitsdichte $p$ w"ahlen. Schauen wir uns daher die Formel (\ref{eq:mc_variance}) f"ur die Varianz nochmal an, da"s es zu minimieren gilt, um zu verstehen, was ``geeignet'' bedeutet. Nimmt die Wahrscheinlichkeitsdichte beispielsweise die ideale Form
+	Wir sind bei unserem MC--Sch"atzer (\ref{eq:mc_integral}) nicht darauf beschr"ankt eine gleich\-f"or\-mi\-ge Wahrscheinlichkeitsdichte $p$ zu w"ahlen. Es kann sogar die Effizienz des Verfahrens betr"achtlich verbessern, wenn wir eine geeignete Wahrscheinlichkeitsdichte $p$ w"ahlen. Schauen wir uns daher die Formel (\ref{eq:mc_variance}) f"ur die Varianz nochmal an, da"s es zu minimieren gilt, um zu verstehen, was ``geeignet'' bedeutet. Nimmt die Wahrscheinlichkeitsdichte beispielsweise die ideale Form
 	\begin{equation}
 		p(x)=\frac{|f(x)|}{\int_\Omega |f(z)|d\mu(z)}
 		\label{eq:ideal_importance_pdf}
@@ -139,8 +140,25 @@
 		\item{es muss jeder Zustand $x \in \Omega$ durch eine Kette von "Uberg"angen erreichbar sein (Ergodizit"at)}
 		\item{Die "Ubergangswahrscheinlichkeit $T(x'|x)$ durch unser Mutations--Schema von Zustand $x$ zum Zustand $x'$ zu kommen muss f"ur gegebenes $x$ und $x'$ berechenbar sein}
 	\end{itemize}
-	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ sicherzustellen. Die M"oglichkeit, die wir betrachten, ist das Ablehnen des neuen Zustandes $x'$ mit einer bestimmten Wahrscheinlichkeit. Genauer nehmen wir den neuen Zustand $x'$ mit der Akzeptanzwahrscheinlichkeit $a(x'|x)$ an, ansonsten behalten wir f"ur die n"achste Ziehung den letzten Zustand bei. Um die Akzeptanzwahrscheinlichkeit zu bestimmen verlangen wir f"ur die "Ubergangsraten zwischen allen m"oglichen Zust"anden {\em Detailed Balance}, d.h. wir verlangen
+	Mutationen sind also etwas formaler formuliert bedingte Wahrscheinlichkeitsverteilungen, die durch das Herkunftselements parametrisiert sind, nicht normiert sein m"ussen und f"ur die
+	$$\forall x,x'\in\Omega : \quad T(x'|x)>0 \Leftrightarrow T(x|x')>0$$
+	wahr ist.
+	
+	\paragraph{Detailed Balance:}
+	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ sicherzustellen.
+	Betrachten wir eine gro"se Zahl von gleichartigen aber unabh"angigen Markov--Ketten, die alle mit einer gewissen Wahrscheinlichkeit $p(x'|x)$ vom Zustand $x$ in den Zustand $x'$ "ubergehen, dann ist eine M"oglichkeit eine station"are Zustandsdichte $f$, gemittelt "uber die aktuellen Zust"ande aller Markov--Ketten, zu erreichen, zu verlangen, da"s
 	\begin{equation}
+		\forall x,x' \in \Omega :\quad f(x)p(x'|x) = f(x')p(x|x')
+		\label{eq:dynamic_equlibrium}
+	\end{equation}
+	({\em =Detailed Balance}) gilt, d.h. da"s die "Ubergangsraten zwischen zwei beliebigen Zust"anden sich im dynamischen Gleichgewicht befinden.
+	Da $T$ die "Ubergangswahrscheinlichkeiten aber schon festlegt, behalten wir uns das Recht vor, einen durch Ziehen aus $T$ vorgeschlagenen Zustands"ubergang nur mit der Wahrscheinlichkeit $a(x'|x)$ anzunehmen und ansonsten abzulehnen,	um {\em Detailed Balance} sicherstellen zu k"onnen:
+	\begin{equation}
+		p(x'|x) = T(x'|x)a(x'|x)
+		\label{eq:acceptance_prob_intro}
+	\end{equation}
+	\begin{equation}
+		(\ref{eq:dynamic_equlibrium}) \stackrel{(\ref{eq:acceptance_prob_intro})}{\Longrightarrow}
 		\forall x,x' \in \Omega :\quad f(x)T(x'|x)a(x'|x) = f(x')T(x|x')a(x|x')
 		\label{eq:detailedbalance}
 	\end{equation}
@@ -149,20 +167,24 @@
 		a(x'|x)=\text{min}\left(1,\frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)
 		\label{eq:acceptanceratio}
 	\end{equation}
-	Als Pseudocode sieht der Algorithmus also wie folgt aus:
-	\begin{verbatim}
-	  for i=1 to N do
-		  ziehe x' gem"a"s T(x'|x_i)
-		  a(x'|x_i) = min(1, f(x')T(x|x')/(f(x)T(x'|x)))
-		  generiere Zufallszahl u aus [0,1]
-		  if (u < a(x'|x_i))
-		    then x_{i+1}=x'
-		    else x_{i+1}=x_i
-	\end{verbatim}
+	
+	
+	\paragraph{Pseudocode:}
+	In Pseudocode sieht der Algorithmus dann wie folgt aus:
+	\begin{algorithmic}
+		\STATE $x_1 \leftarrow$ Anfangszustand
+		\FOR{$i=1$ to $N$}
+			\STATE ziehe $x'$ gem"a"s $T(x'|x_i)$
+			\STATE $a(x'|x_i) \leftarrow \text{min}\left(1, \frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)$
+			\STATE $u\leftarrow$ Zufallszahl aus $[0,1]$
+			\IF{$u < a(x'|x_i)$}	\STATE $x_{i+1}=x'$
+			\ELSE	\STATE $x_{i+1}=x_i$
+			\ENDIF
+	  \ENDFOR
+	\end{algorithmic}
 	Als Ergebnis erhalten wir eine Liste von Samples, die gem"a"s $f$ verteilt sind. Die Samples sind allerdings nicht unabh"angig, sondern im Gegenteil h"aufig hochkorreliert. Wenn wir nur an statistischen Kenngr"o"sen wie dem Mittelwert oder der Varianz einer Stichprobe interessiert sind ist die Korrelation aber irrelevant und stellt somit f"ur uns kein Problem dar. Die Tatsache, da"s die Normierung von $f$ f"ur die Funktion des Verfahrens nicht notwendig ist, bedeutet allerdings auch, da"s wir uns bei Bedarf eine Normierung auf andere Weise beschaffen m"ussen.
 	
-	\subsubsection{Detailed Balance}
-	TODO: Detailed Balance
+	
 	\subsubsection{Generalisierter Metropolis--Hastings--Algorithmus}
 	TODO: Robuste MH--Variante
 
