@@ -1,0 +1,66 @@
+	\section{Monte--Carlo--Markov--Chain--Verfahren}
+	Bisher sind wir bei unserem Monte--Carlo--Sch"atzer (\ref{eq:mc_integral}) von einer zugrundeliegenden Stichprobe aus $N$ unabh"angigen und identisch gem"a"s $p$ verteilten St"utzstellen ausgegangen, deren zugeh"rige Funktionswerte gemittelt als Sch"atzer f"ur den Wert des Integrals (\ref{eq:integration_problem}) dienen. Wenn wir aber unsere Funktionswerte in jedem Fall mitteln, dann ist die Unabh"angigkeit der gezogenen St"utzstellen nicht relevant, da die Reihenfolge, in der sie gezogen werden, den Mittelwert nicht beeinflusst. Essentiell ist also lediglich, dass sie identisch gem"a"s $p$ verteilt sind.
+	
+	Diese Freiheit nutzen sogenannte Monte--Carlo--Markov--Chain--Verfahren (MCMC--Verfahren). Sie stellen ein Verfahren dar, um aus einem Zustandsraum $\Omega$ gem"a"s einer gegebenen Wahrscheinlichkeitsdichte $p$ verteilte Werte zu ziehen. Dies wird durch die Konstruktion eines Zufallspfads ({\em random~walk}) im Zustandsraum, dirigiert durch eine Markov--Kette, erreicht. Dabei mu"s sichergestellt werden, da"s die so erzeugten Werte auch gem"a"s $p$ verteilt sind und insbesondere jeder Punkt im Zustandsraum, auf dem $p$ nicht verschwindet, auch erreicht werden kann.
+	
+	Wie im n"achsten Abschnitt gezeigt wird, ist dies mit erstaunlich wenig Aufwand m"oglich. Die Kombination aus Vielseitigkeit, M"achtigkeit und Einfachheit hat MCMC--Verfahren in vielen Bereichen\footnote{Beispiele finden sich u.a. in der statistischen Physik, in der Finanzmathematik und zur Berechnung von A--posteriori--Wahrscheinlichkeiten in der Bayes'schen Statistik \citep{Geweke:1989p10465}, z.B. mit Anwendungen in der Bioinformatik und Medizin. Weitere interessante und ungew"ohnliche Anwendungen finden sich in \citep{Diaconis:2009p4122}} zu einem Hauptverfahrensbestandteil gemacht.
+	
+	
+	\subsection{Metropolis--Hastings--Algorithmus}
+	Unter den MCMC--Verfahren ist eines der bekanntesten der {\em Metropolis--Hastings--Algorithmus} (MH), der durch eine Arbeit in der statistischen Physik von \citet{Metropolis:1953p3364} in einer einfachen Form vorgestellt und sp"ater durch \citet{Hastings:1970p3387} verallgemeinert wurde.
+
+	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gem"a"s der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_{\geq 0}$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir ver"andern dazu den aktuellen Zustand $x$ nach einem frei w"ahlbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
+	Dabei stellen wir folgende Bedingungen an eine Mutation:
+	\begin{itemize}
+		\item{wenn der "Ubergang vom Zustand $x$ nach $x'$ m"oglich ist, muss auch der "Ubergang zur"uck von $x'$ nach $x$ m"oglich sein}
+		\item{es muss jeder Zustand $x \in \Omega$ durch eine Kette von "Uberg"angen erreichbar sein (Ergodizit"at)}
+		\item{Die "Ubergangswahrscheinlichkeit $T(x'|x)$ durch unser Mutations--Schema von Zustand $x$ zum Zustand $x'$ zu kommen muss f"ur gegebenes $x$ und $x'$ berechenbar sein}
+	\end{itemize}
+	Mutationen sind also etwas formaler formuliert bedingte Wahrscheinlichkeitsverteilungen, die durch das Herkunftselements parametrisiert sind, nicht normiert sein m"ussen und f"ur die
+	$$\forall x,x'\in\Omega : \quad T(x'|x)>0 \Leftrightarrow T(x|x')>0$$
+	wahr ist.
+	
+	\paragraph{Detailed Balance:}
+	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ sicherzustellen.
+	Betrachten wir eine gro"se Zahl von gleichartigen aber unabh"angigen Markov--Ketten, die alle mit einer gewissen Wahrscheinlichkeit $p(x'|x)$ vom Zustand $x$ in den Zustand $x'$ "ubergehen, dann ist eine M"oglichkeit eine station"are Zustandsdichte $f$, gemittelt "uber die aktuellen Zust"ande aller Markov--Ketten, zu erreichen, zu verlangen, da"s
+	\begin{equation}
+		\forall x,x' \in \Omega :\quad f(x)p(x'|x) = f(x')p(x|x')
+		\label{eq:dynamic_equlibrium}
+	\end{equation}
+	({\em =Detailed Balance}) gilt, d.h. da"s die "Ubergangsraten zwischen zwei beliebigen Zust"anden sich im dynamischen Gleichgewicht befinden.
+	Da $T$ die "Ubergangswahrscheinlichkeiten aber schon festlegt, behalten wir uns das Recht vor, einen durch Ziehen aus $T$ vorgeschlagenen Zustands"ubergang nur mit der Wahrscheinlichkeit $a(x'|x)$ anzunehmen und ansonsten abzulehnen,	um {\em Detailed Balance} sicherstellen zu k"onnen:
+	\begin{equation}
+		p(x'|x) = T(x'|x)a(x'|x)
+		\label{eq:acceptance_prob_intro}
+	\end{equation}
+	\begin{equation}
+		(\ref{eq:dynamic_equlibrium}) \stackrel{(\ref{eq:acceptance_prob_intro})}{\Longrightarrow}
+		\forall x,x' \in \Omega :\quad f(x)T(x'|x)a(x'|x) = f(x')T(x|x')a(x|x')
+		\label{eq:detailedbalance}
+	\end{equation}
+	Dies l"asst noch immer verschiedene M"oglichkeiten zu, die Akzeptanzwahrscheinlichkeit zu bestimmen. Eine effiziente und dadurch beliebte Wahl ist dabei Folgende: ist $f(x')>f(x)$ nehmen wir den neuen Zustand auf jeden Fall an, ansonsten mit der Wahrscheinlichkeit $(f(x')T(x|x'))/(f(x)T(x'|x))$. Dies l"asst sich zusammenfassen zu
+	\begin{equation}
+		a(x'|x)=\text{min}\left(1,\frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)
+		\label{eq:acceptanceratio}
+	\end{equation}
+	
+	
+	\paragraph{Pseudocode:}
+	In Pseudocode sieht der Algorithmus dann wie folgt aus:
+	\begin{algorithmic}
+		\STATE $x_1 \leftarrow$ Anfangszustand
+		\FOR{$i=1$ to $N$}
+			\STATE ziehe $x'$ gem"a"s $T(x'|x_i)$
+			\STATE $a(x'|x_i) \leftarrow \text{min}\left(1, \frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)$
+			\STATE $u\leftarrow$ Zufallszahl aus $[0,1]$
+			\IF{$u < a(x'|x_i)$}	\STATE $x_{i+1}=x'$
+			\ELSE	\STATE $x_{i+1}=x_i$
+			\ENDIF
+	  \ENDFOR
+	\end{algorithmic}
+	Als Ergebnis erhalten wir eine Liste von Samples, die gem"a"s $f$ verteilt sind. Die Samples sind allerdings nicht unabh"angig, sondern im Gegenteil h"aufig hochkorreliert. Wenn wir nur an statistischen Kenngr"o"sen wie dem Mittelwert oder der Varianz einer Stichprobe interessiert sind ist die Korrelation aber irrelevant und stellt somit f"ur uns kein Problem dar. Die Tatsache, da"s die Normierung von $f$ f"ur die Funktion des Verfahrens nicht notwendig ist, bedeutet allerdings auch, da"s wir uns bei Bedarf eine Normierung auf andere Weise beschaffen m"ussen.
+	
+	
+	\subsection{Generalisierter Metropolis--Hastings--Algorithmus}
+	TODO: Robuste MH--Variante
+
