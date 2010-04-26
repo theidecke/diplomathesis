@@ -12,16 +12,19 @@
 	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gem"a"s der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_{\geq 0}$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir ver"andern dazu den aktuellen Zustand $x$ nach einem frei w"ahlbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
 	Dabei stellen wir folgende Bedingungen an eine Mutation:
 	\begin{itemize}
-		\item{wenn der "Ubergang vom Zustand $x$ nach $x'$ m"oglich ist, muss auch der "Ubergang zur"uck von $x'$ nach $x$ m"oglich sein}
+		\item{wenn der "Ubergang von Zustand $x$ nach $x'$ m"oglich ist, muss auch der "Ubergang zur"uck von $x'$ nach $x$ m"oglich sein}
 		\item{es muss jeder Zustand $x \in \Omega$ durch eine Kette von "Uberg"angen erreichbar sein (Ergodizit"at)}
 		\item{Die "Ubergangswahrscheinlichkeit $T(x'|x)$ durch unser Mutations--Schema von Zustand $x$ zum Zustand $x'$ zu kommen muss f"ur gegebenes $x$ und $x'$ berechenbar sein}
 	\end{itemize}
-	Mutationen sind also etwas formaler formuliert bedingte Wahrscheinlichkeitsverteilungen, die durch das Herkunftselements parametrisiert sind, nicht normiert sein m"ussen und f"ur die
+	Mutationen sind also, etwas formaler formuliert, bedingte Wahrscheinlichkeitsverteilungen, die durch das Herkunftselement parametrisiert sind, nicht normiert sein m"ussen und f"ur die
 	$$\forall x,x'\in\Omega : \quad T(x'|x)>0 \Leftrightarrow T(x|x')>0$$
-	wahr ist.
+	wahr ist. Hierin k"onnen wir eine Parallele zum {\em Importance Sampling} aus Abschnitt \ref{subsec:importancesampling} entdecken, bei dem wir auch die A--priori--Wahr\-schein\-lich\-keits\-ver\-tei\-lung, aus der die Werte gezogen werden, selber w"ahlen k"onnen ohne das Ergebnis der Integration zu verf"alschen. W"ahrend wir uns beim Importance Sampling allerdings f"ur eine einzige Verteilung zur Generierung der gesamten Stichprobe entscheiden m"ussen, haben wir beim {\em MH--Algorithmus} die M"oglichkeit, f"ur jeden aktuellen Zustand eine eigene Verteilung festzulegen aus der ein Vorschlag f"ur den neuen Zustand gezogen wird.
+	Das bedeutet, Mutationen k"onnen (und sollten) f"ur effizientes und verl"assliches Verhalten an das spezifische Samplingproblem angepasst werden indem die Eigenschaften der interessierenden Wahrscheinlichkeitsdichte $f$ und des Zustandsraumes $\Omega$ miteinbezogen werden. Sind beispielsweise exakte oder n"aherungsweise g"ultige Invarianten von $f$ bez"uglich seiner Zustandsraumkoordinaten bekannt, k"onnen diese genutzt werden, um Samples "ahnlicher Wahrscheinlichkeitsdichte aber gering korrelierten Zustandsraumkoordinaten zu ziehen.
 	
+		
 	\paragraph{Detailed Balance:}
-	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ sicherzustellen.
+	Da die Mutation, mit der wir den neuen Zustand generieren, nichts mit der Wahrscheinlichkeitsdichte $f$ zu tun haben mu"s, brauchen wir eine M"oglichkeit die Verteilung der Zust"ande gem"a"s $f$ trotzdem sicherzustellen.
+	
 	Betrachten wir eine gro"se Zahl von gleichartigen aber unabh"angigen Markov--Ketten, die alle mit einer gewissen Wahrscheinlichkeit $p(x'|x)$ vom Zustand $x$ in den Zustand $x'$ "ubergehen, dann ist eine M"oglichkeit eine station"are Zustandsdichte $f$, gemittelt "uber die aktuellen Zust"ande aller Markov--Ketten, zu erreichen, zu verlangen, da"s
 	\begin{equation}
 		\forall x,x' \in \Omega :\quad f(x)p(x'|x) = f(x')p(x|x')
@@ -43,6 +46,8 @@
 		a(x'|x)=\text{min}\left(1,\frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)
 		\label{eq:acceptanceratio}
 	\end{equation}
+	Diese Wahl der Akzeptanzwahrscheinlichkeit erf"ullt die Detailed--Balance--Bedingung (\ref{eq:detailedbalance}).
+	
 	
 	
 	\paragraph{Pseudocode:}
@@ -50,17 +55,24 @@
 	\begin{algorithmic}
 		\STATE $x_1 \leftarrow$ Anfangszustand
 		\FOR{$i=1$ to $N$}
-			\STATE ziehe $x'$ gem"a"s $T(x'|x_i)$
+			\STATE $x'\leftarrow$ ziehe Wert gem"a"s $T(x'|x_i)$
 			\STATE $a(x'|x_i) \leftarrow \text{min}\left(1, \frac{f(x')T(x|x')}{f(x)T(x'|x)}\right)$
 			\STATE $u\leftarrow$ Zufallszahl aus $[0,1]$
-			\IF{$u < a(x'|x_i)$}	\STATE $x_{i+1}=x'$
-			\ELSE	\STATE $x_{i+1}=x_i$
+			\IF{$u < a(x'|x_i)$}	\STATE $x_{i+1} \leftarrow x'$
+			\ELSE	\STATE $x_{i+1} \leftarrow x_i$
 			\ENDIF
 	  \ENDFOR
 	\end{algorithmic}
-	Als Ergebnis erhalten wir eine Liste von Samples, die gem"a"s $f$ verteilt sind. Die Samples sind allerdings nicht unabh"angig, sondern im Gegenteil h"aufig hochkorreliert. Wenn wir nur an statistischen Kenngr"o"sen wie dem Mittelwert oder der Varianz einer Stichprobe interessiert sind ist die Korrelation aber irrelevant und stellt somit f"ur uns kein Problem dar. Die Tatsache, da"s die Normierung von $f$ f"ur die Funktion des Verfahrens nicht notwendig ist, bedeutet allerdings auch, da"s wir uns bei Bedarf eine Normierung auf andere Weise beschaffen m"ussen.
+	Als Ergebnis erhalten wir eine Liste von Werten, die gem"a"s $f$ verteilt sind.
+	Die Tatsache, da"s die Normierung von $f$ f"ur die Funktion des Verfahrens nicht notwendig ist, kann einerseits von Vorteil sein, und bei bestimmten Problemen die effiziente Generierung einer Stichprobe erst m"oglich machen, sie bedeutet allerdings, da"s wir uns bei Bedarf eine Normierung auf andere Weise beschaffen m"ussen, da die gezogenen Werte ebenfalls nicht normiert sind. Die Werte sind ausserdem nicht unabh"angig, sondern im Gegenteil h"aufig stark korreliert.
+
+	\paragraph{Konvergenz:}Bei klassischer Monte--Carlo--Integration hatten wir in Abschnitt \ref{subsec:integrationsproblem_comparison} gezeigt, da"s bei einer Standard--Abweichung eines Wertes von $$\sigma^*:=\sigma\left[\frac{f(X_i)}{p(X_i)}\right]$$ die Standard--Abweichung des Mittelwertes von N unabh"angig gezogenen Werten $\sigma^*/\sqrt{N}$ betr"agt. Sind die Werte hingegen korreliert, gilt f"ur die Standard--Abweichung des Mittelwertes die Absch"atzung \citep[siehe][VII.\;\S3(8)]{Renyi:1964p10655}
+	$$\sigma\leq \sigma^*\sqrt{\frac{1+2\sum_{i=1}^N R(i)}{N}},$$
+	wobei $R(|j-i|)\leq 1$ eine obere Schranke f"ur die Korrelation zwischen $f(X_i)/p(X_i)$ und $f(X_j)/p(X_j)$ ist.
+	Eine gro"se Korrelation kann sich also negativ auf die Konvergenzrate des Mittelwertes (und anderer statistischer Kenngr"o"sen) auswirken. Daher gilt es bei der Konstruktion einer Mutation zwei Aspekte gegeneinander abzuw"agen: einerseits ist es w"unschenswert in einem Mutationsschritt m"oglichst ``gro"se Schritte'' zu machen um die Korrelation der Werte kleinzuhalten, andererseits ist es in selten gezogenen Bereichen mit hohem Beitrag w"unschenswert kleine Schritte zu machen, um diesen Bereich gut abzudecken. W"ahrend ersteres Verfahren meist mit einer kleinen Akzeptanzwahrscheinlichkeit einhergeht, f"uhren kleine Mutationen tendenziell zu hohen Akzeptanzwahrscheinlichkeiten. Beide ziehen aber in zu extremer Form hohe Korrelation der Samples nach sich, bei zu gro"sen Schritten aufgrund der geringen Akzeptanzwahrscheinlichkeit und daher mehrfacher Gewichtung desselben Samples, bei zu kleinen Schritten aufgrund der gro"sen "Ahnlichkeit der vorgeschlagenen Samples. Daher sind sowohl zu hohe als auch zu kleine Akzeptanzwahrscheinlichkeiten meistens ein Zeichen suboptimalen Samplings. In \citep{Roberts:1997p5198} wird zur Steuerung der Mutationsst"arke f"ur die Akzeptanzwahrscheinlichkeit ein anzustrebender Wert von $\approx 0.23$ bei hochdimensionalen Problemen empfohlen.
+
 	
 	
 	\subsection{Generalisierter Metropolis--Hastings--Algorithmus}
-	TODO: Robuste MH--Variante
+	Wir haben in Abschnitt \ref{subsec:importancesampling} festgestellt, da"s die Effizienz des einfachen Monte--Carlo--Sch"atzers erheblich verbessert werden kann, wenn f"ur {\em Importance Sampling} eine geeignete A--priori--Wahrscheinlichkeitsdichte $p$ bekannt und samplebar ist. Parallel dazu haben wir im vorigen Abschnitt gesehen, da"s es auch f"ur ein effizientes Funktionieren des {\em Metropolis--Hastings--Algorithmus} wichtig ist, die Mutationen an das Problem anzupassen.
 

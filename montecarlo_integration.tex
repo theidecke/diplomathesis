@@ -73,14 +73,17 @@
 	Da die Werte unabh"angig gezogen sind gilt f"ur die Varianz des Sch"atzer mit $N$ Werten
 	$$V[F_N]=V\left[\frac{1}{N}\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}V\left[\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}\sum_{i=0}^{N-1}V[Y_i]=\frac{1}{N}V[Y_i],$$
 	d.h. die Varianz des Sch"atzers sinkt invers mit der Anzahl $N$ an gezogenen Werten. Daraus folgt sofort die Standardabweichung
-	$$\sigma[F_N]=\frac{1}{\sqrt{N}}\sigma[Y_i],$$
+	\begin{equation}
+		\sigma[F_N]=\frac{1}{\sqrt{N}}\sigma[Y_i],
+		\label{eq:mc_standarddeviation}
+	\end{equation}
 	was einer Konvergenzrate von $\mathcal{O}(N^{-1/2})$ entspricht. Die Konvergenzrate des Monte--Carlo--Sch"atzers ist im Gegensatz zur Konvergenzrate der Tensor--Produkt--Verfahren also unabh"angig von der Dimension des Integrationsgebietes, d.h. das Verfahren leidet {\em nicht} unter dem {\em Curse~of~Dimensionality}! Ausserdem mussten wir nirgendwo Bedingungen an die Glattheit der Funktion stellen, was bei Funktionen mit Diskontinuit"aten von Vorteil ist.
 	
 	Zusammenfassend k"onnen wir also feststellen, da"s Monte--Carlo--Integration bei hochdimensionalen Integrationsproblemen und Funktionen mit Diskontinuit"aten klar gegen"uber klassischen Tensor--Produktverfahren vorzuziehen ist. F"ur niedrigdimensionale ($d\lessapprox 7$) Gebiete mit glatten Integranden sind die klassischen Methoden hingegen besser geeignet.
 	
 	
-	\subsection{Importance--Sampling}
-	Wir sind bei unserem MC--Sch"atzer (\ref{eq:mc_integral}) nicht darauf beschr"ankt eine gleich\-f"or\-mi\-ge Wahrscheinlichkeitsdichte $p$ zu w"ahlen. Es kann sogar die Effizienz des Verfahrens betr"achtlich verbessern, wenn wir eine geeignete Wahrscheinlichkeitsdichte $p$ w"ahlen. Schauen wir uns daher die Formel (\ref{eq:mc_variance}) f"ur die Varianz nochmal an, da"s es zu minimieren gilt, um zu verstehen, was ``geeignet'' bedeutet. Nimmt die Wahrscheinlichkeitsdichte beispielsweise die ideale Form
+	\subsection{Importance--Sampling}\label{subsec:importancesampling}
+	Wir sind bei unserem MC--Sch"atzer (\ref{eq:mc_integral}) nicht darauf beschr"ankt eine gleich\-f"or\-mi\-ge Wahrscheinlichkeitsdichte $p$ zu w"ahlen. Es kann die Effizienz des Verfahrens sogar betr"achtlich verbessern, wenn wir eine geeignete Wahrscheinlichkeitsdichte $p$ w"ahlen. Schauen wir uns daher die Formel (\ref{eq:mc_variance}) f"ur die Varianz, die es zu minimieren gilt, nochmal an, um zu verstehen, was ``geeignet'' bedeutet. Nimmt die Wahrscheinlichkeitsdichte beispielsweise die ideale Form
 	\begin{equation}
 		p(x)=\frac{|f(x)|}{\int_\Omega |f(z)|d\mu(z)}
 		\label{eq:ideal_importance_pdf}
