@@ -73,6 +73,53 @@
 
 	
 	
-	\subsection{Generalisierter Metropolis--Hastings--Algorithmus}
-	Wir haben in Abschnitt \ref{subsec:importancesampling} festgestellt, da"s die Effizienz des einfachen Monte--Carlo--Sch"atzers erheblich verbessert werden kann, wenn f"ur {\em Importance Sampling} eine geeignete A--priori--Wahrscheinlichkeitsdichte $p$ bekannt und samplebar ist. Parallel dazu haben wir im vorigen Abschnitt gesehen, da"s es auch f"ur ein effizientes Funktionieren des {\em Metropolis--Hastings--Algorithmus} wichtig ist, die Mutationen an das Problem anzupassen.
+	\subsection{Robuster Metropolis--Hastings--Algorithmus}
+	Wir haben in Abschnitt \ref{subsec:importancesampling} festgestellt, da"s die Effizienz des einfachen Monte--Carlo--Sch"atzers erheblich verbessert werden kann, wenn f"ur {\em Importance Sampling} eine geeignete A--priori--Wahrscheinlichkeitsdichte $p$ bekannt und samplebar ist. Parallel dazu haben wir im vorigen Abschnitt gesehen, da"s es auch f"ur ein effizientes Funktionieren des {\em Metropolis--Hastings--Algorithmus} wichtig ist, die Mutationen an das Problem anzupassen. Meistens geschieht dies dadurch, da"s verschiedene Mutationen erdacht werden, die jeweils in einem Teilbereich des Zustandsraumes effizient sind. Beispielsweise eine Mutation die gro"se Schritte macht und eine andere die nur kleine Ver"anderungen vornimmt. Zur Generierung eines neuen Samples wird dann zuf"allig eine der Mutationen ausgew"ahlt und auf das letzte Sample angewandt.
+	
+	In \citep{Kelemen:2002p8514} wird hingegen eine elegante Variante des Metropolis--Algorithmus vorgeschlagen die im Wesentlichen mit nur einer Mutation auskommt und trotzdem "uber die gew"unschte Eigenschaft verf"ugt sich an die lokalen Gegebenheiten anpassen zu k"onnen. Dem Verfahren liegt dabei folgende Idee zugrunde: Wenn es m"oglich w"are den Zustandsraum $\Omega$ und die Wahrscheinlichkeitsdichte $f$ so zu transformieren, 	da"s $f$ gleichm"assiger verteilt ist, dann w"urde es ausreichen eine einzige Mutation auf diesem transformierten Zustandsraum operieren zu lassen. Dann w"urden Teilgebiete von $\Omega$ mit hohen Peaks in $f$ zu gr"o"seren Gebieten ``gedehnt'', und gr"o"sere Teilgebiete mit kleinen $f$--Werten ``gestaucht'' werden, und $f$ dadurch gleichm"assiger werden lassen. Eine Mutation, die auf dem transformierten Zustandsraum operiert w"urde dann automatisch dort kleinere Schritte machen, wo $f$ pl"otzlich gro"s wird und gr"o"sere Schritte dort, wo $f$ flach und klein ist.
+	
+	Solch eine Transformation bekommen wir geschenkt, falls wir Punkte im Zustandsraum mittels {\em Importance Sampling} generieren, was bei komplizierteren Problemen (wie dem Strahlungstransportproblem) sowieso meist der Fall ist (siehe Abschnitt \ref{sec:mc_radiativetransfer}). Schauen wir uns dazu als Beispiel das Integrationsproblem
+	\begin{equation}
+		I=\int_\Omega f(x) d\mu(x)\approx \frac{1}{N}\sum_{i=0}^{N-1} \frac{f(X_i)}{p(X_i)}
+		\label{eq:transformedintegral1}
+	\end{equation}
+	aus Abschnitt \ref{subsec:integrationsproblem} an. Die Samples aus $p$ werden zumeist durch Transformation gleichf"ormig verteilter Zufallszahlen aus dem Einheitsinterval $[0,1]$ generiert. Daher k"onnen wir eine gezogene Konfiguration von (potentiell unendlich vielen) Zufallszahlen als Koordinaten im unendlichdimensionalen Einheitsw"urfel $[0,1]^\infty$ auffassen. Nennen wir diesen den {\em prim"aren Sample--Raum} $\mathcal{U}$ und bezeichnen die Transformation vom prim"aren Sample--Raum in unseren Zustandsraum als
+	$$S : \mathcal{U} \to \Omega\,,\quad x=S(u).$$
+	Dann k"onnen wir unser Integral (\ref{eq:transformedintegral1}) auch als transformiertes Integral
+	$$I=\int_\mathcal{U} f(S(u)) \left|\frac{dS(u)}{du}\right|du=\int_\mathcal{U} \frac{f(S(u))}{p_S(u)}du$$
+	schreiben, wobei
+	$$\left|\frac{dS(u)}{du}\right|=\frac{1}{p_S(u)}$$
+	die Jacobi--Determinante der Abbildung $S$ ist. Bildlich gesproche dr"uckt die Jacobi--Determinante die lokale Dehnung bzw. Stauchung einer Transformation zwischen zwei R"aumen aus. Wenn $u$ also eine gleichm"assig verteilte Zufallsvariable darstellt, ist $p_S(u)$ die Wahrscheinlichkeitsdichte von $x=S(u)$. Da $S$ die Zufallszahlen aus dem prim"aren Sample--Raum vermehrt auf Punkte im Zustandsraum $\Omega$ mit hohem $f$ abbildet variiert unser neuer Integrand $f(S(u))/p_S(u)$ nicht mehr so stark, ist also flacher geworden. Unsere Mutation die nun im prim"aren Sample--Raum mit konstanter durchschnittlicher Schrittweite agiert, passt sich dadurch automatisch an die lokalen Gegebenheiten an, d.h. sie macht kleine Schritte in $\Omega$ wenn $f$ gro"s ist und gr"o"sere Schritte wenn $f$ klein ist. Die Effizienz des Verfahrens k"onnen wir nun also dadurch verbessern, da"s wir das Importance Sampling besser auf das Problem abstimmen. Der Metropolis--Algorithmus mu"s davon nichts wissen, was auch die Modularit"at des Computerprogramms und somit seine Wiederverwendbarkeit erh"oht.
+
+	Zum Vorschlagen neuer Samples benutzen wir zwei Mutationen. Zum einen k"onnen {\em frische} Samples vorgeschlagen werden, was durch w"ahlen eines neuen Satzes aus gleichf"ormig verteilten Zufallszahlen aus $\mathcal{U}$ entspricht. Dies stellt sicher, da"s jeder Punkt in $\mathcal{U}$ bzw. $\Omega$ erreicht werden kann und stellt so die Ergodizit"at des Verfahrens sicher und macht es robuster. Bei sehr schwierigen Sampling--Problemen verh"alt sich das Verfahren dann schlimmstenfalls wie ein klassischer Monte--Carlo--Sampler mit Importance Sampling, bei dem jedes Sample unabh"angig gezogen wird.
+	Die andere Mutation addiert zu den vorhandenen Koordinaten des aktuellen Samples aus $\mathcal{U}$ jeweils eine kleine St"orung, soda"s jede Koordinate sich "andert aber mit gro"ser Wahrscheinlichkeit in der N"ahe der alten Koordinate landet. Die St"orung ist dabei symmetrisch um Null, d.h. es ist gleichwahrscheinlich einen Versatz $\Delta u$ zu ziehen, wie $-\Delta u$. Die Koordinaten werden dabei als periodisch angesehen, d.h. bei "Uberschreiten des rechten Randes von $[0,1]$ wird der ganzzahlige Teil abgeschnitten um wieder im Einheitsintervall zu landen. Dies birgt einen Effizienz--Vorteil, da die Symmetrie der St"orung bedeutet, da"s f"ur die "Ubergangswahrscheinlichkeiten
+	\begin{equation}
+	  T(u'|u)=T(u|u')
+	  \label{eq:symmetric_transitionprob}
+	\end{equation}
+	gilt und sie sich daher in der Berechnung der Akzeptanzwahrscheinlichkeit
+	$$a(u'|u)=\text{min}\left(1,\frac{f(S(u'))T(u|u')}{f(S(u))T(u'|u)}\right)\stackrel{(\ref{eq:symmetric_transitionprob})}{=}\text{min}\left(1,\frac{f(S(u'))}{f(S(u))}\right)$$
+	herausk"urzt. Im Falle der {\em frischen Mutation} k"urzt sich die "Ubergangswahrscheinlichkeit $T$ ebenfalls heraus, da $\mathcal{U}$ gleichm"a"sig gesampled wird.
+	In Pseudocode sieht der Algorithmus dann wie folgt aus:
+	\begin{algorithmic}
+		\STATE $u \leftarrow$ Anfangszustand
+		\STATE $x_1 \leftarrow S(u)$
+		\FOR{$i=1$ to $N$}
+			\STATE $r\leftarrow$ Zufallszahl aus $[0,1]$
+			\COMMENT{w"ahle Mutation}
+			\IF{$r < p_\text{fresh}$}
+						\STATE $T \leftarrow T_\text{fresh}$
+			\ELSE	\STATE $T \leftarrow T_\text{perturb}$
+			\ENDIF
+			\STATE $u'\leftarrow$ ziehe Wert gem"a"s $T(u'|u)$
+			\STATE $x' \leftarrow S(u')$
+			\STATE $a(u'|u) \leftarrow \text{min}\left(1,\frac{f(x')}{f(x_i)}\right)$
+			\STATE $r\leftarrow$ Zufallszahl aus $[0,1]$
+			\IF{$r < a(u'|u)$}
+			  \STATE $x_{i+1} \leftarrow x'$
+			  \STATE $u \leftarrow u'$
+			\ELSE	\STATE $x_{i+1} \leftarrow x_i$
+			\ENDIF
+	  \ENDFOR
+	\end{algorithmic}
 
