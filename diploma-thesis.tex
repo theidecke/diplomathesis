@@ -12,6 +12,30 @@
 \usepackage{natbib}
 %\bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 
+\usepackage[
+	automark,		% Kapitelangaben in Kopfzeile automatisch erstellen
+        headsepline,		% Trennlinie unter Kopfzeile
+%        footsepline,
+	ilines			% Trennlinie linksbündig ausrichten
+]{scrpage2}
+\pagestyle{scrheadings}
+
+\usepackage[a4paper, bookmarks, colorlinks]{hyperref}	%%farbige Hyperlinks 
+\hypersetup{%
+	pdfkeywords = {},
+	linkcolor = black,
+	urlcolor = black,
+	menucolor=black,
+	citecolor = black,
+	pagecolor=black,
+	bookmarksopen = true, 
+	bookmarksnumbered = true,
+	pdfpagemode = {UseNone}, % UseNone, UseThumbs,UseOutlines, FullScreen
+	pdfstartview = {} % ohne (nicht None), Fit, FitB
+	%pdfcreator = {Adobe-Acrobat-Distiller},
+	%pdfproducer = {LaTeX with hyperref and thumbpdf}
+}
+
 \begin{document}
 	\titlehead{Christian--Albrechts--Universit"at zu Kiel\\ Institut f"ur Theoretische Physik und Astrophysik}
 	\subject{Diplomarbeit}
