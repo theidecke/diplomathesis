@@ -309,4 +309,22 @@
 	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
 
 
-	\section{Strahlungstransport als Integrationsproblem}
+	\subsection{Elimination der Neumann--Reihe}
+	Unsere Darstellung der L"osung des Strahlungstransportproblems (\ref{eq:STGpathsolution}) besteht bisher aus einer unendlichen Summe von Integralen, was eine direkte Folge der Aufspaltung des L"osungsoperators aus (\ref{eq:op.STGinvert}) in seine Neumann--Reihe (\ref{eq:op.STGneumann}) ist. In dieser Form sind die Pfade in Klassen gleicher L"ange (d.h. Anzahl an Streupunkten) eingeteilt, was die mathematische Behandlung verinfacht, da die F"alle verschiedener L"ange getrennt voneinander behandelt werden k"onnen. Gleichzeitig verleitet diese Darstellung jedoch dazu zu glauben, es w"are sinnvoll oder l"age in der Natur der Sache, die Pfade unterschiedlicher L"ange getrennt voneinander zu behandeln. Tats"achlich gibt es aber keinen physikalischen Grund daf"ur, vielmehr w"are es auch mathematisch hilfreich die L"osung als ein einziges Integral "uber den Raum aller Pfade darzustellen, da wir es dann formal mit nur noch einem Integrationsproblem zu tun h"atten und nicht mit unendlich vielen.
+	
+	Daher f"uhren wir nun \citet[][8.2]{Veach:1997p9136} folgend, die Menge aller Pfade sowie ein passendes Integrationsma"s ein, um unsere L"osung (\ref{eq:STGpathsolution}) als Einzelintegral darstellen zu k"onnen. Sei dazu $\Omega_{\nu,k}$ die Menge aller Pfade der Frequenz $\nu$ und der L"ange $k$, d.h. Pfade der Form
+	$${\overline x}=\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1},$$
+	mit $k\in\{0,1,2,\dots\}$ und $\location{r}_i \in \mathbb{R}^3$ f"ur alle $i$. Wir definieren mittels
+	$$\mu_k(D)=\int_D d\nu d\location{r}_0\cdots d\location{r}_{k+1}$$
+	ein Ma"s f"ur Pfade der L"ange $k$, wobei $D\subset\Omega_k$ eine Teilmenge von Pfaden dieser L"ange repr"asentiert und $d\location{r}_i$ das geometrische Volumenma"s sowie $d\nu$ das Integrationsma"s "uber die positiven reellen Zahlen darstellt. Der Raum aller Pfade ist die Vereinigung
+	$$\Omega=\bigcup_{k=0}^\infty \Omega_k$$
+	der Mengen von Pfaden verschiedener L"angen. Da"s Ma"s f"ur die Integration von beliebigen Teilmengen des Pfadraumes $D\subset\Omega$ ist nun durch
+	$$\mu(D)=\sum_{k=0}^\infty \mu_k(D\cap\Omega_k)$$
+	gegeben, d.h. das Ma"s f"ur $D$ ist einfach die Summe der Ma"se von Pfaden aus $D$ entsprechender L"ange. Benennen wir nun noch den pfadl"angen- und frequenzabh"angigen Integranden aus (\ref{eq:STGpathsolution})
+	$$f({\overline x}_\nu)=f_\nu(\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1})=\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\frac{e^{-\tau_{\nu,(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{\nu,(k,k+1)}}}{d_{(k,k+1)}^2} W_{\nu,(k,k+1)}$$
+	als {\em Messbeitragsfunktion}, dann k"onnen wir nun die polychromatische Messung (\ref{eq:messgleichung_frommonos}) einfach als
+	\begin{equation}
+		M=\int_\Omega f({\overline x})d\mu({\overline x})
+		\label{eq:unified_measurementintegral}
+	\end{equation}
+	schreiben. Es ist in dieser Form leichter einzusehen, da"s wir die Pfade nicht nach ihrer L"ange zusammengefasst behandeln m"ussen, um anschliessend die (unendlich vielen) Ergebnisse aufzusummieren, sondern stattdessen Pfade in beliebiger Weise zur Integration zusammenfassen d"urfen. Dies ist insbesondere f"ur die Monte--Carlo--Integration wichtig, da unsere ganze Theorie sich dort auf die L"osung eines Einzelintegrals beschr"anken wird und wir dort dann nahtlos mit der L"osung von Messintegralen der Form (\ref{eq:unified_measurementintegral}) ankn"upfen k"onnen.
