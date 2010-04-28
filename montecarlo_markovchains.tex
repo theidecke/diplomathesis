@@ -1,4 +1,4 @@
-	\section{Monte--Carlo--Markov--Chain--Verfahren}
+	\chapter{Monte--Carlo--Markov--Chain--Verfahren}
 	Bisher sind wir bei unserem Monte--Carlo--Sch"atzer (\ref{eq:mc_integral}) von einer zugrundeliegenden Stichprobe aus $N$ unabh"angigen und identisch gem"a"s $p$ verteilten St"utzstellen ausgegangen, deren zugeh"rige Funktionswerte gemittelt als Sch"atzer f"ur den Wert des Integrals (\ref{eq:integration_problem}) dienen. Wenn wir aber unsere Funktionswerte in jedem Fall mitteln, dann ist die Unabh"angigkeit der gezogenen St"utzstellen nicht relevant, da die Reihenfolge, in der sie gezogen werden, den Mittelwert nicht beeinflusst. Essentiell ist also lediglich, dass sie identisch gem"a"s $p$ verteilt sind.
 	
 	Diese Freiheit nutzen sogenannte Monte--Carlo--Markov--Chain--Verfahren (MCMC--Verfahren). Sie stellen ein Verfahren dar, um aus einem Zustandsraum $\Omega$ gem"a"s einer gegebenen Wahrscheinlichkeitsdichte $p$ verteilte Werte zu ziehen. Dies wird durch die Konstruktion eines Zufallspfads ({\em random~walk}) im Zustandsraum, dirigiert durch eine Markov--Kette, erreicht. Dabei mu"s sichergestellt werden, da"s die so erzeugten Werte auch gem"a"s $p$ verteilt sind und insbesondere jeder Punkt im Zustandsraum, auf dem $p$ nicht verschwindet, auch erreicht werden kann.
@@ -6,7 +6,7 @@
 	Wie im n"achsten Abschnitt gezeigt wird, ist dies mit erstaunlich wenig Aufwand m"oglich. Die Kombination aus Vielseitigkeit, M"achtigkeit und Einfachheit hat MCMC--Verfahren in vielen Bereichen\footnote{Beispiele finden sich u.a. in der statistischen Physik, in der Finanzmathematik und zur Berechnung von A--posteriori--Wahrscheinlichkeiten in der Bayes'schen Statistik \citep{Geweke:1989p10465}, z.B. mit Anwendungen in der Bioinformatik und Medizin. Weitere interessante und ungew"ohnliche Anwendungen finden sich in \citep{Diaconis:2009p4122}} zu einem Hauptverfahrensbestandteil gemacht.
 	
 	
-	\subsection{Metropolis--Hastings--Algorithmus}
+	\section{Metropolis--Hastings--Algorithmus}
 	Unter den MCMC--Verfahren ist eines der bekanntesten der {\em Metropolis--Hastings--Algorithmus} (MH), der durch eine Arbeit in der statistischen Physik von \citet{Metropolis:1953p3364} in einer einfachen Form vorgestellt und sp"ater durch \citet{Hastings:1970p3387} verallgemeinert wurde.
 
 	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gem"a"s der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_{\geq 0}$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir ver"andern dazu den aktuellen Zustand $x$ nach einem frei w"ahlbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
@@ -73,7 +73,7 @@
 
 	
 	
-	\subsection{Robuster Metropolis--Hastings--Algorithmus}
+	\section{Robuster Metropolis--Hastings--Algorithmus}
 	Wir haben in Abschnitt \ref{subsec:importancesampling} festgestellt, da"s die Effizienz des einfachen Monte--Carlo--Sch"atzers erheblich verbessert werden kann, wenn f"ur {\em Importance Sampling} eine geeignete A--priori--Wahrscheinlichkeitsdichte $p$ bekannt und samplebar ist. Parallel dazu haben wir im vorigen Abschnitt gesehen, da"s es auch f"ur ein effizientes Funktionieren des {\em Metropolis--Hastings--Algorithmus} wichtig ist, die Mutationen an das Problem anzupassen. Meistens geschieht dies dadurch, da"s verschiedene Mutationen erdacht werden, die jeweils in einem Teilbereich des Zustandsraumes effizient sind. Beispielsweise eine Mutation die gro"se Schritte macht und eine andere die nur kleine Ver"anderungen vornimmt. Zur Generierung eines neuen Samples wird dann zuf"allig eine der Mutationen ausgew"ahlt und auf das letzte Sample angewandt.
 	
 	In \citep{Kelemen:2002p8514} wird hingegen eine elegante Variante des Metropolis--Algorithmus vorgeschlagen die im Wesentlichen mit nur einer Mutation auskommt und trotzdem "uber die gew"unschte Eigenschaft verf"ugt sich an die lokalen Gegebenheiten anpassen zu k"onnen. Dem Verfahren liegt dabei folgende Idee zugrunde: Wenn es m"oglich w"are den Zustandsraum $\Omega$ und die Wahrscheinlichkeitsdichte $f$ so zu transformieren, 	da"s $f$ gleichm"assiger verteilt ist, dann w"urde es ausreichen eine einzige Mutation auf diesem transformierten Zustandsraum operieren zu lassen. Dann w"urden Teilgebiete von $\Omega$ mit hohen Peaks in $f$ zu gr"o"seren Gebieten ``gedehnt'', und gr"o"sere Teilgebiete mit kleinen $f$--Werten ``gestaucht'' werden, und $f$ dadurch gleichm"assiger werden lassen. Eine Mutation, die auf dem transformierten Zustandsraum operiert w"urde dann automatisch dort kleinere Schritte machen, wo $f$ pl"otzlich gro"s wird und gr"o"sere Schritte dort, wo $f$ flach und klein ist.

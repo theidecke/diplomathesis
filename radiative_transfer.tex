@@ -1,4 +1,4 @@
-	\section{Das Strahlungstransportproblem}
+	\chapter{Das Strahlungstransportproblem}
 	\label{sec:radiative_transfer}
 	
 	Das Verhalten von Licht l"asst sich (nach heutigem wissenschaftlichen Stand) durch die {\em Quantenelektrodynamik} in allen Details vollst"andig beschreiben. Es beinhaltet solche Ph"anomene wie Dispersion, Brechung, Interferenz, Photon--Photon--Interaktion, etc. Diese Effekte sind h"aufig dann am bedeutendsten, wenn die Ausma"se der betrachteten Objekte von der Gr"o"senordnung der Wellenl"ange des Lichtes sind. Auf der anderen Seite beschreibt die {\em geometrische Optik} die rein makroskopische lineare Ausbreitung gro"ser Mengen von Photonen ohne obengenannte Wellen--Ph"anomene zu ber"ucksichtigen.
@@ -7,7 +7,7 @@
 	
 	Die folgende Darstellung und Herleitung orientiert sich an \citep{Arvo:1993p9035}
 	
-	\subsection{Das Strahlungstransportproblem als Teilchentransportproblem}
+	\section{Das Strahlungstransportproblem als Teilchentransportproblem}
 	Um Strahlungstransport als Teilchentransportproblem behandeln zu k"onnen m"ussen folgende Bedingungen erf"ullt sein
 	\begin{itemize}
 		\item{Die Teilchen m"ussen so klein und zahlreich sein, das ihre statistische Verteilung als kontinuierlich angesehen werden kann}
@@ -80,7 +80,7 @@
 	Die Bilanzgleichung hat die Gestalt einer Integro--Differentialgleichung in $\phi$.
 	Im folgenden Abschnitt stellen wir den Bezug zwischen unseren abstrakten Teilchentransportgr"o"sen und physikalischen Strahlungsgr"o"sen her.
 
-	\subsection{Ph"anomenologische Strahlungsgr"o"sen}\label{subsec:strahlungsgroessen}
+	\section{Ph"anomenologische Strahlungsgr"o"sen}\label{subsec:strahlungsgroessen}
 	Im vorigen Abschnitt haben wir das Strahlungstransportproblem bewu"st auf ein Teilchentransportproblem mit abstrakten Teilchen statt Photonen reduziert um einerseits eine klarere Herleitung zu erm"oglichen und um andererseits die Verwandtschaft zu anderen Transportproblemen (wie z.B. Neutronentransport) offensichtlich zu machen. Um nun den Anschlu"s zu radiometrischen Strahlungsgr"o"sen zu bekommen, ersetzen wir unsere abstrakten Teilchen wieder durch Photonen. Photonen haben u.a. zwei Eigenschaften die wir daher ber"ucksichtigen. Sie bewegen sich konstant mit Lichtgeschwindigkeit, d.h. wir k"onnen die vorher gebrauchte allgemeine Teilchengeschwindigkeit $v$ gleich $\text{c}$ setzten. Ausserdem besitzt jedes Photon eine Energie, die durch seine Frequenz $\nu$ mit 
 	$$E=h\nu \qquad[J]$$
 	bestimmt ist. Dabei bezeichnet $h$ das Planck'sche Wirkungsquantum.
@@ -123,7 +123,7 @@
 	gel"ost wird. Die L"osung zeigt, da"s die optische Tiefe zu einer exponentiellen Abschw"achung der Intensit"at f"uhrt.
 	
 	
-	\subsection{Die Messgleichung}
+	\section{Die Messgleichung}
 	Mit dem Strahlungsintensit"atsfeld, da"s aus der Gesamtheit aller spezifischen Intensit"aten $I_\nu$ besteht, meinen wir die Funktion
 	$$I:\mathbb{R}_{\geq 0}\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_{\geq 0}\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
 	die vom 6--dimensionalen Raum aller Photonenfrequenzen, Orte und Raumrichtungen auf die dort herrschende spezifische Intensit"at abbildet.
@@ -150,16 +150,16 @@
 	Was hier vielleicht als ein nur theoretisch interessantes Konstrukt ohne praktischen Nutzen erscheint, erweist sich sp"ater insbesondere in Verbindung mit Monte--Carlo--Sampling als ein gleichzeitig vielseitiges und effizientes Werkzeug.	
 	
 	
-	\subsection{"Ubersicht etablierter L"osungsverfahren}
+	\section{"Ubersicht etablierter L"osungsverfahren}
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
-	\section{Pfadintegralformulierung der Strahlungstransportgleichung}
+	\chapter{Pfadintegralformulierung der Strahlungstransportgleichung}
 	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer L"osung (genau genommen, Messungen der L"osung im Sinne von (\ref{eq:messgleichung})) andererseits her. Dies f"uhrt uns durch die verschiedenen, auf das Problem eingenommenen Blickwinkel, zu einem besseren Verst"andnis von Strahlungstransport und gibt uns dar"uber hinaus einen neuen Ansatzpunkt zur effizienten L"osung des Strahlungstransportproblems.
 	
 	Die Idee zu dieser Formulierung kommt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberfl"achen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt ausserdem die Herleitung der integralen Form der Strahlungstransportgleichung.
 	
 	
-	\subsection{Strahlungstransportgleichung in integraler Form}
+	\section{Strahlungstransportgleichung in integraler Form}
 	In differentieller Form nimmt die Strahlungstransportgleichung, wie wir in Abschnitt (\ref{subsec:strahlungsgroessen}) gesehen haben, folgende Gestalt an:
 		\begin{equation}
 			\omega \cdot \nabla I(\location{r},\omega)+\overbrace{\left(\kappa(\location{r})+\sigma(\location{r})\right)}^{=:\xi(\location{r})}I(\location{r},\omega)=\varepsilon(\location{r},\omega)+\sigma(\location{r}) \int_{\mathcal{S}^2} k(\location{r},\omega',\omega)I(\location{r},\omega') d\omega'.
@@ -216,7 +216,7 @@
 	\end{multline}
 
 
-	\subsection{Strahlungstransportgleichung in Operator--Form und formale L"osung des Strahlungstransportproblems}
+	\section{Strahlungstransportgleichung in Operator--Form}
 	Schauen wir uns die einzelnen Teile der Gleichung (\ref{eq:int.STGdarkbg}) genauer an.
 	Der innere Teil von (\ref{eq:int.STGdarkbg}) in eckigen Klammern summiert an einem festen Ort ($\location{r}-s'\,\omega$), mit der Streuphasenfunktion $k$ gewichtet, die einfallenden Intensit"aten auf, die in Richtung $\omega$ gestreut werden. Anschliessend skaliert der Volumenstreuquerschnitt die aufintegrierte Intensit"at entsprechend dem lokal vorhandenen Medium und gibt dabei dem Ausdruck die Einheit einer Emissivit"at.
 	Der restliche "aussere Teil der Gleichung addiert die eben gewonnene Emissivit"at durch Einstreuung zu der lokal durch Ausstrahlung erzeugten Emissivit"at an jedem Punkt auf einer Geraden hinter dem Punkt $\location{r}$ und summiert, die mit einem der optischen Tiefe entsprechenden Abschw"achungsfaktor gewichteten, in Richtung $\omega$ zeigenden, Emissivit"aten, entlang der Geraden zur Gesamtintensit"at am Ort $\location{r}$ in Richtung $\omega$ auf.
@@ -247,7 +247,7 @@
 	Damit ist das Strahlungstransportproblem formal gel"ost! Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist dann zul"assig wenn die Operatornorm des Operators $\mathbf{GK}$ kleiner als eins ist und damit sichergestellt ist, da"s die Neumann--Reihe konvergiert. F"ur alle praktisch relevanten Probleme ist dies der Fall \citep[siehe][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch l"asst sich das Gleichgewichts--Strahlungsintensit"atsfeld als Summe aus Intensit"atsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung mit einem Me"sinstrument entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei m"ussen Pfade jeder m"oglichen L"ange (sprich Anzahl an Streuereignissen) ber"ucksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ nach links ausgeklammert um den $\mathbf{KG}$--Operator herauszustellen.
 	
 	
-	\subsection{KG--Operator in Volumenform}
+	\section{KG--Operator in Volumenform}
 	Schauen wir uns den $\mathbf{KG}$--Operator genauer an. $\mathbf{KG}$ bildet ein Emissivit"atsfeld nach Fortpflanzung und Aufintegration zu einem Intensit"atsfeld und anschliessender Streuung auf ein neues Emissivit"atsfeld ab:
 	\begin{equation*}
 		\mathbf{KG} : \varepsilon(\location{r},\omega) \mapsto \varepsilon(\location{r},\omega)
@@ -278,7 +278,7 @@
 	schreiben k"onnen.
 
 
-	\subsection{Pfadintegrall"osung der Strahlungstransportgleichung}
+	\section{Pfadintegrall"osung der Strahlungstransportgleichung}
 	Wir setzen die Neumann--Reihen--L"osung (\ref{eq:op.STGkg}) in die monochromatische Me"sgleichung (\ref{eq:messgleichung_mono}) ein und erhalten
 	\begin{align}
 		M_\nu&=\int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
@@ -309,4 +309,4 @@
 	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
 
 
-	\subsection{Strahlungstransport als Integrationsproblem}
+	\section{Strahlungstransport als Integrationsproblem}
