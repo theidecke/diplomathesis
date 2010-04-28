@@ -1,4 +1,12 @@
-\documentclass[12pt,a4paper,DIVcalc,titlepage,twoside]{scrbook}
+\documentclass[
+	12pt,
+	a4paper,
+	DIVcalc,
+	titlepage,
+	twoside,
+	liststotoc,
+	bibtotocnumbered
+]{scrbook}
 
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[utf8]{inputenc}     %% dt. Umlaute mit utf-8, 
@@ -37,6 +45,8 @@
 }
 
 \begin{document}
+
+\frontmatter
 	\titlehead{Christian--Albrechts--Universit"at zu Kiel\\ Institut f"ur Theoretische Physik und Astrophysik}
 	\subject{Diplomarbeit}
 	\title{L"osung des Strahlungstransportproblems in Pfadintegralform mit effizienten Monte--Carlo--Verfahren}
@@ -46,14 +56,15 @@
 	\maketitle
 	% standard-titelblatt verf"ugbar?
 
-	\tableofcontents
-	%\vfill
-	%\pagebreak
-	
+	\tableofcontents	%%Inhaltsverzeichnis
+	%\listoffigures	%%Abbildungsverzeichnis
+	%\listoftables		%%Tabellenverzeichnis
+
 	\newcommand{\location}[1]{\mathbf{#1}}
 	\newcommand{\scatter}[1]{\overset{#1}{\leftrightsquigarrow}}
 	\newcommand{\normalized}[1]{\frac{#1}{||#1||}}
-	
+
+\mainmatter
 	\input{introduction}
 	\input{radiative_transfer}
 	\input{montecarlo_integration}
@@ -78,6 +89,8 @@
 	\chapter{Zusammenfassung und Ausblick}
 	TODO: Ausblick: Normierung, physikalisch relevante Streuphasenfunktionen, polychromatische Bilder/SEDs
 
+\backmatter
 	\bibliographystyle{chicago}
 	\bibliography{bibliography}
+
 \end{document}
