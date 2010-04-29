@@ -38,7 +38,9 @@
 	\end{equation}
 	ab. Im Falle unseres $d$--dimensionalen Einheitsw"urfels $\Omega=[0,1]^d$ k"onnen wir besipielsweise jede St"utzstelle aus $d$ gleichf"ormig auf dem Einheitsintervall $[0,1]$ verteilten Zufallszahlen $U_i$ durch einfache Tupelbildung
 	$$X_i:=(U_{d i},\dots,U_{d(i+1)-1})$$
-	gewinnen. Von der Erwartungstreue des Sch"atzers (\ref{eq:mc_integral}) f"ur unser Integral (\ref{eq:integration_problem}) k"onnen wir uns mit \citep[][2.4]{Veach:1997p9136}
+	gewinnen. Aber auch f"ur allgemeine Integrationsgebiete $\Omega$ kann das Verfahren genauso angewandt werden, solange ein passendes Integrationsma"s $\mu$ und ein Wahrscheinlichkeitsma"s $P$ existieren, so das $$P(D)=\text{Pr}(x\in D)$$ f"ur jede me"sbare Menge $D\subset\Omega$ gilt. Die entsprechende Wahrscheinlichkeitsdichte $p$ l"asst sich mit Hilfe der {\em Radon--Nikodym--Ableitung} $$p(x)=\frac{dP}{d\mu}(x)$$
+	einf"uhren, wobei $p$ dann einfach eine Funktion ist, f"ur die $$P(D)=\int_D p(x)d\mu(x)$$ gilt.
+	Von der Erwartungstreue des Sch"atzers (\ref{eq:mc_integral}) f"ur unser Integral (\ref{eq:integration_problem}) k"onnen wir uns mit \citep[][2.4]{Veach:1997p9136}
 	\begin{align*}
 		E[{\tilde I}_d^{\,\text{MC}}] &=E\left[\frac{1}{N}\sum_{i=0}^{N-1}\frac{f(X_i)}{p(X_i)}\right] \\
 			&= \frac{1}{N}\sum_{i=0}^{N-1}E\left[\frac{f(X_i)}{p(X_i)}\right] \\
