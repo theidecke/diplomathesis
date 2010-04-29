@@ -321,7 +321,10 @@
 	der Mengen von Pfaden verschiedener L"angen. Da"s Ma"s f"ur die Integration von beliebigen Teilmengen des Pfadraumes $D\subset\Omega$ ist nun durch
 	$$\mu(D)=\sum_{k=0}^\infty \mu_k(D\cap\Omega_k)$$
 	gegeben, d.h. das Ma"s f"ur $D$ ist einfach die Summe der Ma"se von Pfaden aus $D$ entsprechender L"ange. Benennen wir nun noch den pfadl"angen- und frequenzabh"angigen Integranden aus (\ref{eq:STGpathsolution})
-	$$f({\overline x}_\nu)=f_\nu(\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1})=\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\frac{e^{-\tau_{\nu,(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{\nu,(k,k+1)}}}{d_{(k,k+1)}^2} W_{\nu,(k,k+1)}$$
+	\begin{equation}
+		f({\overline x}_\nu)=f_\nu(\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1})=\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\frac{e^{-\tau_{\nu,(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{\nu,(k,k+1)}}}{d_{(k,k+1)}^2} W_{\nu,(k,k+1)}
+		\label{eq:mcf}
+	\end{equation}
 	als {\em Messbeitragsfunktion} $f$, dann k"onnen wir nun die polychromatische Messung (\ref{eq:messgleichung}) einfach als
 	\begin{equation}
 		M=\int_\Omega f({\overline x})d\mu({\overline x})
