@@ -123,7 +123,7 @@
 	gel"ost wird. Die L"osung zeigt, da"s die optische Tiefe zu einer exponentiellen Abschw"achung der Intensit"at f"uhrt.
 	
 	
-	\section{Die Messgleichung}
+	\section{Die Messgleichung}\label{sec:measurement_equation}
 	Mit dem Strahlungsintensit"atsfeld, da"s aus der Gesamtheit aller spezifischen Intensit"aten $I_\nu$ besteht, meinen wir die Funktion
 	$$I:\mathbb{R}_{\geq 0}\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_{\geq 0}\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
 	die vom 6--dimensionalen Raum aller Photonenfrequenzen, Orte und Raumrichtungen auf die dort herrschende spezifische Intensit"at abbildet.
@@ -153,7 +153,7 @@
 	\section{"Ubersicht etablierter L"osungsverfahren}
 	TODO: "Ubersicht benutzter L"osungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so sp"at?, etc...)
 		
-	\chapter{Pfadintegralformulierung der Strahlungstransportgleichung}
+	\chapter{Pfadintegralformulierung der Strahlungstransportgleichung}\label{chapter:path_radiative_transfer}
 	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer L"osung (genau genommen, Messungen der L"osung im Sinne von (\ref{eq:messgleichung})) andererseits her. Dies f"uhrt uns durch die verschiedenen, auf das Problem eingenommenen Blickwinkel, zu einem besseren Verst"andnis von Strahlungstransport und gibt uns dar"uber hinaus einen neuen Ansatzpunkt zur effizienten L"osung des Strahlungstransportproblems.
 	
 	Die Idee zu dieser Formulierung kommt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberfl"achen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt ausserdem die Herleitung der integralen Form der Strahlungstransportgleichung.
@@ -309,7 +309,7 @@
 	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
 
 
-	\section{Elimination der Neumann--Reihe}
+	\section{Elimination der Neumann--Reihe}\label{sec:neumann_elimination}
 	Unsere Darstellung der L"osung (\ref{eq:STGpathsolution}) des Strahlungstransportproblems besteht bisher aus einer unendlichen Summe von Integralen, was eine direkte Folge der Aufspaltung des L"osungsoperators aus (\ref{eq:op.STGinvert}) in seine Neumann--Reihe (\ref{eq:op.STGneumann}) ist. In dieser Form sind die Pfade in Klassen gleicher L"ange (d.h. Anzahl an Streupunkten) eingeteilt, was die mathematische Behandlung vereinfacht, da die F"alle verschiedener L"ange getrennt voneinander behandelt werden k"onnen. Gleichzeitig verleitet diese Darstellung jedoch dazu zu glauben, es w"are sinnvoll oder l"age in der Natur der Sache, die Pfade unterschiedlicher L"ange getrennt voneinander zu behandeln. Tats"achlich gibt es aber keinen physikalischen Grund daf"ur, vielmehr w"are es auch mathematisch hilfreich die L"osung als ein einziges Integral "uber den Raum aller Pfade darzustellen, da wir es dann formal mit nur noch einem Integrationsproblem zu tun h"atten und nicht mit unendlich vielen.
 	
 	Daher f"uhren wir nun \citet[][8.2]{Veach:1997p9136} folgend, die Menge aller Pfade sowie ein passendes Integrationsma"s ein, um unsere L"osung (\ref{eq:STGpathsolution}) als Einzelintegral darstellen zu k"onnen. Sei dazu $\Omega_{\nu,k}$ die Menge aller Pfade der Frequenz $\nu$ und der L"ange $k$, d.h. Pfade der Form
