@@ -1,4 +1,14 @@
 	\chapter{Monte--Carlo--Strahlungstransport}\label{sec:mc_radiativetransfer}
+	In diesem Abschnitt wollen wir die Theorie zum Strahlungstransport aus Abschnitt \ref{sec:radiative_transfer} und \ref{chapter:path_radiative_transfer} mit den Integrations- und Samplingverfahren aus den Abschnitten \ref{chapter:mc_integration} und \ref{chapter:mcmc} zusammenf"uhren, um zu zeigen wie konkrete Verfahren zur L"osung des Strahlungstransportproblems konstruiert werden k"onnen.
+	\section{Strahlungstransport als Integrationsproblem}
+	In Abschnitt \ref{sec:neumann_elimination} haben wir gesehen, da"s sich L"osungen des Strahlungstransportproblems in Form von Messungen des Strahlungsintensit"atsfeldes als Integration der Beitragsmessfunktion $f$ "uber den Raum aller m"oglichen Lichtpfade $\Omega$ darstellen lassen:
+	\begin{equation}
+		M=\int_\Omega f({\overline x})d\mu({\overline x}).
+		\label{eq:mcrad_measurement_integral}
+	\end{equation}
+	Wir haben dann in Abschnitt \ref{chapter:mc_integration} Monte--Carlo--Integration als Verfahren zur numerischen L"osung von allgemeinen Integrationsproblemen kennengelernt. Schliesslich haben wir mit den MCMC--Verfahren eine Methode behandelt, um Messsprobleme, bei denen wir besonders an der Verteilung der Werte "uber verschiedene Bereiche des Sensors interessiert sind, effizient l"osen zu k"onnen.
+	
+	Wir wollen nun diese vorgestellten Techniken speziell auf das in der L"osung des Strahlungstransportproblems auftretende Integral (\ref{eq:mcrad_measurement_integral}) anwenden. Da wir schon viel der dazu n"otigen Techniken in den vorangegangenen Abschnitten allgemein behandelt haben, fehlt f"ur ein komplettes Verfahren nur eine Methode, die Photonenpfade zu generieren und die entsprechende Wahrscheinlichkeitsdichte $p$, die jedem Pfad ${\overline x}\in\Omega$ eine differentielle Wahrscheinlichkeit zuweist von dem Verfahren erzeugt worden zu sein.
 	\section{Pfadgenerierung}
 	\subsection{Raycasting}
 	\subsection{Distanzsampler}
