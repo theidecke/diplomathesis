@@ -114,7 +114,7 @@
 		\STATE $i \leftarrow 0$
 		\REPEAT
 			\STATE $i \leftarrow i+1$
-			\STATE $\location{r}_i \leftarrow$ ziehe Ort durch Raycasting von $\location{r}_{i-1} aus$
+			\STATE $\location{r}_i \leftarrow$ ziehe Ort durch Raycasting von $\location{r}_{i-1}$ aus
 			\STATE $u \leftarrow$ ziehe Wert gleichf"ormig aus $[0,1]$
 		\UNTIL{$u>p_\text{grow}$}
 	  \RETURN $(\nu,\location{r}_\text{Emitter}\location{r}_i\location{r}_{i-1}\cdots\location{r}_1\location{r}_\text{Sensor})$
