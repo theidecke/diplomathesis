@@ -10,8 +10,7 @@
 	
 	Wir wollen nun diese vorgestellten Techniken speziell auf das in der L"osung des Strahlungstransportproblems auftretende Integral (\ref{eq:mcrad_measurement_integral}) anwenden. Da wir schon viel der dazu n"otigen Techniken in den vorangegangenen Abschnitten allgemein behandelt haben, fehlt nun f"ur ein komplettes Verfahren nur eine Methode, die Photonenpfade zu generieren und die entsprechende Wahrscheinlichkeitsdichte $p$, die jedem Pfad ${\overline x}\in\Omega$ eine differentielle Wahrscheinlichkeit zuweist von dem Verfahren erzeugt worden zu sein.
 	
-	\section{Pfadgenerierung}
-	\subsection{Definition der Pfadwahrscheinlichkeitsdichte}
+	\section{Definition der Pfadwahrscheinlichkeitsdichte}
 	In Abschnitt \ref{sec:neumann_elimination} hatten wir f"ur Pfade der L"ange $k$ das Integrationsma"s $$d\mu_k=d\nu d\location{r}_0\cdots d\location{r}_{k+1}$$ eingef"uhrt, das einfach das Produktma"s aus den Volumenma"sen $d\location{r}_i$ der beteiligten Pfadpunkte sowie dem Integrationsma"s $d\nu$ f"ur die Frequenz des Lichtes ist. Die dazugeh"orige Wahrscheinlichkeitsdichte ist durch die {\em Radon--Nikodym--Ableitung} mit
 	$$p_k(\nu,\location{r}_0\cdots \location{r}_{k+1})=\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\cdots\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1})$$
 	gegeben. Jeder der Faktoren stellt dabei eine Wahrscheinlichkeitsdichte dar ein Photon der Frequenz $\nu$ zu generieren bzw. den $i$-ten Punkt des Pfades am Ort $\location{r}_i$ vorzufinden. Jede Wahrscheinlichkeitsdichte ist f"ur sich genommen normiert, d.h. es gilt
@@ -27,8 +26,14 @@
 	
 	Jede Pfadgenerierungsmethode, die wir im Folgenden entwickeln, bedarf einer solchen Wahrscheinlichkeitsdichte, d.h. wir m"ussen in der Lage sein, die Wahrscheinlichkeitsdichte auf die Form (\ref{eq:path_probabilitydensity}) zur"uckzuf"uhren.
 	
+	\section{Pfadgenerierung}
+	Die Tatsache, da"s wir die Messbeitragsfunktion $f$ (\ref{eq:mcf}) auf ein problemunabh"angiges Integrationsma"s beziehen, und das Integral (\ref{eq:mcrad_measurement_integral}) gem"a"s (\ref{eq:mc_integral}) mit einer frei gew"ahlten Wahrscheinlichkeitsdichte $p$ absch"atzen, macht jede Pfadgenerierungsmethode zu einer Form von {\em Importance Sampling}, d.h. einer M"oglichkeit die Variation des Integranden klein zu halten, indem wir einen Pfad ${\overline x}$ m"oglichst mit einer Wahrscheinlichkeit proportional zu seinem Messbeitrag $f({\overline x})$ generieren.
+	
+	Da unser Integrand $f$ aus vielen Faktoren besteht, und es ausreicht wenn einer von ihnen verschwindet oder sehr klein wird, um den Beitrag des ganzen Pfades zum verschwinden zu bringen, sollten wir also versuchen m"oglichst viele der Faktoren in $f$ gro"s werden zu lassen und es vermeiden einen von ihnen null werden zu lassen.
+	
+	Daher schauen wir uns nun ein paar der M"oglichkeiten an Pfade zu generieren.
 	\subsection{Naive Pfadgenerierung}
-	An der Produktform von (\ref{eq:path_probabilitydensity}) sehen wir, da"s die Wahl der Anzahl an Streupunkten, der Photonenfrequenz und der Pfadpunkte unabh"angig voneinander getroffen werden k"onnen (wobei nat"urlich die Anzahl an Faktoren f"ur die Pfadpunkte von der Wahl der Pfadl"ange abh"angt). Daher best"ande der naheliegendste Ansatz Pfade zu generieren darin, f"ur jeden der Faktoren eine statische Wahrscheinlichkeitsverteilung festzulegen, aus der wir dann unabh"angig voneinander die einzelnen Pfadbestandteile ziehen. Die k"onnen wir dann anschliessend zu einem Pfad zusammensetzen. Der Pseudocode k"onnte beispielsweise so aussehen:
+	An der Produktform von (\ref{eq:path_probabilitydensity}) sehen wir, da"s die Wahl der Anzahl an Streupunkten, der Photonenfrequenz und der Pfadpunkte unabh"angig voneinander getroffen werden k"onnen (wobei nat"urlich die Anzahl an Faktoren f"ur die Pfadpunkte von der Wahl der Pfadl"ange abh"angt). Daher besteht der naheliegendste Ansatz Pfade zu generieren darin, f"ur jeden der Faktoren eine statische Wahrscheinlichkeitsverteilung festzulegen, aus der wir dann unabh"angig voneinander die einzelnen Pfadbestandteile ziehen, und anschliessend zu einem Pfad zusammensetzen k"onnen. Der Pseudocode k"onnte beispielsweise so aussehen:
 	\begin{algorithmic}
 		\STATE $\nu \leftarrow$ ziehe Wert gleichf"ormig aus $[\nu_\text{min},\nu_\text{max}]$
 		\STATE $k \leftarrow$ ziehe Wert aus Poissonverteilung mit Erwartungswert $2.5$
@@ -39,37 +44,87 @@
 	  \ENDFOR
 	  \RETURN $(\nu,\location{r}_0\location{r}_1\cdots\location{r}_{k+1})$
 	\end{algorithmic}
-	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingestzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert.
-	Dies liegt daran, da"s $f$ aus vielen Faktoren besteht, und es daher ausreicht wenn einer von ihnen verschwindet oder sehr klein wird, um den Beitrag des ganzen Pfades verschwinden zu lassen.
-
-	Wir sollten also versuchen Pfade so zu erzeugen, da"s m"oglichst viele der Faktoren in $f$ gro"s werden und die Chance gering ist, da"s einer von ihnen null wird.
+	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingestzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert. Daher ist die Methode ausser f"ur Testzwecke nicht empfehlenswert.
+	
 
 	\subsection{Raycasting}
-	Eine M"oglichkeit dazu, die zudem auch physikalisch motiviert ist, besteht darin die Punkte nicht unabh"angig voneinander, sondern stattdessen bei einem Ende des Pfades beginnend, rekursiv vom jeweils letzten generierten Punkt aus zu ziehen. Dies wird auch als {\em Raycasting} bezeichnet.
+	Eine M"oglichkeit dazu, die zudem auch physikalisch motiviert ist, besteht darin die Punkte nicht unabh"angig voneinander, sondern stattdessen bei einem Ende des Pfades beginnend, rekursiv vom jeweils letzten generierten Punkt aus nacheinander zu ziehen. Dies wird auch als {\em Raycasting} bezeichnet.
 	
-	Genauer bedeutet dies, da"s wir ausgehend vom letzten generierten Punkt $\location{r}_{i-1}$ aus, zuerst eine Richtung $\omega$ und dann eine Entfernung $s$ aus entsprechenden Wahrscheinlichkeitsdichten (PDF) ziehen, die angibt wie weit wir uns von $\location{r}_{i-1}$ in Richtung $\omega$ bewegen. Der n"achste Punkt hat dann die Koordinaten
+	Genauer bedeutet dies, da"s wir ausgehend vom letzten generierten Punkt $\location{r}_{i-1}$ zuerst eine Richtung $\omega$ und dann eine Entfernung $s$ ziehen, die angeben in welche Richtung und wie weit sich das Photon von $\location{r}_{i-1}$ bis zur n"achsten Interaktion am Ort
 	$$\location{r}_i=\location{r}_{i-1}+s\,\omega$$
+	wegbewegt.
 	Die "aquivalente Wahrscheinlichkeitsdichte bezogen auf's Volumenma"s von $\location{r}_i$ ist dann
 	\begin{align*}
 		\frac{\text{d}P}{\text{d}\location{r}_i}(\location{r}_i) &= \frac{\text{d}P}{s^2 \text{d}\omega\text{d}s}(\location{r}_i) \\
-		&= \underbrace{\frac{1}{\|\location{r}_i - \location{r}_{i-1}\|^2}}_{\text{geometrische}\atop\text{Verd"unnung}} \cdot\underbrace{\frac{\text{d}P}{\text{d}\omega}(\location{r}_i)}_{\text{Richtungs--PDF}} \cdot \underbrace{\frac{\text{d}P}{\text{d}s}(\location{r}_i)}_{\text{Entfernungs--PDF}}
+		&= \underbrace{\frac{1}{\|\location{r}_i - \location{r}_{i-1}\|^2}}_{\text{geometrische}\atop\text{Verd"unnung}} \cdot\underbrace{\frac{\text{d}P}{\text{d}\omega}\left(\normalized{\location{r}_i - \location{r}_{i-1}}\right)}_{\text{Richtungs--PDF}} \cdot \underbrace{\frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i-1}\|)}_{\text{Entfernungs--PDF}},
 	\end{align*}
-	Als Richtungs--PDF bietet sich dabei die Phasenfunktion des Materials an
-	\begin{equation}
-		\frac{\text{d}P}{\text{d}\omega}(\location{r}_i) = k(\location{r}_{i-2}\rightarrow\location{r}_{i-1} \rightarrow\location{r}_i).
-		\label{eq:direction_pdf}
-	\end{equation}
-	F"ur die Entfernungs--PDF ergibt sich bei gleichf"ormig zuf"allig gezogenem Anteil durch Extinktion verlorener Strahlung $\eta$
-	\begin{align}
-		\eta &= \underbrace{1-e^{-\int_0^s \xi(\location{r}+s\,\omega)\text{d}s}}_\text{CDF} \,,\quad \eta \in (0,1) \nonumber \\
-		\Rightarrow \frac{\text{d}P}{\text{d}s}(\location{r}_i) &= \dds \left(1-e^{-\int_0^s \xi(\location{r}+s\,\omega)\text{d}s}\right) \nonumber \\
-		&= \xi(\location{r}+s\,\omega) e^{-\int_0^s \xi(\location{r}+s\,\omega)\text{d}s}
-		\label{eq:distance_pdf}
-	\end{align}
+	wobei PDF f"ur Wahrscheinlichkeitsdichte (engl. {\em probability density function}) steht.
 	
 	Mit dieser Methode l"asst sich der Zufallspfad eines Photons in ``nat"urlicher Weise'' (d.h. mit gleicher Wahrscheinlichkeitsverteilung) nachvollziehen wenn wir bei einem zuf"allig aus der Lichtquelle gezogenen Punkt starten und von dort aus rekursiv Streupunkte und zum Schlu"s den Sensorpunkt ziehen. Wir haben aber z.B. auch die Freiheit die Pfadgenerierung bei einem zuf"allig gezogenen Sensorpunkt zu beginnen und uns ``r"uckw"arts'' zur Lichtquelle vorzuarbeiten.
-	\subsection{Distanzsampler}
-	TODO: uniform depth sampler, uniform attenuation sampler, enforced uniform attenuation sampler
 	
-	TODO: Pfadgenerierung, Sch"atzer
+	\subsubsection{Richtungssampler}
+	Als Richtungs--PDF bietet sich die Streuphasenfunktion des Materials an
+	\begin{equation*}
+		\frac{\text{d}P}{\text{d}\omega}(\location{r}_i) = k(\location{r}_{i-2}\rightarrow\location{r}_{i-1} \rightarrow\location{r}_i).
+		\label{eq:direction_pdf}
+	\end{equation*}
 	
+	M"oglich ist aber auch, bei komplizierter Streuphasenfunktion eine einfachere Streuphasenfunktion zu samplen. Als Beispiel w"are es denkbar, in einem Modell mit Mie--Streuphasenfunktion, zur Wahl der Streurichtung die Wahrscheinlichkeitsverteilung der Henyey--Greenstein--Phasenfunktion mit gleichem Anisotropie--Parameter $g=\langle \text{cos}(\theta)\rangle$ zu benutzen. Dies kann das Verfahren effizienter machen, da die Wahrscheinlichkeitsverteilung der Henyey--Greenstein--Phasenfunktion ein analytischer Ausdruck ist und somit Samples analytisch mit der Inversionsmethode erzeugt werden k"onnen.
+	
+	\subsubsection{Distanzsampler}
+	Bei der Pfadgenerierung k"onnen Distanzen zu drei Arten von Medien auftauchen. Die Distanz zum n"achsten Streupunkt, die Distanz bis zum n"achsten Emissionspunkt und die Distanz bis zum n"achsten Sensorpunkt. Dabei beschreiben jeweils Extinktions-/Streuquerschnitt $\xi$ bzw. $\sigma$, Emissivit"at $\varepsilon$ und Sensitivit"at $\zeta$ die ``Dichte'' des Mediums. Im Folgenden benutzen wir stellvertretend f"ur diese Dichten
+	$${\hat h}(s)=h(\location{r}_{i-1}+s\omega)\,,\quad h\in\{\xi,\sigma,\varepsilon,\zeta\}.$$
+	
+	Streuende und absorbierende Materialien schirmen Licht ab, d.h. die Wahrscheinlichkeit eines Photons ins Medium einzudringen nimmt exponentiell mit der zur"uckgelegten {\em optischen Tiefe} ab (vgl. (\ref{eq:exponentialdecay})). Emittierendes und sensitives Volumen beeinflu"st die Ausbreitung von Photonen hingegen nicht. Daher bietet sich f"ur diese beiden Medien eine gleichf"ormige Verteilung in Bezug auf die zur"uckgelegte Tiefe
+	$${\hat \tau}(s)=\int_{s'=0}^s {\hat h}(s')ds'$$
+	an. Mit
+	$$P_1(s)=\frac{{\hat \tau}(s)}{{\hat \tau}(\infty)}$$
+	definieren wir uns dann eine Verteilungsfunktion (CDF={\em cumulative distribution function}), die Werte im Intervall $[0,1]$ annehmen kann. Die entsprechende PDF erhalten wir dann durch Ableitung
+	$$\frac{dP_1}{ds}(s)=P_1'(s)=\frac{{\hat \tau}'(s)}{{\hat \tau}(\infty)}=\frac{{\hat h}(s)}{{\hat \tau}(\infty)}.$$
+	Um einen Wert aus dieser Verteilung zu ziehen, ziehen wir eine gleichf"ormig verteilte Zufallszahl $u$ aus $[0,1]$ und setzen dann
+	$$s=P_1^{-1}(u).$$
+	Die n"otige inverse CDF $P_1^{-1}$ k"onnen wir numerisch bestimmen.
+	
+	Im Fall eines photonenabsorbierenden oder -streuenden Mediums $h$ l"asst sich das nat"urlich auftretende Verhalten eines Photons mit der CDF
+	$$P_2(s)=1-\text{exp}(-{\hat \tau}(s))$$
+	beschreiben, was zu der PDF
+	$$\frac{dP_2}{ds}(s)=P_2'(s)={\hat \tau}'(s)\text{exp}(-{\hat \tau}(s))={\hat h}(s)\text{exp}(-{\hat \tau}(s))$$
+	f"uhrt. Bei der Inversion
+	$$s=P_1^{-1}(u)={\hat \tau}^{-1}\left(-\text{ln}(1-u)\right)$$
+	kann es allerdings passieren, da"s eine optische Tiefe durch $u$ bestimmt wird, die gr"o"ser ist als die gesamte optische Tiefe entlang des Strahls. In der Natur oder bei klassischen Monte--Carlo--Methoden bedeutet dies, da"s das Photon ``entwischt'' und f"ur die Simulation verloren ist. In unserem Modell sind aber nur vollst"andige Pfade erlaubt, die letztendlich eine Lichtquelle "uber eventuell vorhandene Streupunkte mit einem Sensor verbinden. Tritt bei uns der Fall ein, da"s das Photon den Simulationsraum verl"asst, verwerfen wir daher den bis dahin generierten Pfad komplett und beginnnen von Neuem.
+	
+	Die Wahrscheinlichkeit f"ur ein Photon aus dem Simulationsgebiet zu entweichen wird umso gr"o"ser, je geringer die maximalen optischen Tiefen sind. Da wir aber nicht an physikalisch korrekte Wahrscheinlichkeitsdichten gebunden sind, k"onnen wir wie bei $P_1$ die CDF mit der maximal auftretenden optischen Tiefe normieren und erhalten dann
+	$$P_3(s)=\frac{1-\text{exp}(-{\hat \tau}(s))}{1-\text{exp}(-{\hat \tau}(\infty))}$$
+	sowie die dazugeh"orige PDF
+	$$\frac{dP_3}{ds}(s)=P_3'(s)=\frac{{\hat \tau}'(s)\text{exp}(-{\hat \tau}(s))}{1-\text{exp}(-{\hat \tau}(\infty))}=\frac{{\hat h}(s)\text{exp}(-{\hat \tau}(s))}{1-\text{exp}(-{\hat \tau}(\infty))}.$$
+	Die Inversionsmethode liefert nun zu jeder Zufallszahl $u\in[0,1]$ eine Distanz
+	$$s=P_3^{-1}(u)={\hat \tau}^{-1}\left(-\text{ln}(1-a u)\right)\,,\quad a=1-\text{exp}(-{\hat \tau}(\infty)),$$
+	die auf jedenfall innerhalb des Mediums liegt. Das heisst, da"s eine Streuung erzwungen werden kann, was die Effizienz bei sehr geringen optischen Tiefen um ein Vielfaches steigert.
+	
+	\subsection{Sensor--basiertes Raycasting}
+	Mit dem im letzten Abschnitt vorgestellten Raycasting haben wir eine M"oglichkeit, ausgehend von einem Punkt einen anderen Punkt zu samplen und gegen"uber unabh"angigem Ziehen der Punkte die Wahrscheinlichkeit zu vergr"o"sern, da"s der Me"sbeitrag $f$ durch den neu hinzugekommenen Punkt nicht auf null herabgesetzt wird.
+	
+	Nun wollen wir mit unabh"angigem Ziehen eines Punktes aus einem Volumen und Raycasting als Bausteine ein praktisch brauchbares Verfahren zur Pfadgenerierung konstruieren. Dabei ziehen wir zuerst einen Emissionspunkt aus dem Volumen der Lichtquelle und einen Sensorpunkt aus dem Sensorvolumen. Anschliessend erzeugen wir mit der Wahrscheinlichkeit $p_\text{grow}$ durch Raycasting vom Sensor ausgehend einen neuen Streupunkt oder brechen mit der Wahrscheinlichkeit $1-p_\text{grow}$ das Erzeugen neuer Streupunkte ab und verbinden anschliessend die bis dahin erzeugten Punkte zu einem vollst"andigen Pfad. In Pseudocode:
+	
+	\begin{algorithmic}
+		\STATE $\nu \leftarrow$ ziehe Wert gleichf"ormig aus $[\nu_\text{min},\nu_\text{max}]$
+		\STATE $\location{r}_\text{Emitter} \leftarrow$ ziehe Ort gleichf"ormig aus der Lichtquelle
+		\STATE $\location{r}_\text{Sensor} \leftarrow$ ziehe Ort gleichf"ormig aus dem Sensor
+		\STATE $\location{r}_0 \leftarrow \location{r}_\text{Sensor}$
+		\STATE $i \leftarrow 0$
+		\REPEAT
+			\STATE $i \leftarrow i+1$
+			\STATE $\location{r}_i \leftarrow$ ziehe Ort durch Raycasting von $\location{r}_{i-1} aus$
+			\STATE $u \leftarrow$ ziehe Wert gleichf"ormig aus $[0,1]$
+		\UNTIL{$u>p_\text{grow}$}
+	  \RETURN $(\nu,\location{r}_\text{Emitter}\location{r}_i\location{r}_{i-1}\cdots\location{r}_1\location{r}_\text{Sensor})$
+	\end{algorithmic}
+	
+	Die zugeh"orige Wahrscheinlichkeitsdichte
+	\begin{multline*}
+		p(\nu,\location{r}_0\cdots\location{r}_{k+1})=p_\text{grow}^k(1-p_\text{grow})\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1}) \cdot \\
+	\cdot \prod_{i=1}^k \frac{1}{\|\location{r}_i - \location{r}_{i+1}\|^2} \frac{\text{d}P}{\text{d}\omega}(\location{r}_i) \frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i+1}\|)
+	\end{multline*}
+	ist das Produkt aus der Wahrscheinlichkeitsdichte f"ur die Photonenfrequenz, aus den beiden Wahrscheinlichkeitsdichten f"ur die aus dem Volumen gezogenen Emissions- und Sensorpunkte, den Ray\-casting\-wahr\-schein\-lich\-keits\-dich\-ten f"ur die Streupunkte sowie aller Wahrscheinlichkeiten f"ur bzw. gegen die Entscheidung einen neuen Streupunkt zu erzeugen. Diese diskreten Wahrscheinlichkeiten entsprechen zusammengenommen einer geometrischen Wahrscheinlichkeitsverteilung.
+	
+	% P_L(k)\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\cdots\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1})

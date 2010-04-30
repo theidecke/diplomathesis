@@ -81,7 +81,7 @@
 	Im folgenden Abschnitt stellen wir den Bezug zwischen unseren abstrakten Teilchentransportgr"o"sen und physikalischen Strahlungsgr"o"sen her.
 
 	\section{Ph"anomenologische Strahlungsgr"o"sen}\label{subsec:strahlungsgroessen}
-	Im vorigen Abschnitt haben wir das Strahlungstransportproblem bewu"st auf ein Teilchentransportproblem mit abstrakten Teilchen statt Photonen reduziert um einerseits eine klarere Herleitung zu erm"oglichen und um andererseits die Verwandtschaft zu anderen Transportproblemen (wie z.B. Neutronentransport) offensichtlich zu machen. Um nun den Anschlu"s zu radiometrischen Strahlungsgr"o"sen zu bekommen, ersetzen wir unsere abstrakten Teilchen wieder durch Photonen. Photonen haben u.a. zwei Eigenschaften die wir daher ber"ucksichtigen. Sie bewegen sich konstant mit Lichtgeschwindigkeit, d.h. wir k"onnen die vorher gebrauchte allgemeine Teilchengeschwindigkeit $v$ gleich $\text{c}$ setzten. Ausserdem besitzt jedes Photon eine Energie, die durch seine Frequenz $\nu$ mit 
+	Im vorigen Abschnitt haben wir das Strahlungstransportproblem bewu"st auf ein Teilchentransportproblem mit abstrakten Teilchen statt Photonen reduziert um einerseits eine klarere Herleitung zu erm"oglichen und um andererseits die Verwandtschaft zu anderen Transportproblemen (wie z.B. Neutronentransport) offensichtlich zu machen. Um nun den Anschlu"s zu radiometrischen Strahlungsgr"o"sen zu bekommen, ersetzen wir unsere abstrakten Teilchen wieder durch Photonen. Photonen haben zwei Eigenschaften die wir ber"ucksichtigen m"ussen. Sie bewegen sich konstant mit Lichtgeschwindigkeit, d.h. wir k"onnen die vorher gebrauchte allgemeine Teilchengeschwindigkeit $v$ gleich $\text{c}$ setzten. Ausserdem besitzt jedes Photon eine Energie, die durch seine Frequenz $\nu$ mit 
 	$$E=h\nu \qquad[J]$$
 	bestimmt ist. Dabei bezeichnet $h$ das Planck'sche Wirkungsquantum.
 	Jeder Frequenz $\nu$ k"onnen wir ein monochromatisches Transportproblem zuordnen, dessen L"osung in Form eines Phasenraumflusses $\phi_\nu$ die Photonenfrequenz als Index tr"agt.
@@ -104,7 +104,7 @@
 	\end{equation}
 	die {\em Strahlungstransportgleichung in differentieller Form}. Sie stellt eine Integro--Differentialgleichung f"ur $I_\nu$ auf unserem 5--dimensionalen Phasenraum $\mathbb{R}^3 \times \mathcal{S}^2$ dar und kann f"ur jede Frequenz $\nu$ getrennt gel"ost werden. Sie gibt f"ur jede Kombination aus Ort $\location{r}$ und Photonen--Ausbreitungsrichtung $\omega$ das lokal zu erf"ullende Gleichgewicht aus Verlusten (linke Seite) und Zuw"achsen (rechte Seite) an.
 	
-	Wir fassen die Verluste durch Absorption und Streuung mit dem {\em Vo\-lu\-men\-ex\-tink\-ti\-ons\-quer\-schnitt}
+	Wir fassen die Verluste aufgrund von Absorption und Streuung durch den {\em Vo\-lu\-men\-ex\-tink\-ti\-ons\-quer\-schnitt}
 	$$\xi_\nu(\location{r}):=\kappa_\nu(\location{r})+\sigma_\nu(\location{r}) \qquad\left[\frac{1}{m}\right]$$
 	zusammen, wodurch wir (\ref{eq:stg_diff}) auch als
 	\begin{equation}\label{eq:stg_diff2}
@@ -119,22 +119,25 @@
 	die ein Ma"s f"ur die Undurchsichtigkeit des Mediums bei der Frequenz $\nu$ zwischen zwei Orten $\location{r}_1$ und $\location{r}_2$ ist. Nehmen wir uns Gleichung (\ref{eq:stg_diff2}), betrachten nur die Verluste (indem wir die rechte Seite zu Null setzen) und w"ahlen eine beliebige Richtung $\omega$, gelangen wir zur gew"ohnlichen Differentialgleichung
 	$$I_\nu'(s)+\xi_\nu(s)I_\nu(s)=0$$
 	die durch
-	$$I_\nu(s)=I_\nu(0)\:\text{exp}\left(-\int_{s'=0}^s \xi_\nu(s')\right)=I_\nu(0)\:\text{exp}\left(-\tau_\nu(0,s)\right)$$
+	\begin{equation}
+		I_\nu(s)=I_\nu(0)\:\text{exp}\left(-\int_{s'=0}^s \xi_\nu(s')\right)=I_\nu(0)\:\text{exp}\left(-\tau_\nu(0,s)\right)
+		\label{eq:exponentialdecay}
+	\end{equation}
 	gel"ost wird. Die L"osung zeigt, da"s die optische Tiefe zu einer exponentiellen Abschw"achung der Intensit"at f"uhrt.
 	
 	
 	\section{Die Messgleichung}\label{sec:measurement_equation}
 	Mit dem Strahlungsintensit"atsfeld, da"s aus der Gesamtheit aller spezifischen Intensit"aten $I_\nu$ besteht, meinen wir die Funktion
-	$$I:\mathbb{R}_{\geq 0}\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_{\geq 0}\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
+	$$I:\mathbb{R}_+\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_{\geq 0}\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
 	die vom 6--dimensionalen Raum aller Photonenfrequenzen, Orte und Raumrichtungen auf die dort herrschende spezifische Intensit"at abbildet.
 	
 	Funktionen dieser Art bilden einen Skalarproduktraum. Das Null--Element ist die konstant auf Null abbildende Funktion. Zwei Funktionen lassen sich punktweise addieren und ergeben so eine neue Funktion die auch nach $\mathbb{R}_{\geq 0}$ abbildet. Das Skalarprodukt zwischen zwei Funktionen $f$ und $g$ ist schlie"slich mit
-	$$\langle f,g\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} f(\nu,\location{r},\omega)g(\nu,\location{r},\omega)\,d\omega\,d\location{r}\,d\nu$$
+	$$\langle f,g\rangle=\int_{\mathbb{R}_+} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} f(\nu,\location{r},\omega)g(\nu,\location{r},\omega)\,d\omega\,d\location{r}\,d\nu$$
 	gegeben.
 	
 	Mit diesem funktionalanalytischem Handwerkszeug definieren wir eine Messung als das Skalarprodukt zwischen unserem Strahlungsintensit"atsfeld $I$ und einer {\em Sensitivit"atsfunktion} $W$, welche die St"arke der Gewichtung angibt, mit der die spezifische Intensit"at der Frequenz $\nu$ am Ort $\location{r}$ in Richtung $\omega$ in den Me"swert eingeht. Die entsprechende Formel
 	\begin{equation}\label{eq:messgleichung}
-		M^{(i)}:=\langle W^{(i)},I\rangle=\int_{\mathbb{R}_{\geq 0}} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W^{(i)}(\nu,\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}\,d\nu
+		M^{(i)}:=\langle W^{(i)},I\rangle=\int_{\mathbb{R}_+} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} W^{(i)}(\nu,\location{r},\omega)I_\nu(\location{r},\omega)\,d\omega\,d\location{r}\,d\nu
 	\end{equation}
 	nennen wir {\em Me"sgleichung} (f"ur den $i$--ten Sensor). F"ur monochromatische Messungen f"uhren wir zus"atzlich noch 
 	\begin{equation}\label{eq:messgleichung_mono}
@@ -142,7 +145,7 @@
 	\end{equation}
 	ein, womit wir (\ref{eq:messgleichung}) auch als
 	\begin{equation}\label{eq:messgleichung_frommonos}
-		M^{(i)}=\int_{\mathbb{R}_{\geq 0}} M_\nu^{(i)}\,d\nu
+		M^{(i)}=\int_{\mathbb{R}_+} M_\nu^{(i)}\,d\nu
 	\end{equation}
 	schreiben k"onnen
 	Die Tatsache, da"s wir die Sensitivit"atsfunktion nicht n"aher spezifizieren, erlaubt uns die gr"o"stm"ogliche Freiheit beim kreieren virtueller Sensoren. Beispielsweise k"onnte $W$ nur f"ur einen kleines Volumen und einen kleinen Raumwinkel aber bei allen Frequenzen nichtverschwindend sein, und so einen virtuellen Sensor zur Messung der Gesamt--Intensit"at an einem bestimmten Ort in eine bestimmte Richtung repr"asentieren. Ebenso kann durch gleichstarke Gewichtung aller Raumrichtungen die mittlere Intensit"at gemessen werden.
