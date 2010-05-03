@@ -44,7 +44,7 @@
 	  \ENDFOR
 	  \RETURN $(\nu,\location{r}_0\location{r}_1\cdots\location{r}_{k+1})$
 	\end{algorithmic}
-	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingestzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert. Daher ist die Methode ausser f"ur Testzwecke nicht empfehlenswert.
+	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingesetzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert. Daher ist die Methode ausser f"ur Testzwecke nicht empfehlenswert.
 	
 
 	\subsection{Raycasting}
@@ -63,9 +63,9 @@
 	Mit dieser Methode l"asst sich der Zufallspfad eines Photons in ``nat"urlicher Weise'' (d.h. mit gleicher Wahrscheinlichkeitsverteilung) nachvollziehen wenn wir bei einem zuf"allig aus der Lichtquelle gezogenen Punkt starten und von dort aus rekursiv Streupunkte und zum Schlu"s den Sensorpunkt ziehen. Wir haben aber z.B. auch die Freiheit die Pfadgenerierung bei einem zuf"allig gezogenen Sensorpunkt zu beginnen und uns ``r"uckw"arts'' zur Lichtquelle vorzuarbeiten.
 	
 	\subsubsection{Richtungssampler}
-	Als Richtungs--PDF bietet sich die Streuphasenfunktion des Materials an
+	Als Richtungs--PDF bietet sich die Streuphasenfunktion des Materials an:
 	\begin{equation*}
-		\frac{\text{d}P}{\text{d}\omega}(\location{r}_i) = k(\location{r}_{i-2}\rightarrow\location{r}_{i-1} \rightarrow\location{r}_i).
+		\frac{\text{d}P}{\text{d}\omega}\left(\normalized{\location{r}_i - \location{r}_{i-1}}\right) = k\left(\location{r}_{i-1},\normalized{\location{r}_{i-1} - \location{r}_{i-2}},\normalized{\location{r}_i - \location{r}_{i-1}}\right).
 		\label{eq:direction_pdf}
 	\end{equation*}
 	
@@ -79,7 +79,7 @@
 	$${\hat \tau}(s)=\int_{s'=0}^s {\hat h}(s')ds'$$
 	an. Mit
 	$$P_1(s)=\frac{{\hat \tau}(s)}{{\hat \tau}(\infty)}$$
-	definieren wir uns dann eine Verteilungsfunktion (CDF={\em cumulative distribution function}), die Werte im Intervall $[0,1]$ annehmen kann. Die entsprechende PDF erhalten wir dann durch Ableitung
+	definieren wir uns eine Verteilungsfunktion (CDF={\em cumulative distribution function}), die Werte im Intervall $[0,1]$ annehmen kann. Die entsprechende PDF erhalten wir dann durch Ableitung
 	$$\frac{dP_1}{ds}(s)=P_1'(s)=\frac{{\hat \tau}'(s)}{{\hat \tau}(\infty)}=\frac{{\hat h}(s)}{{\hat \tau}(\infty)}.$$
 	Um einen Wert aus dieser Verteilung zu ziehen, ziehen wir eine gleichf"ormig verteilte Zufallszahl $u$ aus $[0,1]$ und setzen dann
 	$$s=P_1^{-1}(u).$$
@@ -123,7 +123,7 @@
 	Die zugeh"orige Wahrscheinlichkeitsdichte
 	\begin{multline*}
 		p(\nu,\location{r}_0\cdots\location{r}_{k+1})=p_\text{grow}^k(1-p_\text{grow})\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1}) \cdot \\
-	\cdot \prod_{i=1}^k \frac{1}{\|\location{r}_i - \location{r}_{i+1}\|^2} \frac{\text{d}P}{\text{d}\omega}(\location{r}_i) \frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i+1}\|)
+	\cdot \prod_{i=1}^k \frac{1}{\|\location{r}_i - \location{r}_{i+1}\|^2} \frac{\text{d}P}{\text{d}\omega}\left(\normalized{\location{r}_i - \location{r}_{i+1}}\right) \frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i+1}\|)
 	\end{multline*}
 	ist das Produkt aus der Wahrscheinlichkeitsdichte f"ur die Photonenfrequenz, aus den beiden Wahrscheinlichkeitsdichten f"ur die aus dem Volumen gezogenen Emissions- und Sensorpunkte, den Ray\-casting\-wahr\-schein\-lich\-keits\-dich\-ten f"ur die Streupunkte sowie aller Wahrscheinlichkeiten f"ur bzw. gegen die Entscheidung einen neuen Streupunkt zu erzeugen. Diese diskreten Wahrscheinlichkeiten entsprechen zusammengenommen einer geometrischen Wahrscheinlichkeitsverteilung.
 	

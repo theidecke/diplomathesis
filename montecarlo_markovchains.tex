@@ -99,7 +99,7 @@
 	$$\left|\frac{dS(u)}{du}\right|=\frac{1}{p_S(u)}$$
 	die Jacobi--Determinante der Abbildung $S$ ist. Bildlich gesprochen dr"uckt die Jacobi--Determinante die lokale Dehnung bzw. Stauchung einer Transformation zwischen zwei R"aumen aus. Wenn $u$ also eine gleichm"assig verteilte Zufallsvariable darstellt, ist $p_S(u)$ die Wahrscheinlichkeitsdichte von $x=S(u)$. Da $S$ die Zufallszahlen aus dem prim"aren Sample--Raum vermehrt auf Punkte im Zustandsraum $\Omega$ mit hohem $f$ abbildet variiert unser neuer Integrand $f(S(u))/p_S(u)$ nicht mehr so stark, ist also flacher geworden. Unsere Mutation die nun im prim"aren Sample--Raum mit konstanter durchschnittlicher Schrittweite agiert, passt sich dadurch automatisch an die lokalen Gegebenheiten an, d.h. sie macht kleine Schritte in $\Omega$ wenn $f$ gro"s ist und gr"o"sere Schritte wenn $f$ klein ist. Die Effizienz des Verfahrens k"onnen wir nun also dadurch verbessern, da"s wir das Importance Sampling besser auf das Problem abstimmen. Der Metropolis--Algorithmus mu"s davon nichts wissen, was auch die Modularit"at des Computerprogramms und somit seine Wiederverwendbarkeit erh"oht.
 
-	Zum Vorschlagen neuer Samples benutzen wir zwei Mutationen. Zum einen k"onnen {\em frische} Samples vorgeschlagen werden, was durch w"ahlen eines neuen Satzes aus gleichf"ormig verteilten Zufallszahlen aus $\mathcal{U}$ entspricht. Dies stellt sicher, da"s jeder Punkt in $\mathcal{U}$ bzw. $\Omega$ erreicht werden kann und stellt so die Ergodizit"at des Verfahrens sicher und macht es robuster. Bei sehr schwierigen Sampling--Problemen verh"alt sich das Verfahren dann schlimmstenfalls wie ein klassischer Monte--Carlo--Sampler mit Importance Sampling, bei dem jedes Sample unabh"angig gezogen wird.
+	Zum Vorschlagen neuer Samples benutzen wir zwei Mutationen. Zum einen k"onnen {\em frische} Samples vorgeschlagen werden, was dem W"ahlen eines neuen Satzes aus gleichf"ormig verteilten Zufallszahlen aus $\mathcal{U}$ entspricht. Dies stellt sicher, da"s jeder Punkt in $\mathcal{U}$ bzw. $\Omega$ erreicht werden kann und stellt so die Ergodizit"at des Verfahrens sicher und macht es robuster. Bei sehr schwierigen Sampling--Problemen verh"alt sich das Verfahren dann schlimmstenfalls wie ein klassischer Monte--Carlo--Sampler mit Importance Sampling, bei dem jedes Sample unabh"angig gezogen wird.
 	Die andere Mutation addiert zu den vorhandenen Koordinaten des aktuellen Samples aus $\mathcal{U}$ jeweils eine kleine St"orung, soda"s jede Koordinate sich "andert aber mit gro"ser Wahrscheinlichkeit in der N"ahe der alten Koordinate landet. Die St"orung ist dabei symmetrisch um Null, d.h. es ist gleichwahrscheinlich einen Versatz $\Delta u$ zu ziehen, wie $-\Delta u$. Die Koordinaten werden dabei als periodisch angesehen, d.h. bei "Uberschreiten des rechten Randes von $[0,1]$ wird der ganzzahlige Teil abgeschnitten um wieder im Einheitsintervall zu landen. Dies birgt einen Effizienz--Vorteil, da die Symmetrie der St"orung bedeutet, da"s f"ur die "Ubergangswahrscheinlichkeiten
 	\begin{equation}
 	  T(u'|u)=T(u|u')
@@ -114,10 +114,9 @@
 		\STATE $x_1 \leftarrow S(u)$
 		\FOR{$i=1$ to $N$}
 			\STATE $r\leftarrow$ Zufallszahl aus $[0,1]$
-			\COMMENT{w"ahle Mutation}
-			\IF{$r < p_\text{fresh}$}
+			\IF[Mutation schl"agt frisches Sample vor]{$r < p_\text{fresh}$}
 						\STATE $T \leftarrow T_\text{fresh}$
-			\ELSE	\STATE $T \leftarrow T_\text{perturb}$
+			\ELSE[Mutation schl"agt leicht abgewandeltes Sample vor]	\STATE $T \leftarrow T_\text{perturb}$
 			\ENDIF
 			\STATE $u'\leftarrow$ ziehe Wert gem"a"s $T(u'|u)$
 			\STATE $x' \leftarrow S(u')$
