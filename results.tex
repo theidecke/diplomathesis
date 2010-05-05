@@ -15,7 +15,7 @@
 	\end{figure}
 
 	
-	\subsection{analytische L"osung}
+	\subsection{analytische L"osung}\label{subsec:homsphere_analytic_solution}
 	\subsubsection{Green'sche Funktion f"ur den Photonentransport zwischen Kugelschalen}
 	Um die korrekte radiale Intensit"atsverteilung zu berechnen, bestimmen wir zun"achst in Form der Green'schen Funktion $g$, wie sich die Photonen radial nach einem Streuvorgang ausgebreitet haben.
 	Genauer gibt $g$ an, wie gro"s der Anteil der Photonen, die auf einer Kugelschale mit Radius $r_0$ starten, beim Radius $r_1$ w"ahrend des n"achsten Streuvorganges ist (siehe Abb. \ref{fig:radial_greens_function_pdfcdf}):
@@ -44,18 +44,18 @@
 		\label{eq:testprob_intensity_calculation}
 	\end{equation}
 	
-	\begin{figure}
-		\centering
-		\includegraphics[width=1.0\textwidth]{analytical_tau_comparison.eps}
-		\caption{radiales Intensit"atsprofil f"ur verschiedene Kugelradien und damit verschiedene optische Tiefen. $\lambda=1/\sigma$ bezeichnet die freie optische Wegl"ange.}
-		\label{fig:analytical_tau_comparison}
-	\end{figure}
+	%\begin{figure}
+	%	\centering
+	%	\includegraphics[width=1.0\textwidth]{analytical_tau_comparison.eps}
+	%	\caption{radiales Intensit"atsprofil f"ur verschiedene Kugelradien und damit verschiedene optische Tiefen. $\lambda=1/\sigma$ bezeichnet die freie optische Wegl"ange.}
+	%	\label{fig:analytical_tau_comparison}
+	%\end{figure}
 	
-	Das Ergebnis ist f"ur vier Kugelradien beispielhaft in Abb. \ref{fig:analytical_tau_comparison} dargestellt.
+	%Das Ergebnis ist f"ur vier Kugelradien beispielhaft in Abb. \ref{fig:analytical_tau_comparison} dargestellt.
 	
 	\pagebreak
 	\subsection{schnelle Monte--Carlo--L"osung}
-	Eine andere Methode schnell die radiale Intensit"atsverteilung zu bestimmen ist durch folgendes Monte--Carlo--Schema gegeben:
+	Eine andere Methode, schnell die radiale Intensit"atsverteilung zu bestimmen, ist durch folgendes Monte--Carlo--Schema gegeben:
 	\begin{algorithmic}
 		\STATE $M\leftarrow$ Anzahl Ringe
 		\STATE $N\leftarrow$ Anzahl Photonen
@@ -91,6 +91,24 @@
 	\subsection{Resultate}
 	TODO: warum tau=0.01,1,10? 
 	TODO: Vergleich mit analytischer L"osung und MC3D (Ergebnis+Geschwindigkeit)
+	
+	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir ausserdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
+	
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\textwidth]{mc3dalphasplot.eps}
+			\caption{Bei gleicher Photonenzahl aber sinkendem Kamera--"Offnungswinkel $\alpha$ steigt der statistische Fehler aufgrund der geringeren Zahl beachteter Photnen.}
+			\label{fig:alphacomparison}
+		\end{figure}
+	
+	Die drei gew"ahlten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken dabei den optisch d"unnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \texttt{MC3D} und \texttt{PIRaTE} gewonnene radiale Intensit"atsprofile abgebildet.
+	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen L"osung "uberein. Dabei ist zu bedenken, da"s bei kleineren Radien "uber weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort naturgem"a"s gr"o"ser ausf"allt.
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\textwidth]{methodcomparisongraphics.eps}
+			\caption{Vergleich zwischen der analytischen L"osung, \texttt{MC3D} und \texttt{PIRaTE} bei verschiedenen optischen Tiefen. \texttt{MC3D} hat f"ur alle drei F"alle $3.6\cdot10^8$ Photonen, \texttt{PIRaTE} jeweils $4.88\cdot10^7,4.88\cdot10^7,2.088\cdot10^8$ Photonenpfade generiert.}
+			\label{fig:methodcomparisongraphics}
+		\end{figure}
 	\section{Einfaches Scheibenmodell}
 	\subsection{Resultate}
 	TODO: Vergleich mit MC3D (Ergebnis und Geschwindigkeit).
