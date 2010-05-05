@@ -89,8 +89,7 @@
 	
 	
 	\subsection{Resultate}
-	TODO: warum tau=0.01,1,10? 
-	TODO: Vergleich mit analytischer L"osung und MC3D (Ergebnis+Geschwindigkeit)
+	TODO: Geschwindigkeits--Vergleich mit MC3D, Zentral--Intensit"at, beispielhafte Streubilder.
 	
 	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir ausserdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
 	
@@ -110,8 +109,9 @@
 			\label{fig:methodcomparisongraphics}
 		\end{figure}
 	\section{Einfaches Scheibenmodell}
+	TODO: Formel und KonturPlot f"ur Dichteverteilung.
 	\subsection{Resultate}
-	TODO: Vergleich mit MC3D (Ergebnis und Geschwindigkeit).
+	TODO: Konvergenz--Geschwindigkeits--Vergleich mit MC3D.
 	Stichpunkte:tau=97.6958 in der Mittelebene. 1m55s f"ur $10^6$ Photonen mit MC3D. 720M Photonen in 72Ebenen $\rightarrow$ Jede Ebene entspricht 10M Photonen
 	\section{Einordnung der Resultate}
-	TODO: Gesamtvergleich zwischen MC3D und PIRaTE
+	TODO: Gesamtvergleich zwischen MC3D und PIRaTE: PIRaTE schneller, MC3D nat"urlicheres Rauschen, PIRaTE bedarf weiterer Kalibration f"ur ZentralSternIntensit"at
