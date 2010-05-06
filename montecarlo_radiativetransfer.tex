@@ -29,11 +29,11 @@
 	\section{Pfadgenerierung}
 	Die Tatsache, da"s wir die Messbeitragsfunktion $f$ (\ref{eq:mcf}) auf ein problemunabh"angiges Integrationsma"s beziehen, und das Integral (\ref{eq:mcrad_measurement_integral}) gem"a"s (\ref{eq:mc_integral}) mit einer frei gew"ahlten Wahrscheinlichkeitsdichte $p$ absch"atzen, macht jede Pfadgenerierungsmethode zu einer Form von {\em Importance Sampling}, d.h. einer M"oglichkeit die Variation des Integranden klein zu halten, indem wir einen Pfad ${\overline x}$ m"oglichst mit einer Wahrscheinlichkeit proportional zu seinem Messbeitrag $f({\overline x})$ generieren.
 	
-	Da unser Integrand $f$ aus vielen Faktoren besteht, und es ausreicht wenn einer von ihnen verschwindet oder sehr klein wird, um den Beitrag des ganzen Pfades zum verschwinden zu bringen, sollten wir also versuchen m"oglichst viele der Faktoren in $f$ gro"s werden zu lassen und es vermeiden einen von ihnen null werden zu lassen.
+	Da unser Integrand $f$ aus vielen Faktoren besteht, und es ausreicht wenn einer von ihnen verschwindet oder sehr klein wird, um den Beitrag des ganzen Pfades zum Verschwinden zu bringen, sollten wir also versuchen m"oglichst viele der Faktoren in $f$ gro"s werden zu lassen und es vermeiden einen von ihnen null werden zu lassen.
 	
 	Daher schauen wir uns nun ein paar der M"oglichkeiten an Pfade zu generieren.
 	\subsection{Naive Pfadgenerierung}
-	An der Produktform von (\ref{eq:path_probabilitydensity}) sehen wir, da"s die Wahl der Anzahl an Streupunkten, der Photonenfrequenz und der Pfadpunkte unabh"angig voneinander getroffen werden k"onnen (wobei nat"urlich die Anzahl an Faktoren f"ur die Pfadpunkte von der Wahl der Pfadl"ange abh"angt). Daher besteht der naheliegendste Ansatz Pfade zu generieren darin, f"ur jeden der Faktoren eine statische Wahrscheinlichkeitsverteilung festzulegen, aus der wir dann unabh"angig voneinander die einzelnen Pfadbestandteile ziehen, und anschliessend zu einem Pfad zusammensetzen k"onnen. Der Pseudocode k"onnte beispielsweise so aussehen:
+	An der Produktform von (\ref{eq:path_probabilitydensity}) sehen wir, da"s die Wahl der Anzahl an Streupunkten, der Photonenfrequenz und der Pfadpunkte unabh"angig voneinander getroffen werden k"onnen (wobei nat"urlich die {\em Anzahl} an Faktoren f"ur die Pfadpunkte von der Wahl der Pfadl"ange abh"angt). Daher besteht der naheliegendste Ansatz Pfade zu generieren darin, f"ur jeden der Faktoren eine statische Wahrscheinlichkeitsverteilung festzulegen, aus der wir dann unabh"angig voneinander die einzelnen Pfadbestandteile ziehen, und anschliessend zu einem Pfad zusammensetzen k"onnen. Der Pseudocode k"onnte beispielsweise so aussehen:
 	\begin{algorithmic}
 		\STATE $\nu \leftarrow$ ziehe Wert gleichf"ormig aus $[\nu_\text{min},\nu_\text{max}]$
 		\STATE $k \leftarrow$ ziehe Wert aus Poissonverteilung mit Erwartungswert $2.5$
@@ -44,7 +44,7 @@
 	  \ENDFOR
 	  \RETURN $(\nu,\location{r}_0\location{r}_1\cdots\location{r}_{k+1})$
 	\end{algorithmic}
-	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingesetzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert. Daher ist die Methode ausser f"ur Testzwecke nicht empfehlenswert.
+	Auch wenn diese Methode einfach zu verstehen und einfach zu implementieren ist, ist sie fast immer sehr ineffizient, da sie bis auf die Geometrie der Lichtquelle, des Sensors und des Streuvolumens keinerlei weitere Informationen einbezieht, was in der Praxis bedeutet, da"s der "uberwiegende Teil der generierten Pfade in die {\em Messbeitragsfunktion} $f$ (\ref{eq:mcf}) eingesetzt null oder nur einen sehr kleinen Wert und damit nur einen sehr geringen Beitrag zum Messwert liefert. Daher ist die Methode ausser zu Testzwecken nicht empfehlenswert.
 	
 
 	\subsection{Raycasting}
@@ -60,7 +60,7 @@
 	\end{align*}
 	wobei PDF f"ur Wahrscheinlichkeitsdichte (engl. {\em probability density function}) steht.
 	
-	Mit dieser Methode l"asst sich der Zufallspfad eines Photons in ``nat"urlicher Weise'' (d.h. mit gleicher Wahrscheinlichkeitsverteilung) nachvollziehen wenn wir bei einem zuf"allig aus der Lichtquelle gezogenen Punkt starten und von dort aus rekursiv Streupunkte und zum Schlu"s den Sensorpunkt ziehen. Wir haben aber z.B. auch die Freiheit die Pfadgenerierung bei einem zuf"allig gezogenen Sensorpunkt zu beginnen und uns ``r"uckw"arts'' zur Lichtquelle vorzuarbeiten.
+	Mit dieser Methode l"asst sich der Zufallspfad eines Photons in ``nat"urlicher Weise'' (d.h. mit gleicher Wahrscheinlichkeitsverteilung) nachvollziehen wenn wir bei einem zuf"allig aus der Lichtquelle gezogenen Punkt starten und von dort aus rekursiv Streupunkte und zum Schlu"s den Sensorpunkt ziehen. Wir haben aber z.B. auch die Freiheit die Pfadgenerierung bei einem zuf"allig gezogenen Sensorpunkt zu beginnen und uns ``r"uckw"arts'' zur Lichtquelle vorzuarbeiten (siehe Abschnitt~\ref{subsec:sensor_based_raycasting}).
 	
 	\subsubsection{Richtungssampler}
 	Als Richtungs--PDF bietet sich die Streuphasenfunktion des Materials an:
@@ -72,7 +72,7 @@
 	M"oglich ist aber auch, bei komplizierter Streuphasenfunktion eine einfachere Streuphasenfunktion zu samplen. Als Beispiel w"are es denkbar, in einem Modell mit Mie--Streuphasenfunktion, zur Wahl der Streurichtung die Wahrscheinlichkeitsverteilung der Henyey--Greenstein--Phasenfunktion mit gleichem Anisotropie--Parameter $g=\langle \text{cos}(\theta)\rangle$ zu benutzen. Dies kann das Verfahren effizienter machen, da die Wahrscheinlichkeitsverteilung der Henyey--Greenstein--Phasenfunktion ein analytischer Ausdruck ist und somit Samples analytisch mit der Inversionsmethode erzeugt werden k"onnen.
 	
 	\subsubsection{Distanzsampler}
-	Bei der Pfadgenerierung k"onnen Distanzen zu drei Arten von Medien auftauchen. Die Distanz zum n"achsten Streupunkt, die Distanz bis zum n"achsten Emissionspunkt und die Distanz bis zum n"achsten Sensorpunkt. Dabei beschreiben jeweils Extinktions-/Streuquerschnitt $\xi$ bzw. $\sigma$, Emissivit"at $\varepsilon$ und Sensitivit"at $\zeta$ die ``Dichte'' des Mediums. Im Folgenden benutzen wir stellvertretend f"ur diese Dichten
+	Bei der Pfadgenerierung k"onnen Distanzen zu Punkten in drei Arten von Medien auftauchen. Die Distanz zum n"achsten Streupunkt, die Distanz bis zum n"achsten Emissionspunkt und die Distanz bis zum n"achsten Sensorpunkt. Dabei beschreiben jeweils Extinktions-/Streuquerschnitt $\xi$ bzw. $\sigma$, Emissivit"at $\varepsilon$ und Sensitivit"at $\zeta$ die ``Dichte'' des Mediums. Im Folgenden benutzen wir stellvertretend f"ur diese Dichten
 	$${\hat h}(s)=h(\location{r}_{i-1}+s\omega)\,,\quad h\in\{\xi,\sigma,\varepsilon,\zeta\}.$$
 	
 	Streuende und absorbierende Materialien schirmen Licht ab, d.h. die Wahrscheinlichkeit eines Photons ins Medium einzudringen nimmt exponentiell mit der zur"uckgelegten {\em optischen Tiefe} ab (vgl. (\ref{eq:exponentialdecay})). Emittierendes und sensitives Volumen beeinflu"st die Ausbreitung von Photonen hingegen nicht. Daher bietet sich f"ur diese beiden Medien eine gleichf"ormige Verteilung in Bezug auf die zur"uckgelegte Tiefe
@@ -101,8 +101,8 @@
 	$$s=P_3^{-1}(u)={\hat \tau}^{-1}\left(-\text{ln}(1-a u)\right)\,,\quad a=1-\text{exp}(-{\hat \tau}(\infty)),$$
 	die auf jedenfall innerhalb des Mediums liegt. Das heisst, da"s eine Streuung erzwungen werden kann, was die Effizienz bei sehr geringen optischen Tiefen um ein Vielfaches steigert.
 	
-	\subsection{Sensor--basiertes Raycasting}
-	Mit dem im letzten Abschnitt vorgestellten Raycasting haben wir eine M"oglichkeit, ausgehend von einem Punkt einen anderen Punkt zu samplen und gegen"uber unabh"angigem Ziehen der Punkte die Wahrscheinlichkeit zu vergr"o"sern, da"s der Me"sbeitrag $f$ durch den neu hinzugekommenen Punkt nicht auf null herabgesetzt wird.
+	\subsection{Sensor--basiertes Raycasting}\label{subsec:sensor_based_raycasting}
+	Mit dem im letzten Abschnitt vorgestellten Raycasting haben wir eine M"oglichkeit, ausgehend von einem Punkt einen anderen Punkt zu samplen und gegen"uber unabh"angigem Ziehen der Punkte die Wahrscheinlichkeit zu vergr"o"sern, da"s der Messbeitrag $f$ durch den neu hinzugekommenen Punkt nicht auf null herabgesetzt wird.
 	
 	Nun wollen wir mit unabh"angigem Ziehen eines Punktes aus einem Volumen und Raycasting als Bausteine ein praktisch brauchbares Verfahren zur Pfadgenerierung konstruieren. Dabei ziehen wir zuerst einen Emissionspunkt aus dem Volumen der Lichtquelle und einen Sensorpunkt aus dem Sensorvolumen. Anschliessend erzeugen wir mit der Wahrscheinlichkeit $p_\text{grow}$ durch Raycasting vom Sensor ausgehend einen neuen Streupunkt oder brechen mit der Wahrscheinlichkeit $1-p_\text{grow}$ das Erzeugen neuer Streupunkte ab und verbinden anschliessend die bis dahin erzeugten Punkte zu einem vollst"andigen Pfad. In Pseudocode:
 	
