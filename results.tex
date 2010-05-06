@@ -2,7 +2,7 @@
 	In diesem Abschnitt sollen die Ergebnisse und die Effizienz des in Abschnitt \ref{cha:program_description} vorgestellten Programmes anhand von zwei unterschiedlichen Testf"allen analysiert werden. Als Referenz dient dabei das Programm \texttt{MC3D} \citep{Wolf:2003p12974}, sowohl f"ur die berechneten Bilder als auch f"ur die Geschwindigkeit der Berechnung. F"ur den ersten Testfall wurde zur Berechnung einer Referenzl"osung zus"atzlich zum einen ein geschlossener Ausdruck f"ur die L"osung hergeleitet und zum anderen ein einfaches Monte--Carlo--Verfahren erdacht, das sehr schnell konvergiert.
 	
 	\section{Homogene streuende Kugel}
-	Um die Korrektheit der vom Monte--Carlo--Code produzierten L"osung zu verifizieren ist es von erheblichem Nutzen eine unabh"angig gewonnene, vielleicht sogar analytisch hergeleitete, L"osung eines konstruierten Testproblems berechnen zu k"onnen. Das Problem sollte dabei nicht so trivial sein, da"s komplexe Effekte wie Mehrfachstreuung keinen Einflu"s auf das Ergebnis haben. Gleichzeitig sollte es aber nicht so komplex sein, da"s keine elegante, leicht berechenbare L"osung gefunden werden kann.
+	Um die Korrektheit der vom Monte--Carlo--Code produzierten L"osung zu verifizieren ist es von erheblichem Nutzen eine unabh"angig gewonnene, vielleicht sogar analytisch hergeleitete, L"osung eines konstruierten Testproblems berechnen zu k"onnen. Das Problem sollte dabei nicht so trivial sein, dass komplexe Effekte wie Mehrfachstreuung keinen Einflu"s auf das Ergebnis haben. Gleichzeitig sollte es aber nicht so komplex sein, dass keine elegante, leicht berechenbare L"osung gefunden werden kann.
 	Mit dieser Motivation konstruieren wir folgendes Testproblem:
 		
 	Gegeben sei eine Kugel mit Radius $R$, die mit homogenem, isotrop streuendem Material mit Volumenstreuquerschnitt $\sigma=1$ gef"ullt ist, sowie eine punktf"ormige Lichtquelle im Zentrum der Kugel. Zu berechnen ist nun die radiale Abh"angigkeit der Intensit"at, die eine ausserhalb der Kugel platzierte orthographische Kamera, die zum Zentrum der Kugel ausgerichtet ist, misst. Die feste Wahl von $\sigma$ und Variation des Kugelradius $R$ dient ausschliesslich der einfacheren Berechnung, da die Wegstrecken dadurch automatisch in freien optischen  Wegl"angen $\lambda=1/\sigma$ vorliegen. Das Problem ist gleichwertig zu jeder anderen Kombination aus Radius und Volumenstreuquerschnitt f"ur welche sich die gleiche optische Tiefe $\tau_\text{center}=\sigma R=R/\lambda$ vom Zentrum bis zum Rand der Kugel ergibt.
@@ -86,11 +86,11 @@
 		\ENDFOR
 		\RETURN $C[\cdots]$
 	\end{algorithmic}
-	Dabei starten wir mit einem Photon im Ursprung und berechnen dann von der aktuellen Position solange die Position des n"achsten Streuereignisses, bis dieses ausserhalb der Kugel liegt. Damit kennen wir den letzten Streupunkt und die Richtung in die das Photon das Streuvolumen verl"asst. Da wir nur an der radialen Intensit"atsverteilung interessiert sind k"onnen wir die Symmetrie des Problems ausnutzen indem wir die Kamera immer so hindrehen, da"s das entfliehende Photon senkrecht auf den (gedachten) Sensor auftrifft. Das bedeutet, da"s nicht die genaue Entweichrichtung sondern nur der Sto"sparameter entscheidend ist. Mit diesem Trick k"onnen wir jedes entweichende Photon z"ahlen, soda"s dieses Verfahren sehr schnell konvergiert.
+	Dabei starten wir mit einem Photon im Ursprung und berechnen dann von der aktuellen Position solange die Position des n"achsten Streuereignisses, bis dieses ausserhalb der Kugel liegt. Damit kennen wir den letzten Streupunkt und die Richtung in die das Photon das Streuvolumen verl"asst. Da wir nur an der radialen Intensit"atsverteilung interessiert sind k"onnen wir die Symmetrie des Problems ausnutzen indem wir die Kamera immer so hindrehen, dass das entfliehende Photon senkrecht auf den (gedachten) Sensor auftrifft. Das bedeutet, dass nicht die genaue Entweichrichtung sondern nur der Sto"sparameter entscheidend ist. Mit diesem Trick k"onnen wir jedes entweichende Photon z"ahlen, sodass dieses Verfahren sehr schnell konvergiert.
 	
 	
 	\subsection{Resultate}
-	TODO: Geschwindigkeits--Vergleich mit MC3D, Zentral--Intensit"at, beispielhafte Streubilder.
+	TODO: Geschwindigkeits--Vergleich mit MC3D
 	
 	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir ausserdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
 	
@@ -102,7 +102,7 @@
 		\end{figure}
 	
 	Die drei gew"ahlten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken dabei den optisch d"unnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \texttt{MC3D} und \texttt{PIRaTE} gewonnene radiale Intensit"atsprofile abgebildet.
-	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen L"osung "uberein. Dabei ist zu bedenken, da"s bei kleineren Radien "uber weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort naturgem"a"s gr"o"ser ausf"allt.
+	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen L"osung "uberein. Dabei ist zu bedenken, dass bei kleineren Radien "uber weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort naturgem"a"s gr"o"ser ausf"allt.
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{methodcomparisongraphics.eps}
@@ -119,7 +119,7 @@
 			\label{fig:sphere_image_cuts}
 		\end{figure}
 	
-	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu m"ussen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder (siehe Abb.~\ref{fig:sphere_reference_images})werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \texttt{MC3D} erzeugten Streubildern generiert. Zus"atzlich mitteln wir innerhalb der Bildes "uber alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum (siehe Abb.~\ref{fig:polaraveragingsymmetry}). Dies f"uhrt im Durchschnitt zu einer Mittelung "uber 11 Pixel wodurch das Rauschen ungef"ahr gedrittelt wird, was insbesondere bei dem Bild der optisch d"unnen Kugel, welches das st"arkste Rauschen besitzt, hilfreich ist.
+	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu m"ussen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder (siehe Abb.~\ref{fig:sphere_reference_images}) werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \texttt{MC3D} erzeugten Streubildern generiert. Zus"atzlich mitteln wir innerhalb der Bildes "uber alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum (siehe Abb.~\ref{fig:polaraveragingsymmetry}). Dies f"uhrt im Durchschnitt zu einer Mittelung "uber 11 Pixel wodurch das Rauschen ungef"ahr gedrittelt wird, was insbesondere bei dem Bild der optisch d"unnen Kugel, welches das st"arkste Rauschen besitzt, hilfreich ist.
 	
 		\begin{figure}
 			\centering
@@ -131,7 +131,7 @@
 		\begin{figure}
 			\centering
 			\includegraphics[width=1.0\textwidth]{spherereferenceimages.eps}
-			\caption{F"ur die Bestimmung der Abweichungen sind hier die Referenzbilder dargestellt.}
+			\caption{Referenzbilder zur Bestimmung der Abweichungen}
 			\label{fig:sphere_reference_images}
 		\end{figure}
 	
