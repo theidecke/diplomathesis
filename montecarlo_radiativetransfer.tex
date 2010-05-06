@@ -98,7 +98,10 @@
 	sowie die dazugeh"orige PDF
 	$$\frac{dP_3}{ds}(s)=P_3'(s)=\frac{{\hat \tau}'(s)\text{exp}(-{\hat \tau}(s))}{1-\text{exp}(-{\hat \tau}(\infty))}=\frac{{\hat h}(s)\text{exp}(-{\hat \tau}(s))}{1-\text{exp}(-{\hat \tau}(\infty))}.$$
 	Die Inversionsmethode liefert nun zu jeder Zufallszahl $u\in[0,1]$ eine Distanz
-	$$s=P_3^{-1}(u)={\hat \tau}^{-1}\left(-\text{ln}(1-a u)\right)\,,\quad a=1-\text{exp}(-{\hat \tau}(\infty)),$$
+	\begin{equation}
+    s=P_3^{-1}(u)={\hat \tau}^{-1}\left(-\text{ln}(1-a u)\right)\,,\quad a=1-\text{exp}(-{\hat \tau}(\infty)),
+    \label{eq:enforced_scattering_distancesampler}
+	\end{equation}
 	die auf jedenfall innerhalb des Mediums liegt. Das heisst, dass eine Streuung erzwungen werden kann, was die Effizienz bei sehr geringen optischen Tiefen um ein Vielfaches steigert.
 	
 	\subsection{Sensor--basiertes Raycasting}\label{subsec:sensor_based_raycasting}
