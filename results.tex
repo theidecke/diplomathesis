@@ -91,9 +91,7 @@
 	
 	
 	\subsection{Resultate}
-	TODO: Geschwindigkeits--Vergleich mit MC3D
-	
-	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir au"serdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
+	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir au"serdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt. Hier generieren wir die Bilder in mehreren unabh"angigen L"aufen mit Pfadanzahlen zwischen $10^5$ und $10^7$.
 	
 		\begin{figure}
 			\centering
@@ -101,8 +99,8 @@
 			\caption{Radiale Intensit"atsprofile auf der Grundlage von \texttt{MC3D}--Simulationen --- Bei gleicher Photonenzahl aber sinkendem Kamera--"Offnungswinkel $\alpha$ steigt der statistische Fehler aufgrund der geringeren Zahl beachteter Photonen.}
 			\label{fig:alphacomparison}
 		\end{figure}
-	
-	Die drei gew"ahlten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken dabei den optisch d"unnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \texttt{MC3D} und \texttt{PIRaTE} gewonnene radiale Intensit"atsprofile abgebildet.
+		
+	Die drei zur Simulation gew"ahlten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken den optisch d"unnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \texttt{MC3D} und \texttt{PIRaTE} gewonnene radiale Intensit"atsprofile abgebildet.
 	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen L"osung "uberein. Dabei ist zu bedenken, dass bei kleineren Radien "uber weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort naturgem"a"s gr"o"ser ausf"allt.
 		\begin{figure}
 			\centering
@@ -111,7 +109,7 @@
 			\label{fig:methodcomparisongraphics}
 		\end{figure}
 	
-	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (siehe Abb.~\ref{fig:sphere_image_cuts}) f"allt auf, das \texttt{PIRaTE} den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch sch"atzt. Dies liegt vermutlich an den Sensorparametern ("Offnungswinkel), da im Unterschied zu \texttt{MC3D} in \texttt{PIRaTE} keine punktf"ormigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausma"sen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein k"onnen. Zur end"ultigen Kl"arung bedarf es aber einer genaueren Fehleranalyse.
+	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (siehe Abb.~\ref{fig:sphere_image_cuts}) f"allt auf, das \texttt{PIRaTE} den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch sch"atzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem "Offnungswinkel), da im Unterschied zu \texttt{MC3D} in \texttt{PIRaTE} keine punktf"ormigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausma"sen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein k"onnen. Zur end"ultigen Kl"arung bedarf es aber einer genaueren Fehleranalyse.
 	
 		\begin{figure}
 			\centering
@@ -120,7 +118,9 @@
 			\label{fig:sphere_image_cuts}
 		\end{figure}
 	
-	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu m"ussen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder (siehe Abb.~\ref{fig:sphere_reference_images}) werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \texttt{MC3D} erzeugten Streubildern generiert. Zus"atzlich mitteln wir innerhalb der Bildes "uber alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum (siehe Abb.~\ref{fig:polaraveragingsymmetry}). Dies f"uhrt im Durchschnitt zu einer Mittelung "uber 11 Pixel wodurch das Rauschen ungef"ahr gedrittelt wird, was insbesondere bei dem Bild der optisch d"unnen Kugel, welches das st"arkste Rauschen besitzt, hilfreich ist.
+	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu m"ussen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder %(siehe Abb.~\ref{fig:sphere_reference_images}) 
+	werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \texttt{MC3D} erzeugten Streubildern generiert. Zus"atzlich mitteln wir innerhalb des Bildes "uber alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum% (siehe Abb.~\ref{fig:polaraveragingsymmetry})
+	. Dies f"uhrt im Durchschnitt zu einer Mittelung "uber 11 Pixel wodurch das Rauschen ungef"ahr gedrittelt wird, was insbesondere bei dem Bild der optisch d"unnen Kugel, welches das st"arkste Rauschen besitzt, hilfreich ist.
 	
 		%\begin{figure}
 		%	\centering
@@ -136,6 +136,10 @@
 		%	\label{fig:sphere_reference_images}
 		%\end{figure}
 	
+	Eine Auswahl der generierten Streubilder ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} dargestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der zum generieren ben"otigten Rechenzeit versehen. Die \texttt{MC3D}--Rechenzeiten sind trotz unterschiedlicher Photonenzahlen konstant. Dies liegt daran, dass die Bilder nur unterschiedlich viele aufsummierte Kameraebenen desselben Simulationslaufes darstellen und nicht die Summe der Ergebnisse verschiedener Simulationen.
+	
+	Aufgrund der unterschiedlichen zugrundeliegenden Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme objektiv zu vergleichen. W"ahrend \texttt{MC3D} eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gez"ahlt werden oder nicht, generiert \texttt{PIRaTE} eine feste Zahl Pfade, die den Sensor erreicht haben aber unterschiedlich stark gewichtet in das Ergebnis eingehen. W"ahrend \texttt{MC3D} immer von einer inhomogenen Dichteverteilung ausgeht und aufintegriert, um optische Tiefen zu bestimmen, kann \texttt{PIRaTE} die optischen Tiefen im homogenen Fall direkt berechnen. \texttt{MC3D} generierte die Ergebnisse auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \texttt{PIRaTE} auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sollten die Ergebnisse als Gr"ossenordnungsabsch"atzungen und nicht als absolut unumst"o"sliche Messergebnisse interpretiert werden.
+	
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{mc3dsphereimageoverview.eps}
@@ -150,12 +154,14 @@
 		\end{figure}
 	
 	
-	Dann ergeben sich die in Abb.~\ref{fig:sphere1_error}-\ref{fig:sphere3_error} gezeigten Ergebnisse.
+	In Abb.~\ref{fig:sphere1_error}-\ref{fig:sphere3_error} sind f"ur die verschiedenen optischen Tiefen jeweils der absolute sowie der relative Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Zur Berechnung des relativen Fehlers wurde dabei die Methode von \citet{Pryce:1984p13059} verwendet. Da bei \texttt{MC3D} die verschiedenen Streubilder nicht durch mehrere Simulationsl"aufe sondern mehrere Kameraebenen erzeugt wurden, sind f"ur \texttt{MC3D} zwei Kurven eingezeichnet. Die eine Kurve repr"asentiert das Ergebnis einer Simulation mit 72 aufsummierten Kameraebenen, w"ahrend die andere Kurve den Aufwand darstellt, um dasselbe Ergebnis mit nur einer Kameraebene zu erreichen.
+	
+	Im optisch d"unnen Fall ($\tau=0.01$, Abb.~\ref{fig:sphere1_error}) wird deutlich, dass bei "ahnlicher Pfad-/Photonenzahl oder Rechenzeit \texttt{PIRaTE} wesentlich schneller konvergiert. Nur die Nutzung der Symmetrie durch die 72 Kameraebenen kann bei gleicher Photonen-/Pfadzahl ein "ahnliches Ergebnis erzielen. 
 	
 		\begin{figure}
 			\centering
 			\includegraphics[angle=90,height=1.0\textheight]{sphere1errorplot.eps}
-			\caption{Die blauen Linien repr"asentieren \texttt{MC3D}, wobei daf"ur die Bilder aus (1,2,4,9,18,36,72) Kameraebenen aufsummiert wurden. Die Schr"age Linie extrapoliert dabei, wie aufw"andig die Simulation mit nur einer Kameraebene gewesen w"are.}
+			\caption{Die blauen Linien repr"asentieren \texttt{MC3D}, wobei daf"ur die Bilder aus (1,2,4,9,18,36,72) Kameraebenen aufsummiert wurden. Die Schr"age Linie extrapoliert, wie aufw"andig die Simulation mit nur einer Kameraebene gewesen w"are.}
 			\label{fig:sphere1_error}
 		\end{figure}
 		\begin{figure}
