@@ -38,7 +38,7 @@
 		\caption{radiale Photonenverteilung nach n Streuvorg"angen. Die freie optische Wegl"ange ist dabei mit $\lambda=1/\sigma$ bezeichnet.}
 		\label{fig:gnlist}
 	\end{figure}
-	Als n"achstes diskretisieren wir die Green'sche Funktion, indem wir ein gleichm"assiges Gitter in $r_0$ und $r_1$ "uber $g$ legen, das sich bis zum Radius der Kugel $R$ erstreckt, und innerhalb jeder Gitterzelle $g$ in $r_0$--Richtung mitteln und in $r_1$--Richtung aufintegrieren und anschliessend die Ergebnisse in einer Matrix $\mathbf{g}$ speichern. Wenn wir nun einen Startvektor, der nur in der innersten Zelle von Null verschieden ist, $n$--mal mit $\mathbf{g}$ multiplizieren, bekommen wir die diskretisierte Photonenverteilung innerhalb der Kugelschalen beim $n$--ten Streuvorgang (siehe Abb. \ref{fig:gnlist}). Um die Emissivit"at $\varepsilon(r)$ jeder Kugelschale auszurechnen, summieren wir die Photonenverteilungen vom 1--ten bis zum $n$--ten Streuvorgang auf und teilen das Ergebnis in jeder Kugelschale durch ihr jeweiliges Volumen und den bestrahlten Raumwinkel $4\pi$. Die Intensit"aten k"onnen nun numerisch gem"a"s
+	Als n"achstes diskretisieren wir die Green'sche Funktion, indem wir ein gleichm"a"siges Gitter in $r_0$ und $r_1$ "uber $g$ legen, das sich bis zum Radius der Kugel $R$ erstreckt, und innerhalb jeder Gitterzelle $g$ in $r_0$--Richtung mitteln und in $r_1$--Richtung aufintegrieren und anschliessend die Ergebnisse in einer Matrix $\mathbf{g}$ speichern. Wenn wir nun einen Startvektor, der nur in der innersten Zelle von Null verschieden ist, $n$--mal mit $\mathbf{g}$ multiplizieren, bekommen wir die diskretisierte Photonenverteilung innerhalb der Kugelschalen beim $n$--ten Streuvorgang (siehe Abb. \ref{fig:gnlist}). Um die Emissivit"at $\varepsilon(r)$ jeder Kugelschale auszurechnen, summieren wir die Photonenverteilungen vom 1--ten bis zum $n$--ten Streuvorgang auf und teilen das Ergebnis in jeder Kugelschale durch ihr jeweiliges Volumen und den bestrahlten Raumwinkel $4\pi$. Die Intensit"aten k"onnen nun numerisch gem"a"s
 	\begin{equation}
 		I(r) = \int_{z=-h}^h \varepsilon\left(\sqrt{r^2+z^2}\right) e^{-(z+h)}\text{d}z\,,\quad h=\sqrt{R^2-r^2}
 		\label{eq:testprob_intensity_calculation}
@@ -93,7 +93,7 @@
 	\subsection{Resultate}
 	TODO: Geschwindigkeits--Vergleich mit MC3D
 	
-	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir ausserdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
+	Um die korrekte Berechnung des Strahlungstransports "uberpr"ufen zu k"onnen, simulieren wir das vorgestellte Problem der homogen streuenden Kugel f"ur drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzl"osung benutzen. Dieselben Konfigurationen berechnen wir au"serdem mit \texttt{MC3D} und \texttt{PIRaTE}. Von \texttt{MC3D} lassen wir hierf"ur $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit "Offnungswinkel von $\alpha=5^\circ$ f"ur eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kamera"offnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \texttt{PIRaTE} benutzt eine einzige Kamera deren Empfindlichkeitskegel einen "Offnungswinkel von $30'$ besitzt.
 	
 		\begin{figure}
 			\centering
@@ -122,19 +122,19 @@
 	
 	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu m"ussen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder (siehe Abb.~\ref{fig:sphere_reference_images}) werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \texttt{MC3D} erzeugten Streubildern generiert. Zus"atzlich mitteln wir innerhalb der Bildes "uber alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum (siehe Abb.~\ref{fig:polaraveragingsymmetry}). Dies f"uhrt im Durchschnitt zu einer Mittelung "uber 11 Pixel wodurch das Rauschen ungef"ahr gedrittelt wird, was insbesondere bei dem Bild der optisch d"unnen Kugel, welches das st"arkste Rauschen besitzt, hilfreich ist.
 	
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.5\textwidth]{polaraveragingsymmetry.eps}
-			\caption{Darstellung der Symmetrien, die bei der polaren Mittelung genutzt werden. Pixel mit exakt gleichem Abstand zum Zentrum sind gleich gef"arbt. Im Schnitt wird "uber 11 Pixel gemittelt.}
-			\label{fig:polaraveragingsymmetry}
-		\end{figure}
+		%\begin{figure}
+		%	\centering
+		%	\includegraphics[width=0.5\textwidth]{polaraveragingsymmetry.eps}
+		%	\caption{Darstellung der Symmetrien, die bei der polaren Mittelung genutzt werden. Pixel mit exakt gleichem Abstand zum Zentrum sind gleich gef"arbt. Im Schnitt wird "uber 11 Pixel gemittelt.}
+		%	\label{fig:polaraveragingsymmetry}
+		%\end{figure}
 		
-		\begin{figure}
-			\centering
-			\includegraphics[width=1.0\textwidth]{spherereferenceimages.eps}
-			\caption{Referenzbilder zur Bestimmung der Abweichungen}
-			\label{fig:sphere_reference_images}
-		\end{figure}
+		%\begin{figure}
+		%	\centering
+		%	\includegraphics[width=1.0\textwidth]{spherereferenceimages.eps}
+		%	\caption{Referenzbilder zur Bestimmung der Abweichungen}
+		%	\label{fig:sphere_reference_images}
+		%\end{figure}
 	
 		\begin{figure}
 			\centering
