@@ -184,11 +184,11 @@
 		\end{figure}
 	
 	\section{Einfaches Scheibenmodell}
-	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenh"ohe, die durch die Dichteverteilung
+	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenh"ohe, die durch die Dichteverteilung (in zylindrischen Koordinaten $(s,\phi,z)$ und mit dem radialen Abstand $r=\sqrt{s^2+z^2}$)
 	\begin{align*}
-		\rho(r,z)&=\Sigma(r)\text{exp}\left[-\frac{1}{2}\left(\frac{z}{\epsilon\,r}\right)^2\right],\quad r_\text{in}<r<r_\text{out} \\
-		\Sigma(r)&=\Sigma_0 / (a^2+r^2) \\
-		r_\text{in}&=0.01, r_\text{out}=1, a=0.25, \epsilon=0.1
+		\rho(s,z)&=\Sigma(r)\text{exp}\left[-\frac{1}{2}\left(\frac{z}{\epsilon\,s}\right)^2\right],\quad s_\text{in}<s<s_\text{out}\land r<r_\text{out} \\
+		\Sigma(r)&=\Sigma_0 / (a^2+s^2) \\
+		s_\text{in}&=0.01, s_\text{out}=1, r_\text{out}=1, a=0.25, \epsilon=0.1
 	\end{align*}
 	gegeben ist (siehe Abb.~\ref{fig:diskdensity}).	Dabei w"ahlen wir $\Sigma_0$ so, da"s die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ betr"agt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
 	
