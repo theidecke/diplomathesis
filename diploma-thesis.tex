@@ -11,7 +11,9 @@
 
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage[utf8]{inputenc}     %% dt. Umlaute mit utf-8, 
+\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
+\usepackage{bibgerm}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -27,7 +29,7 @@
 	automark,		% Kapitelangaben in Kopfzeile automatisch erstellen
         headsepline,		% Trennlinie unter Kopfzeile
 %        footsepline,
-	ilines			% Trennlinie linksbündig ausrichten
+	ilines			% Trennlinie linksb√ºndig ausrichten
 ]{scrpage2}
 \pagestyle{scrheadings}
 
@@ -50,14 +52,14 @@
 \begin{document}
 
 \frontmatter
-	\titlehead{Christian--Albrechts--Universit"at zu Kiel\\ Institut f"ur Theoretische Physik und Astrophysik}
+	\titlehead{Christian--Albrechts--Universität zu Kiel\\ Institut für Theoretische Physik und Astrophysik}
 	\subject{Diplomarbeit}
-	\title{L"osung des Strahlungstransportproblems in Pfadintegralform mit effizienten Monte--Carlo--Verfahren}
+	\title{Lösung des Strahlungstransportproblems in Pfadintegralform mit effizienten Monte--Carlo--Verfahren}
 	\author{vorgelegt von Thies Heidecke\\(theidecke@astrophysik.uni-kiel.de)}
 	\publishers{betreut durch Prof. Dr. Sebastian Wolf}
 	\date{Version vom \today}
 	\maketitle
-	% standard-titelblatt verf"ugbar?
+	% standard-titelblatt verfügbar?
 
 	\tableofcontents	%%Inhaltsverzeichnis
 	%\listoffigures	%%Abbildungsverzeichnis
@@ -82,7 +84,9 @@
 	TODO: Ausblick: Normierung, physikalisch relevante Streuphasenfunktionen, polychromatische Bilder/SEDs
 
 \backmatter
+	\mdqoff
 	\bibliographystyle{plainnat}
 	\bibliography{bibliography}
+	\mdqon
 
 \end{document}

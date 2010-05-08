@@ -1,8 +1,8 @@
 	\chapter{Einleitung}
 	\section{Motivation}
-	TODO: astrophysikalischer Kontext $\rightarrow$ Begr"undung der in Sektion (\ref{sec:radiative_transfer}) gemachten Annahmen
+	TODO: astrophysikalischer Kontext $\rightarrow$ Begründung der in Sektion (\ref{sec:radiative_transfer}) gemachten Annahmen
 	\section{Ziele der Arbeit}
-	In dieser Arbeit soll eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet werden, sowie dessen Nutzen f"ur Monte--Carlo--Verfahren zur L"osung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt werden.
+	In dieser Arbeit soll eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet werden, sowie dessen Nutzen für Monte--Carlo--Verfahren zur Lösung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt werden.
 	
 	\section{Nomenklatur}\label{subsec:nomenklatur}
 	Im folgenden Text werden die in Tabelle \ref{tab:nomenklatur} angegebenen Schreibweisen benutzt.
@@ -16,19 +16,19 @@
 			$\kappa$ & Volumenabsorptionsquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
 			$\sigma$ & Volumenstreuquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
 			$\xi$ & Volumenextinktionsquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
-			$\varepsilon$ & Volumenemissivit"at & $\left[\text{W}/(\text{m}^3\,\text{sr})\right]$ \\
-			$I(\location{r},\omega)$ & Intensit"at am Ort $\location{r}$ in Richtung $\omega$& $\left[\text{W}/(\text{m}^2\,\text{sr})\right]$ \\
-			$W(\location{r},\omega)$ & Sensitivit"at am Ort $\location{r}$ in Richtung $\omega$ & $\left[(\text{m}^2\,\text{sr})/\text{W}\right]$ \\
-			$k(\location{r},\omega',\omega)$ & Phasenfunktion am Ort $\location{r}$ f"ur ein Teilchen, & $\left[1/\text{sr}\right]$ \\
+			$\varepsilon$ & Volumenemissivität & $\left[\text{W}/(\text{m}^3\,\text{sr})\right]$ \\
+			$I(\location{r},\omega)$ & Intensität am Ort $\location{r}$ in Richtung $\omega$& $\left[\text{W}/(\text{m}^2\,\text{sr})\right]$ \\
+			$W(\location{r},\omega)$ & Sensitivität am Ort $\location{r}$ in Richtung $\omega$ & $\left[(\text{m}^2\,\text{sr})/\text{W}\right]$ \\
+			$k(\location{r},\omega',\omega)$ & Phasenfunktion am Ort $\location{r}$ für ein Teilchen, & $\left[1/\text{sr}\right]$ \\
 				&das sich vor der Streuung in Richtung $\omega'$&\\
 				&und nach der Streuung in Richtung $\omega$ bewegt& \\
 			$\scatter{i}$ & Produkt aus Volumenstreuquerschnitt und&\\
-			  & Streuphasenfunktion am Ort $\location{r}_i$ f"ur ein aus Richtung $\location{r}_{i-1}$&\\ 
+			  & Streuphasenfunktion am Ort $\location{r}_i$ für ein aus Richtung $\location{r}_{i-1}$&\\ 
 				&kommendes und in Richtung $\location{r}_{i+1}$ gestreutes Teilchen&\\
-				&("aquivalent zu $\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})$)& \\
+				&(äquivalent zu $\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})$)& \\
 			$\tau_{(i,j)}$ & Optische Tiefe zwischen $\location{r}_i$ und $\location{r}_j$ & \\
-			$\varepsilon_{(i,j)}$ & Emissivit"at am Ort $\location{r}_i$ in Richtung $\location{r}_j$ & \\
-			$W_{(i,j)}$ & Sensitivit"at am Ort $\location{r}_j$ f"ur Strahlung in Richtung $\normalized{\location{r}_j-\location{r}_i}$ &
+			$\varepsilon_{(i,j)}$ & Emissivität am Ort $\location{r}_i$ in Richtung $\location{r}_j$ & \\
+			$W_{(i,j)}$ & Sensitivität am Ort $\location{r}_j$ für Strahlung in Richtung $\normalized{\location{r}_j-\location{r}_i}$ &
 		\end{tabular}
 		\end{center}
 		\label{tab:nomenklatur}
