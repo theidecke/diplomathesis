@@ -158,7 +158,7 @@
 	
 	In Bezug auf die Rechenzeit ist \pirate in allen drei optischen Tiefen gleichwertig oder (besonders im optisch d"unnen Fall) um mehrere Gr"o"senordnungen schneller. Dabei mu"s aber auch ber"ucksichtigt werden, dass \pirate den homogenen Fall speziell behandelt und dadurch effizienter berechnen kann, wohingegen \mctd immer von inhomogenen Dichteverteilungen ausgeht.
 	
-	Im optisch d"unnen Fall ($\tau=0.01$, Abb.~\ref{fig:sphere1_error}) erzeugt \pirate mit einer Gr"o"senordnung weniger Pfaden Bilder gleichen Fehlers. Bei nur einer Kameraebene sind es sogar drei Gr"o"senordnungen. Die Abflachung der Konvergenzrate von \pirate liegt daran, dass dort der Fehler der Simulationen unter den Rauschpegel der Referenzbilder f"allt. Zur h"oheren Effizienz tr"agt vermutlich zum Gro"steil der verwendete Distanzsampler (siehe Gleichung \ref{eq:enforced_scattering_distancesampler}) bei, der eine m"ogliche Streuung erzwingt.
+	Im optisch d"unnen Fall ($\tau=0.01$) erzeugt \pirate mit einer Gr"o"senordnung weniger Pfaden Bilder gleichen Fehlers. Bei nur einer Kameraebene sind es sogar drei Gr"o"senordnungen. Die Abflachung der Konvergenzrate von \pirate liegt daran, dass dort der Fehler der Simulationen unter den Rauschpegel der Referenzbilder f"allt. Zur h"oheren Effizienz tr"agt vermutlich zum Gro"steil der verwendete Distanzsampler (siehe Gleichung \ref{eq:enforced_scattering_distancesampler}) bei, der eine m"ogliche Streuung erzwingt.
 	
 	Bei einer optischer Tiefe von $\tau=1$ liegt die Effizienz von \pirate bezogen auf die Anzahl generierter Pfade zwischen der Effizienz von \mctd mit 72 Kameraebenen und \mctd mit nur einer Kameraebene.
 	
@@ -174,11 +174,11 @@
 
 	\section{Einfaches Scheibenmodell}
 	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenh"ohe, die durch die Dichteverteilung (in zylindrischen Koordinaten $(s,\phi,z)$ und mit dem radialen Abstand $r=\sqrt{s^2+z^2}$)
-	\begin{align*}
-		\rho(s,z)&=\Sigma(r)\text{exp}\left[-\frac{1}{2}\left(\frac{z}{\epsilon\,s}\right)^2\right],\quad s_\text{in}<s<s_\text{out}\land r<r_\text{out} \\
-		\Sigma(r)&=\Sigma_0 / (a^2+s^2) \\
-		s_\text{in}&=0.01, s_\text{out}=1, r_\text{out}=1, a=0.25, \epsilon=0.1
-	\end{align*}
+	\begin{align}
+		\rho(s,z)&=\Sigma(r)\text{exp}\left[-\frac{1}{2}\left(\frac{z}{\epsilon\,s}\right)^2\right],\quad s_\text{in}<s<s_\text{out}\land r<r_\text{out} \nonumber\\
+		\Sigma(r)&=\Sigma_0 / (a^2+s^2) \label{eq:disk_model} \\
+		s_\text{in}&=0.01, s_\text{out}=1, r_\text{out}=1, a=0.25, \epsilon=0.1 \nonumber
+	\end{align}
 	gegeben ist (siehe Abb.~\ref{fig:diskdensity}).	Dabei w"ahlen wir $\Sigma_0$ so, da"s die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ betr"agt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
 	
 		\begin{figure}
@@ -189,13 +189,27 @@
 		\end{figure}
 	
 	\subsection{Resultate}
-	
+		Nach Durchf"uhrung von Simulationen mit $10^5$--$3\cdot 10^7$ Pfaden in \pirate und einer Simulation mit $7.2\cdot 10^8$ Photonen und 72 Kameraebenen in \mctd mit der Dichteverteilung (\ref{eq:disk_model}) erhalten wir die in Abb.~\ref{fig:disk_image_overview} gezeigten (und weitere) Streubilder.
+		
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{diskimageoverview.eps}
-			\caption{"Ubersicht "uber die Qualit"at der Bilder bei unterschiedlich langen Simulationsl"aufen. Bei den \mctd--Bilder in der rechten Spalte repr"asentieren die Zahlen in Klammern die Anzahl der benutzten Kameraebenen.}
-			\label{fig:pirate_sphere_imageoverview}
+			\caption{"Ubersicht "uber die Qualit"at der Bilder bei unterschiedlich langen Simulationsl"aufen. Bei den \texttt{MC3D}--Bildern in der rechten Spalte repr"asentieren die Zahlen in Klammern die Anzahl der benutzten Kameraebenen.}
+			\label{fig:disk_image_overview}
 		\end{figure}
+	
+	Wie beim ersten Testfall bestimmen wir auch hier die absoluten Fehler der Streubilder. Als Referenzbild dient die Summe aller 72 Kameraebenen der \texttt{MC3D}--Simulation, die wir noch jeweils horizontal, vertikal und am Ursprung spiegeln und anschlie"send "uber die vier Variationen mitteln.
+
+	In Abbildung \ref{fig:disk_contours}	l"asst sich erkennen, dass die Ergebnisse qualitativ gut "ubereinstimmen. Durch erzwungene Streuung und Ber"ucksichtigung nichtangenommener Pfade (siehe Abschnitt \ref{cha:program_description}) reicht der konvergierte Bereich im \texttt{PIRaTE}--Bild weiter nach oben und unten hinaus als im \texttt{MC3D}--Bild.
+	
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\textwidth]{diskcontourplots.eps}
+			\caption{Konturplots des Referenzbildes und des von \pirate generierten Bildes.}
+			\label{fig:disk_contours}
+		\end{figure}
+	
+	Schauen wir uns die absoluten Fehler aufgetragen "uber die Anzahl generierter Pfade bzw. Photonen an (siehe Abb.~\ref{fig:disk_error}), schneidet \pirate anfangs vergleichbar gut ab wie \mctd mit 72 Kameraebenen. In Bezug auf die Rechenzeit sogar um eine Gr"o"senordnung besser.
 	
 		\begin{figure}
 			\centering
@@ -204,8 +218,15 @@
 			\label{fig:disk_error}
 		\end{figure}
 	
+	Hin zu gr"o"seren Pfadanzahlen n"ahert sich der Fehler allerdings asymptotisch einem Wert gr"o"ser null, was bedeutet, da"s \pirate nicht exakt gegen dasselbe Bild konvergiert. In Abb.~\ref{fig:resdiskplot} ist die Abweichung qualitativ farblich dargestellt. Es ist zu erkenn, dass im Innenbereich das Bild von \pirate zu dunkel ist. Es konnte bisher allerdings nicht gekl"art werden, ob die Ursache in einer Abweichung des Modells, einem Programmfehler oder im Verfahren begr"undet liegt.
 	
-	TODO: Konvergenz--Geschwindigkeits--Vergleich mit MC3D.
-	Stichpunkte:tau=97.6958 in der Mittelebene. 1m55s f"ur $10^6$ Photonen mit MC3D. 720M Photonen in 72Ebenen $\rightarrow$ Jede Ebene entspricht 10M Photonen
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\textwidth]{resdiskplot.eps}
+			\caption{Darstellung der Abweichung zwischen dem mit \pirate erzeugten Streubild und dem \texttt{MC3D}--Referenzbild. Rot bedeutet kleinere Werte als im Referenzbild, gr"un gr"o"sere.}
+			\label{fig:resdiskplot}
+		\end{figure}
+	
+
 	\section{Einordnung der Resultate}
 	TODO: Gesamtvergleich zwischen MC3D und PIRaTE: PIRaTE schneller, MC3D nat"urlicheres Rauschen, PIRaTE bedarf weiterer Kalibration f"ur ZentralSternIntensit"at
