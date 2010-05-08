@@ -154,7 +154,7 @@
 		\end{figure}
 	
 	
-	In Abb.~\ref{fig:sphere1_error}-\ref{fig:sphere3_error} sind f"ur die verschiedenen optischen Tiefen jeweils der absolute sowie der relative Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Zur Berechnung des relativen Fehlers wurde dabei die Methode von \citet{Pryce:1984p13059} verwendet. Da bei \mctd die verschiedenen Streubilder nicht durch mehrere Simulationsl"aufe sondern mehrere Kameraebenen erzeugt wurden, sind f"ur \mctd zwei Kurven eingezeichnet. Beide Kurven fassen die Summation unterschiedlich vieler Kameraebenen der durchgef"uhrten Simulation als die Ergebnisse verschiedener Simulationen mit unterschiedlicher Anzahl generierter Photonen aber konstanter Kameraebenenanzahl auf. Die linke Kurve interpretiert sie als die Ergebnisse einer Simulation mit 72, die rechte als Ergebnis einer Simulation mit nur einer Kameraebenen auf.
+	In Abb.~\ref{fig:sphere_errors} ist f"ur die verschiedenen optischen Tiefen der absolute Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Da bei \mctd die verschiedenen Streubilder nicht durch mehrere Simulationsl"aufe sondern mehrere Kameraebenen erzeugt wurden, sind f"ur \mctd zwei Kurven eingezeichnet. Beide Kurven fassen die Summation unterschiedlich vieler Kameraebenen der durchgef"uhrten Simulation als die Ergebnisse verschiedener Simulationen mit unterschiedlicher Anzahl generierter Photonen aber konstanter Kameraebenenanzahl auf. Die linke Kurve interpretiert sie als die Ergebnisse einer Simulation mit 72, die rechte als Ergebnis einer Simulation mit nur einer Kameraebenen auf.
 	
 	In Bezug auf die Rechenzeit ist \pirate in allen drei optischen Tiefen gleichwertig oder (besonders im optisch d"unnen Fall) um mehrere Gr"o"senordnungen schneller. Dabei mu"s aber auch ber"ucksichtigt werden, dass \pirate den homogenen Fall speziell behandelt und dadurch effizienter berechnen kann, wohingegen \mctd immer von inhomogenen Dichteverteilungen ausgeht.
 	
@@ -166,23 +166,12 @@
 
 		\begin{figure}
 			\centering
-			\includegraphics[angle=90,height=1.0\textheight]{sphere1errorplot.eps}
-			\caption{Die blauen Linien repr"asentieren \mctd, wobei daf"ur die Bilder aus (1,2,4,9,18,36,72) Kameraebenen aufsummiert wurden. Die Schr"age Linie extrapoliert, wie aufw"andig die Simulation mit nur einer Kameraebene gewesen w"are.}
-			\label{fig:sphere1_error}
+			\includegraphics[width=1.0\textwidth]{sphereerrorplots.eps}
+			\caption{Die rote Linie repr"asentiert \pirate--Simulationen. Die blauen Linien repr"asentieren \mctd. Die linke Linie steht f"ur Simulationen mit 72, die rechte f"ur Simulationen mit einer Kameraebene.}
+			\label{fig:sphere_errors}
 		\end{figure}
-		\begin{figure}
-			\centering
-			\includegraphics[angle=90,height=1.0\textheight]{sphere2errorplot.eps}
-			\caption{Die blauen Linien repr"asentieren \mctd, wobei daf"ur die Bilder aus (1,2,4,9,18,36,72) Kameraebenen aufsummiert wurden. Die Schr"age Linie extrapoliert dabei, wie aufw"andig die Simulation mit nur einer Kameraebene gewesen w"are.}
-			\label{fig:sphere2_error}
-		\end{figure}
-		\begin{figure}
-			\centering
-			\includegraphics[angle=90,height=1.0\textheight]{sphere3errorplot.eps}
-			\caption{Die blauen Linien repr"asentieren \mctd, wobei daf"ur die Bilder aus (1,2,4,9,18,36,72) Kameraebenen aufsummiert wurden. Die Schr"age Linie extrapoliert dabei, wie aufw"andig die Simulation mit nur einer Kameraebene gewesen w"are.}
-			\label{fig:sphere3_error}
-		\end{figure}
-	
+
+
 	\section{Einfaches Scheibenmodell}
 	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenh"ohe, die durch die Dichteverteilung (in zylindrischen Koordinaten $(s,\phi,z)$ und mit dem radialen Abstand $r=\sqrt{s^2+z^2}$)
 	\begin{align*}
@@ -194,14 +183,28 @@
 	
 		\begin{figure}
 			\centering
-			\includegraphics[width=1.1\textwidth]{diskdensity.eps}
+			\includegraphics[height=0.25\textheight]{diskdensity.eps}
 			\caption{Verteilung des Volumenstreuquerschnittes im Schnitt durch die x--z--Ebene der Scheibe.}
 			\label{fig:diskdensity}
 		\end{figure}
 	
-
-	
 	\subsection{Resultate}
+	
+		\begin{figure}
+			\centering
+			\includegraphics[height=1.0\textheight]{diskimageoverview.eps}
+			\caption{"Ubersicht "uber die Qualit"at der Bilder bei unterschiedlich langen Simulationsl"aufen. Bei den \mctd--Bilder in der rechten Spalte repr"asentieren die Zahlen in Klammern die Anzahl der benutzten Kameraebenen.}
+			\label{fig:pirate_sphere_imageoverview}
+		\end{figure}
+	
+		\begin{figure}
+			\centering
+			\includegraphics[width=1.0\textwidth]{diskerrorplot.eps}
+			\caption{Die rote Linie repr"asentiert \pirate--Simulationen. Die blauen Linien repr"asentieren \mctd. Die linke Linie steht f"ur Simulationen mit 72, die rechte f"ur Simulationen mit einer Kameraebene.}
+			\label{fig:disk_error}
+		\end{figure}
+	
+	
 	TODO: Konvergenz--Geschwindigkeits--Vergleich mit MC3D.
 	Stichpunkte:tau=97.6958 in der Mittelebene. 1m55s f"ur $10^6$ Photonen mit MC3D. 720M Photonen in 72Ebenen $\rightarrow$ Jede Ebene entspricht 10M Photonen
 	\section{Einordnung der Resultate}
