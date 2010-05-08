@@ -107,7 +107,7 @@
 	\end{equation}
 	gilt und sie sich daher in der Berechnung der Akzeptanzwahrscheinlichkeit
 	$$a(u'|u)=\text{min}\left(1,\frac{f(S(u'))T(u|u')}{f(S(u))T(u'|u)}\right)\stackrel{(\ref{eq:symmetric_transitionprob})}{=}\text{min}\left(1,\frac{f(S(u'))}{f(S(u))}\right)$$
-	herauskürzt. Im Falle der {\em frischen Mutation} kürzt sich die übergangswahrscheinlichkeit $T$ ebenfalls heraus, da $\mathcal{U}$ gleichmäßig gesampled wird.
+	herauskürzt. Im Falle der {\em frischen Mutation} kürzt sich die übergangswahrscheinlichkeit $T$ ebenfalls heraus, da aus $\mathcal{U}$ gleichmäßig gezogen wird.
 	In Pseudocode sieht der Algorithmus dann wie folgt aus:
 	\begin{algorithmic}
 		\STATE $u \leftarrow$ Anfangszustand
