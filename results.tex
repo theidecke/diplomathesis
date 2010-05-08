@@ -209,7 +209,7 @@
 			\label{fig:disk_contours}
 		\end{figure}
 	
-	Schauen wir uns die absoluten Fehler aufgetragen "uber die Anzahl generierter Pfade bzw. Photonen an (siehe Abb.~\ref{fig:disk_error}), schneidet \pirate anfangs vergleichbar gut ab wie \mctd mit 72 Kameraebenen. In Bezug auf die Rechenzeit sogar um eine Gr"o"senordnung besser.
+	Schauen wir uns die absoluten Fehler, aufgetragen "uber die Anzahl generierter Pfade bzw. Photonen, an (siehe Abb.~\ref{fig:disk_error}), schneidet \pirate anfangs vergleichbar gut ab wie \mctd mit 72 Kameraebenen. In Bezug auf die Rechenzeit sogar um eine Gr"o"senordnung besser.
 	
 		\begin{figure}
 			\centering
@@ -229,4 +229,5 @@
 	
 
 	\section{Einordnung der Resultate}
-	TODO: Gesamtvergleich zwischen MC3D und PIRaTE: PIRaTE schneller, MC3D nat"urlicheres Rauschen, PIRaTE bedarf weiterer Kalibration f"ur ZentralSternIntensit"at
+	Fassen wir die Resultate der beiden Testf"alle zusammen, k"onnen wir feststellen, dass \pirate f"ur moderate optische Tiefen ($\tau < 10$) h"aufig eine Gr"o"senordnung weniger Pfade braucht, um einen "ahnlichen Rauschpegel wie \mctd mit 72 Kameraebenen zu erreichen. Bei kleinen optischen Tiefen ist die Effizienz, bedingt durch erzwungene Streuung und das Z"ahlen nichtangenommener Pfade, sogar noch erheblich gr"o"ser. In Bezug auf die Rechenzeit ist die Effizienz im Vergleich zu \mctd mindestens ebensogut wie in Bezug auf die Anzahl der Pfade. Auf der negativen Seite ist zu erw"ahnen, dass die momentan implementierte Pfadgenerierungsmethode bei gro"sen, nicht umgehbaren, optischen Tiefen ($\tau>10$) ineffizient wird. Hier w"are es interessant, andere Pfadgenerierungsmethoden, die auf den optisch dicken Fall optimiert sind, zu entwickeln. Ein hierf"ur vielversprechnender Ansatz findet sich in \citet{Laszlo:2005p11056}\footnote{siehe hierzu auch \citep{DAldous:1994p11528} und \citep{Grassberger:2002p10876}}. Die Berechnung des direkten Lichtanteils in \pirate ist au"serdem noch nicht fehlerfrei. Hier muss genauer gekl"art werden, ob es sich um ein Undersamplingproblem, ein falsch definierter Sensor oder um ein anderes Problem handelt. Auch die Abweichungen im inneren Bereich der Scheibe bed"urfen einer genaueren Betrachtung und evtl. n"otiger Korrekturen. Des Weiteren kann das unnat"urlichere Rauschen im Vergleich zu \mctd ein Nachteil sein. Dies l"ast sich durch Parametertuning der Mutationsst"arke verh"altnism"a"sig leicht erreichen.
+	
