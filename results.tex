@@ -18,7 +18,7 @@
 	\subsection{analytische Lösung}\label{subsec:homsphere_analytic_solution}
 	\subsubsection{Green'sche Funktion für den Photonentransport zwischen Kugelschalen}
 	Um die korrekte radiale Intensitätsverteilung zu berechnen, bestimmen wir zunächst in Form der Green'schen Funktion $g$, wie sich die Photonen radial nach einem Streuvorgang ausgebreitet haben.
-	Genauer gibt $g$ an, wie groß der Anteil der Photonen, die auf einer Kugelschale mit Radius $r_0$ starten, beim Radius $r_1$ während des nächsten Streuvorganges ist (siehe Abb. \ref{fig:radial_greens_function_pdfcdf}):
+	Genauer gibt $g$ an, wie groß der Anteil der Photonen, die auf einer Kugelschale mit Radius $r_0$ starten, beim Radius $r_1$ während des nächsten Streuvorgangs ist (siehe Abb. \ref{fig:radial_greens_function_pdfcdf}):
 	\begin{align*}
 		g(r_0,r_1) =& 2 \pi \int_0^\pi r_1^2 \sin(\theta) \frac{\exp\left(-\sqrt{r_0^2-2 r_0 r_1 \cos(\theta)+r_1^2}\right)}{4 \pi (r_0^2-2 r_0 r_1 \cos(\theta)+r_1^2)} \text{d}\theta \\
 		=& \frac{1}{2}\frac{r_1}{r_0} \int_{|r_0-r_1|}^{r_0+r_1} \frac{e^{-t}}{t} dt \\
@@ -91,7 +91,7 @@
 	
 	
 	\subsection{Resultate}
-	Um die korrekte Berechnung des Strahlungstransports überprüfen zu können, simulieren wir das vorgestellte Problem der homogen streuenden Kugel für drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzlösung benutzen. Dieselben Konfigurationen berechnen wir außerdem mit \mctd und \pirate. Von \mctd lassen wir hierfür $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit öffnungswinkel von $\alpha=5^\circ$ für eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kameraöffnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \pirate benutzt eine einzige Kamera deren Empfindlichkeitskegel einen öffnungswinkel von $30'$ besitzt. Hier generieren wir die Bilder in mehreren unabhängigen Läufen mit Pfadanzahlen zwischen $10^5$ und $10^7$.
+	Um die korrekte Berechnung des Strahlungstransports überprüfen zu können, simulieren wir das vorgestellte Problem der homogen streuenden Kugel für drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzlösung benutzen. Dieselben Konfigurationen berechnen wir außerdem mit \mctd und \texttt{PIRaTE}. Von \mctd lassen wir hierfür $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit Öffnungswinkel von $\alpha=5^\circ$ für eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kameraöffnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \pirate benutzt eine einzige Kamera deren Empfindlichkeitskegel einen Öffnungswinkel von $30'$ besitzt. Hier generieren wir die Bilder in mehreren unabhängigen Läufen mit Pfadanzahlen zwischen $10^5$ und $10^7$.
 	
 		\begin{figure}
 			\centering
@@ -109,7 +109,7 @@
 			\label{fig:methodcomparisongraphics}
 		\end{figure}
 	
-	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (siehe Abb.~\ref{fig:sphere_image_cuts}) fällt auf, das \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur endültigen Klärung bedarf es aber einer genaueren Fehleranalyse.
+	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (siehe Abb.~\ref{fig:sphere_image_cuts}) fällt auf, das \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem Öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur endgültigen Klärung bedarf es aber einer genaueren Fehleranalyse.
 	
 		\begin{figure}
 			\centering
@@ -136,25 +136,25 @@
 		%	\label{fig:sphere_reference_images}
 		%\end{figure}
 	
-	Eine Auswahl der generierten Streubilder ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} dargestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der zum generieren benötigten Rechenzeit versehen. Die \mctd--Rechenzeiten sind trotz unterschiedlicher Photonenzahlen konstant. Dies liegt daran, dass die Bilder nur unterschiedlich viele aufsummierte Kameraebenen desselben Simulationslaufes darstellen und nicht die Summe der Ergebnisse verschiedener Simulationen.
+	Eine Auswahl der generierten Streubilder ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} dargestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der zum generieren benötigten Rechenzeit versehen. Die \texttt{MC3D}--Rechenzeiten sind trotz unterschiedlicher Photonenzahlen konstant. Dies liegt daran, dass die Bilder nur unterschiedlich viele aufsummierte Kameraebenen desselben Simulationslaufes darstellen und nicht die Summe der Ergebnisse verschiedener Simulationen.
 	
-	Aufgrund der unterschiedlichen zugrundeliegenden Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme objektiv zu vergleichen. Während \mctd eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gezählt werden oder nicht, generiert \pirate eine feste Zahl Pfade, die den Sensor erreicht haben aber unterschiedlich stark gewichtet in das Ergebnis eingehen. Während \mctd immer von einer inhomogenen Dichteverteilung ausgeht und aufintegriert, um optische Tiefen zu bestimmen, kann \pirate die optischen Tiefen im homogenen Fall direkt berechnen. \mctd generierte die Ergebnisse auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \pirate auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sollten die Ergebnisse als Grössenordnungsabschätzungen und nicht als absolut unumstößliche Messergebnisse interpretiert werden.
+	Aufgrund der unterschiedlichen zugrundeliegenden Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme objektiv zu vergleichen. Während \mctd eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gezählt werden oder nicht, generiert \pirate eine feste Zahl Pfade, die den Sensor erreicht haben aber unterschiedlich stark gewichtet in das Ergebnis eingehen. Während \mctd immer von einer inhomogenen Dichteverteilung ausgeht und aufintegriert, um optische Tiefen zu bestimmen, kann \pirate die optischen Tiefen im homogenen Fall direkt berechnen. \mctd generierte die Ergebnisse auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \pirate auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sollten die Ergebnisse als Größenordnungsabschätzungen und nicht als absolut unumstößliche Messergebnisse interpretiert werden.
 	
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{mc3dsphereimageoverview.eps}
-			\caption{übersicht über die Qualität und Simulationszeiten der Bilder bei Akkumulation unterschiedlich vieler Kameraebenen der \mctd--Simulationen.}
+			\caption{Übersicht über die Qualität und Simulationszeiten der Bilder bei Akkumulation unterschiedlich vieler Kameraebenen der \mctd--Simulationen.}
 			\label{fig:mc3d_sphere_imageoverview}
 		\end{figure}
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{piratesphereimageoverview.eps}
-			\caption{übersicht über die Qualität der Bilder bei unterschiedlich langen \pirate--Simulationsläufen.}
+			\caption{Übersicht über die Qualität der Bilder bei unterschiedlich langen \pirate--Simulationsläufen.}
 			\label{fig:pirate_sphere_imageoverview}
 		\end{figure}
 	
 	
-	In Abb.~\ref{fig:sphere_errors} ist für die verschiedenen optischen Tiefen der absolute Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Da bei \mctd die verschiedenen Streubilder nicht durch mehrere Simulationsläufe sondern mehrere Kameraebenen erzeugt wurden, sind für \mctd zwei Kurven eingezeichnet. Beide Kurven fassen die Summation unterschiedlich vieler Kameraebenen der durchgeführten Simulation als die Ergebnisse verschiedener Simulationen mit unterschiedlicher Anzahl generierter Photonen aber konstanter Kameraebenenanzahl auf. Die linke Kurve interpretiert sie als die Ergebnisse einer Simulation mit 72, die rechte als Ergebnis einer Simulation mit nur einer Kameraebenen auf.
+	In Abb.~\ref{fig:sphere_errors} ist für die verschiedenen optischen Tiefen der absolute Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Da bei \mctd die verschiedenen Streubilder nicht durch mehrere Simulationsläufe sondern mehrere Kameraebenen erzeugt wurden, sind für \mctd zwei Kurven eingezeichnet. Beide Kurven fassen die Summation unterschiedlich vieler Kameraebenen der durchgeführten Simulation als die Ergebnisse verschiedener Simulationen mit unterschiedlicher Anzahl generierter Photonen aber konstanter Kameraebenenanzahl auf. Die linke Kurve interpretiert sie als die Ergebnisse einer Simulation mit 72, die rechte als Ergebnis einer Simulation mit nur einer Kameraebene.
 	
 	In Bezug auf die Rechenzeit ist \pirate in allen drei optischen Tiefen gleichwertig oder (besonders im optisch dünnen Fall) um mehrere Größenordnungen schneller. Dabei muß aber auch berücksichtigt werden, dass \pirate den homogenen Fall speziell behandelt und dadurch effizienter berechnen kann, wohingegen \mctd immer von inhomogenen Dichteverteilungen ausgeht.
 	
@@ -200,7 +200,7 @@
 	
 	Wie beim ersten Testfall bestimmen wir auch hier die absoluten Fehler der Streubilder. Als Referenzbild dient die Summe aller 72 Kameraebenen der \texttt{MC3D}--Simulation, die wir noch jeweils horizontal, vertikal und am Ursprung spiegeln und anschließend über die vier Variationen mitteln.
 
-	In Abbildung \ref{fig:disk_contours}	lässt sich erkennen, dass die Ergebnisse qualitativ gut übereinstimmen. Durch erzwungene Streuung und Berücksichtigung nichtangenommener Pfade (siehe Abschnitt \ref{cha:program_description}) reicht der konvergierte Bereich im \texttt{PIRaTE}--Bild weiter nach oben und unten hinaus als im \texttt{MC3D}--Bild.
+	In Abbildung \ref{fig:disk_contours}	lässt sich erkennen, dass die Ergebnisse qualitativ gut übereinstimmen. Durch erzwungene Streuung und Berücksichtigung nichtangenommener Pfade (siehe Abschnitt \ref{cha:program_description}) reicht der konvergierte Bereich im \texttt{PIRaTE}--Bild weiter nach oben und unten hinaus als im \texttt{MC3D}--Bild. Dies erlaubt es, auch Streuereignisse zu berücksichtigen die sehr selten auftreten und daher mit ``natürlicher'' Simulation von Photonen schwer zu erfassen sind.
 	
 		\begin{figure}
 			\centering
@@ -218,7 +218,7 @@
 			\label{fig:disk_error}
 		\end{figure}
 	
-	Hin zu größeren Pfadanzahlen nähert sich der Fehler allerdings asymptotisch einem Wert größer null, was bedeutet, dass \pirate nicht exakt gegen dasselbe Bild konvergiert. In Abb.~\ref{fig:resdiskplot} ist die Abweichung qualitativ farblich dargestellt. Es ist zu erkenn, dass im Innenbereich das Bild von \pirate zu dunkel ist. Es konnte bisher allerdings nicht geklärt werden, ob die Ursache in einer Abweichung des Modells, einem Programmfehler oder im Verfahren begründet liegt.
+	Hin zu größeren Pfadanzahlen nähert sich der Fehler allerdings asymptotisch einem Wert größer null, was bedeutet, dass \pirate nicht exakt gegen dasselbe Bild konvergiert. In Abb.~\ref{fig:resdiskplot} ist die Abweichung qualitativ farblich dargestellt. Es ist zu erkennen, dass im Innenbereich das Bild von \pirate zu dunkel ist. Es konnte bisher allerdings nicht geklärt werden, ob die Ursache in einer Abweichung des Modells, einem Programmfehler oder im Verfahren begründet liegt.
 	
 		\begin{figure}
 			\centering

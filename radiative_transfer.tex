@@ -262,7 +262,7 @@
 		&=\sigma(\location{r}) \int_{\mathcal{S}^2} \int_{s'=0}^\infty k(\location{r},\omega',\omega) e^{-\tau(\location{r}-s' \omega',\location{r})}\varepsilon(\location{r}-s' \omega',\omega') \underbrace{\text{d}s' \text{d}\omega'}_{=\frac{\text{d}\location{r}'}{s'^2}} \\
 		&=\sigma(\location{r}) \int_{\mathbb{R}^3} k(\location{r},\omega',\omega) \frac{e^{-\tau(\location{r}',\location{r})}}{\|\location{r}-\location{r}'\|^2}\varepsilon(\location{r}',\omega') \,\text{d}\location{r}'
 	\end{align*}
-	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale zugunsten eines Volumenintegrals über den gesamten Raum sowie eines geometrischen Verdünnungsfaktors tauschen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so um, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
+	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale zugunsten eines Volumenintegrals über den gesamten Raum und einen geometrischen Verdünnungsfaktor tauschen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so um, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
 	\begin{multline}
 		\left(\mathbf{KG}\varepsilon\right)(\location{r}_i \rightarrow\location{r}_{i+1})=\\
 		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\varepsilon(\location{r}_{i-1} \rightarrow\location{r}_i)d\location{r}_{i-1}
@@ -319,7 +319,7 @@
 	$${\overline x}=\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1},$$
 	mit $k\in\{0,1,2,\dots\}$ und $\location{r}_i \in \mathbb{R}^3$ für alle $i$. Wir definieren mittels
 	$$\mu_k(D)=\int_D d\nu d\location{r}_0\cdots d\location{r}_{k+1}$$
-	ein Maß für Pfade der Länge $k$, wobei $D\subset\Omega_k$ eine Teilmenge von Pfaden dieser Länge repräsentiert und $d\location{r}_i$ das geometrische Volumenmaß sowie $d\nu$ das Integrationsmaß über die positiven reellen Zahlen darstellt. Der Raum aller Pfade ist die Vereinigung
+	ein Maß für Pfade der Länge $k$, wobei $D\subset\Omega_k$ eine Teilmenge von Pfaden dieser Länge repräsentiert und $d\location{r}_i$ das geometrische Volumenmaß sowie $d\nu$ das Integrationsmaß über die positiven reellen Zahlen darstellt. Die Menge aller Pfade ist die Vereinigung
 	$$\Omega=\bigcup_{k=0}^\infty \Omega_k$$
 	der Mengen von Pfaden verschiedener Längen. Daß Maß für die Integration von beliebigen Teilmengen des Pfadraumes $D\subset\Omega$ ist nun durch
 	$$\mu(D)=\sum_{k=0}^\infty \mu_k(D\cap\Omega_k)$$
