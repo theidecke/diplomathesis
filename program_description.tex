@@ -1,2 +1,42 @@
 	\chapter{Programmbeschreibung}\label{cha:program_description}
+	In diesem Abschnitt soll eine Implementation einiger der in den bisherigen Abschnitten vorgestellten Ideen in Form des Computerprogramms \texttt{PIRaTE} (=\texttt{P}ath \texttt{I}ntegral \texttt{Ra}diative \texttt{T}ransfer with \texttt{E}ase) vorgestellt werden. Dabei soll zum einen ein Überblick über das Programm durch eine abstrakte Modulbeschreibung gegeben werden. Zum anderen sollen aber auch interessante Implementationsdetails herausgegriffen und vorgestellt werden.
+	
 	TODO: Programmbeschreibung in Worten bzw. Pseudocode, Modulbeschreibung, Details in evtl. Anhang auslagern, Erhöhte Modularität beim robusten MH-Algo durch feste Mutationen, die über die Sample--Generierungsmethode adaptiv angepasst werden.
+	
+	\section{Allgemeines}
+	\subsection{Haskell}
+	\pirate ist in der rein funktionalen Programmiersprache {\em Haskell} geschrieben. Funktionale Programmiersprachen bauen auf der Idee auf, Programme als Aneinanderreihung vieler kleiner Funktionen darzustellen, von denen jede Funktion eine bestimmte Aufgabe erfüllt. Das Ergebnis einer Funktion hängt dabei nur von den Eingabeparametern ab, d.h. gleiche Eingabewerte führen immer zum gleichen Rückgabewert, was genau der mathematischen Idee einer Funktion entspricht. Funktionen sind somit nebeneffektfrei, d.h. sie können weder auf Zustände (wie z.B. die Uhrzeit oder der Inhalt einer Datei) ausserhalb ihrer Eingabeparameter zurückgreifen, noch kann die Funktion selber, vom Rückgabewert abgesehen, Einfluß auf den ``Zustand der Welt'' (d.h. den Inhalt von Dateien oder eine Ausgabe auf dem Bildschirm) nehmen.
+	
+	Da der Sinn eines Programmes letztendlich in seinen Nebeneffekten (d.h. Ein- und Ausgabe) liegt, lässt sich dieses Paradigma natürlich nicht beliebig weit treiben. Haskell bietet also auch Möglichkeiten zur Ein- und Ausgabe. Es wird jedoch als guter Stil angesehen, diese auf ein Minimum zu beschränken.
+	
+	In Haskell existieren ausserdem keine Variablen, sondern nur lokale Konstanten, d.h. Programme der Art
+		\begin{algorithmic}
+			\STATE $x\leftarrow 41$
+			\STATE $x\leftarrow x+1$
+		\end{algorithmic}
+	sind in Haskell nicht zulässig, da keine Art von Zustandsspeicherung ausser der Weitergabe als Funktionsparameter gestattet ist. Stattdessen wäre
+		\begin{algorithmic}
+			\STATE $x\leftarrow 41$
+			\STATE $y\leftarrow x+1$
+		\end{algorithmic}
+	eine gültige Alternative. Was sich zunächst wie ein unverschmerzlicher Nachteil anhört, vermeidet automatisch eine Vielzahl häufig auftretender Programmierfehler, deren Ursache letztendlich darin liegt, dass die Möglichkeit einer Variablen einen neuen Wert zuzuweisen zwangsläufig mit sich bringt, dass die Ausführungsreihenfolge der Instruktionen die Bedeutung des Programmes ändern kann. In Haskell wird hingegen die Ausführungsreihenfolge nicht durch den Programmierer spezifiziert, sondern lediglich die Abhängigkeiten der verschiedenen Berechnungen voneinander. Der Compiler kann die Ausführungsreihenfolge dann durch Auflösen der Abhängigkeiten selbst bestimmen.
+	
+	Eine weitere Besonderheit von Haskell besteht darin, dass standardmäßig Funktionen nur nach Bedarf ausgewertet werden, d.h. nicht dann wenn sie aufgerufen werden, sondern erst dann wenn der Wert später im Verlauf der Rechnung gebraucht wird. Dies erlaubt u.a. das Arbeiten mit unendlich großen Datenstrukturen (wie unendlich langen Listen) und eine einfachere Trennung des  Programmcodes in Teile zum ausschließlichen Generieren bzw. Konsumieren von Daten.
+		
+	Eine genauere Beschreibung von Haskell würde den Rahmen dieser Arbeit sprengen, deshalb sei für mehr Details auf die Webseite
+	
+	\url{http://www.haskell.org}
+	
+	verwiesen. Ein lesenswerter Essay von John Hughes zur Motivation hinter funktionaler Programmierung ist:
+	
+	{\em Why Functional Programming Matters}
+	
+	(\url{http://www.md.chalmers.se/~rjmh/Papers/whyfp.html}).
+	
+	
+	\section{Modulbeschreibung}
+	
+	
+	
+	
+	
