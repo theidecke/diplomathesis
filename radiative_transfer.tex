@@ -154,22 +154,23 @@
 	Was zunächst nur als theoretisches Konstrukt ohne praktischen Nutzen erscheint, wird sich später in Verbindung mit Monte--Carlo--Sampling als vielseitiges und effizientes Werkzeug erweisen.
 	
 	
-	\section{Übersicht etablierter Lösungsverfahren}
-	TODO: Übersicht benutzter Lösungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so spät?, etc...)
+	%\section{Übersicht etablierter Lösungsverfahren}
+	%TODO: Übersicht benutzter Lösungsverfahren, Meilensteine (wann zum ersten mal Polarisation gerechnet?, Warum etablieren sich MC-Verfahren so spät?, etc...)
 		
 	\chapter{Pfadintegralformulierung der Strahlungstransportgleichung}\label{chapter:path_radiative_transfer}
-	In diesem Abschnitt leiten wir eine alternative mathematische Formulierung der Strahlungstransportgleichung einerseits und ihrer Lösung (genau genommen, Messungen der Lösung im Sinne von (\ref{eq:messgleichung})) andererseits her. Dies führt uns durch die verschiedenen auf das Problem eingenommenen Blickwinkel zu einem besseren Verständnis von Strahlungstransport und gibt uns darüber hinaus einen neuen Ansatzpunkt zur effizienten Lösung des Strahlungstransportproblems.
+	In diesem Abschnitt leiten wir eine alternative Formulierung der Strahlungstransportgleichung einerseits und ihrer Lösung (genauer von Messungen der Lösung im Sinne von (\ref{eq:messgleichung})) andererseits her. Dies führt uns zu einem besseren Verständnis des Strahlungstransports und gibt uns darüber hinaus neue Ansatzpunkte zur effizienten Lösung des Strahlungstransportproblems.
 	
-	Die Idee zu dieser Formulierung kommt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberflächen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt außerdem die Herleitung der integralen Form der Strahlungstransportgleichung.
+	Die Idee zu dieser Formulierung stammt aus der Dissertation von \citet{Veach:1997p9136}, wird aber schon in \citep{Arvo:1995p9257} vorgestellt. Beide Dissertationen behandeln allerdings nur den Strahlungstransport zwischen Oberflächen. In der Arbeit von \citet{Pauly:2000p5705} wird dies auf partizipierende Medien ausgedehnt. Aus \citep{Arvo:1993p9035} stammt außerdem die Herleitung der integralen Form der Strahlungstransportgleichung.
 	
 	
 	\section{Strahlungstransportgleichung in integraler Form}
-	In differentieller Form nimmt die Strahlungstransportgleichung, wie wir in Abschnitt (\ref{subsec:strahlungsgroessen}) gesehen haben, folgende Gestalt an:
+	Für diesen und die folgenden Abschnitte lassen wir den Index $\nu$ aus Übersichtsgründen weg, womit gemeint ist, dass wir stellvertretend für alle Frequenzen ein einzelnes monochromatisches Strahlungstransportproblem einer beliebigen Frequenz nehmen. Wenn wir zum polychromatischen Fall zurückkehren führen wir die Indizes wieder ein.
+	
+	In differentieller Form nimmt die Strahlungstransportgleichung, wie wir in Abschnitt (\ref{subsec:strahlungsgroessen}) gesehen haben dann folgende Gestalt an:
 		\begin{equation}
 			\omega \cdot \nabla I(\location{r},\omega)+\overbrace{\left(\kappa(\location{r})+\sigma(\location{r})\right)}^{=:\xi(\location{r})}I(\location{r},\omega)=\varepsilon(\location{r},\omega)+\sigma(\location{r}) \int_{\mathcal{S}^2} k(\location{r},\omega',\omega)I(\location{r},\omega') d\omega'.
 			\label{eq:diff.STG}
 		\end{equation}
-	Für diesen und die folgenden Abschnitte lassen wir dabei den Index $\nu$ aus übersichtsgründen weg, womit gemeint ist, dass wir stellvertretend für alle Frequenzen ein einzelnes monochromatisches Strahlungstransportproblem einer beliebigen Frequenz nehmen. Wenn wir zum polychromatischen Fall zurückkehren führen wir die Indizes wieder ein.
 	
 	Schreiben wir das Skalarprodukt zwischen $\omega$ und dem $\nabla$--Operator als Richtungsableitung
 	\newcommand{\dds}{\frac{\text{d}}{\text{d}s}}
@@ -203,8 +204,8 @@
 		\Leftrightarrow\qquad e^{-{\hat \tau}(s)} {\hat I}(s) - {\hat I}(0) &= -\int_{s'=0}^s e^{-{\hat \tau}(s')} {\hat Q}(s') \text{d}s' \nonumber \\
 		\Leftrightarrow\qquad {\hat I}(0) &= e^{-{\hat \tau}(s)} {\hat I}(s) + \int_{s'=0}^s e^{-{\hat \tau}(s')} {\hat Q}(s') \text{d}s' \label{eq:diff.STGpreintegral}
 	\end{align}
-	leicht nach ${\hat I}(0)$ auflösen lässt. Obwohl ${\hat Q}(s)$ lokal die Intensität $I$ über alle Raumrichtungen integriert, dürfen wir für die Lösung von (\ref{eq:diff.STGhatted}) $Q$ als unabhängig von $I$ behandeln, da die Schnittmenge zwischen der Geraden im Raum, auf der wir die Differentialgleichung lösen, und der Menge aller Raumrichtungen $\mathcal{S}^2$ bei der Integration über alle Raumrichtungen eine Nullmenge ist und somit für physikalisch relevante Strahlungsintensitätsfelder (d.h. solche, die hinreichend stetig/beschränkt bzw. keine Delta--Distribution sind) keinen Beitrag zum Integral leistet.
-	Setzen wir in (\ref{eq:diff.STGpreintegral}) für die Abkürzungen wieder die ursprünglichen Ausdrücke ein, erhalten wir die {\em Strahlungstransportgleichung in integraler Form}:
+	leicht nach ${\hat I}(0)$ auflösen lässt. Obwohl ${\hat Q}(s)$ lokal die Intensität $I$ über alle Raumrichtungen integriert, dürfen wir die Lösung von (\ref{eq:diff.STGhatted}) $Q$ als unabhängig von $I$ behandeln, da die Schnittmenge zwischen der Geraden im Raum, auf der wir die Differentialgleichung lösen, und der Menge aller Raumrichtungen $\mathcal{S}^2$ bei der Integration über alle Raumrichtungen eine Nullmenge ist und somit für physikalisch relevante Strahlungsintensitätsfelder (d.h. solche, die hinreichend stetig/beschränkt bzw. keine Delta--Distribution sind) keinen Beitrag zum Integral leistet.
+	Setzen wir in (\ref{eq:diff.STGpreintegral}) die ursprünglichen Ausdrücke ein, erhalten wir die {\em Strahlungstransportgleichung in integraler Form}:
 	\begin{multline}
 		I(\location{r},\omega) = e^{-\tau(\location{r},\location{r}-s\,\omega)} {\hat I}(\location{r},\location{r}-s\,\omega) + \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s\,\omega)} \;\cdot \\
 		\quad\cdot\left( \varepsilon(\location{r}-s'\,\omega,\omega) + \sigma(\location{r}-s'\,\omega)
@@ -222,9 +223,7 @@
 
 	\section{Strahlungstransportgleichung in Operator--Form}
 	Schauen wir uns die einzelnen Teile der Gleichung (\ref{eq:int.STGdarkbg}) genauer an.
-	Der innere Teil von (\ref{eq:int.STGdarkbg}) in eckigen Klammern summiert an einem festen Ort ($\location{r}-s'\,\omega$), mit der Streuphasenfunktion $k$ gewichtet, die einfallenden Intensitäten auf, die in Richtung $\omega$ gestreut werden. Anschließend skaliert der Volumenstreuquerschnitt die aufintegrierte Intensität entsprechend dem lokal vorhandenen Medium und gibt dabei dem Ausdruck die Einheit einer Emissivität.
-	Der restliche äußere Teil der Gleichung addiert die eben gewonnene Emissivität durch Einstreuung zu der lokal durch Ausstrahlung erzeugten Emissivität an jedem Punkt auf einer Geraden hinter dem Punkt $\location{r}$ und summiert die mit einem der optischen Tiefe entsprechenden Abschwächungsfaktor gewichteten, in Richtung $\omega$ zeigenden, Emissivitäten, entlang der Geraden zur Gesamtintensität am Ort $\location{r}$ in Richtung $\omega$ auf.
-	Der Gesamtausdruck lässt sich durch Einführung zweier neuer Operatoren
+	Der innere Teil von (\ref{eq:int.STGdarkbg}) summiert und gewichtet an einem festen Ort ($\location{r}-s'\,\omega$) mit der Streuphasenfunktion $k$ die einfallenden Intensitäten in Richtung $\omega$. Anschließend wird diese Intensität entsprechend dem lokal vorhandenen Medium skaliert. 	Der Gesamtausdruck lässt sich durch Einführung zweier neuer Operatoren
 	\begin{align*}
 		\left(\mathbf{G}\varepsilon\right)(\location{r},\omega)&:=\int_{s'=0}^\infty e^{-\tau(\location{r}-s' \omega,\location{r})}\varepsilon(\location{r}-s' \omega,\omega) ds' \\
 		\left(\mathbf{K}I\right)(\location{r},\omega)&:=\sigma(\location{r})\int_{S^2} k(\location{r},\omega',\omega) I(\location{r},\omega') d\omega'
@@ -233,26 +232,26 @@
 		\mathbf{G} : \varepsilon(\location{r},\omega) \mapsto I(\location{r},\omega) , \qquad
 		\mathbf{K} : I(\location{r},\omega) \mapsto \varepsilon(\location{r},\omega)
 	\end{equation*}
-	in elementarere Prozesse aufteilen. Wir nennen $\mathbf{G}$ den sogenannten {\em Fortpflanzungs--Operator} und $\mathbf{K}$ den {\em Streu--Operator}. Beides sind Integraloperatoren auf dem Raum der Funktionen $f : \mathbb{R}^3 \times \mathcal{S}^2 \to \mathbb{R}_+$, die vom Teilchen--Phasenraum auf die positiven reellen Zahlen abbilden. Beide haben komplementäre Lokalitäten. Während $\mathbf{K}$ lokal im Ort über alle Raumrichtungen integriert, ist $\mathbf{G}$ lokal in der Raumrichtung und integriert über alle Orte entlang einer Geraden im Raum. Dabei bildet $\mathbf{K}$ von einem Strahlungsintensitätsfeld auf ein Emissivitätsfeld ab. Bei $\mathbf{G}$ ist es umgekehrt, es macht aus einem Emissivitätsfeld wieder ein Strahlungsintensitätsfeld.
-	Mit diesen neuen Operatoren wird aus Gleichung (\ref{eq:int.STGdarkbg}) die {\em Operatorform der Strahlungstransportgleichung}
+	in elementare Prozesse aufteilen. Wir nennen $\mathbf{G}$ den {\em Fortpflanzungs--Operator} und $\mathbf{K}$ den {\em Streu--Operator}. Beide sind Integraloperatoren auf dem Raum der Funktionen $f : \mathbb{R}^3 \times \mathcal{S}^2 \to \mathbb{R}_+$, die vom Phasenraum der Teilchen auf die positiven reellen Zahlen abbilden. Während $\mathbf{K}$ an einem Ort über alle Raumrichtungen integriert, ist $\mathbf{G}$ konstant in der Raumrichtung und integriert über alle zurückliegenden Orte entlang einer Geraden im Raum. Dabei bildet $\mathbf{K}$ ein Strahlungsintensitätsfeld auf ein Emissivitätsfeld ab, bei $\mathbf{G}$ ist es umgekehrt.
+	Mit diesen Operatoren erhalten wir aus Gleichung (\ref{eq:int.STGdarkbg}) die {\em Operatorform der Strahlungstransportgleichung}
 	\begin{equation}
 		I=\mathbf{G}(\varepsilon + \mathbf{K}I),
 		\label{eq:op.STG}
 	\end{equation}
-	die wir nach $I$ auflösen können:
+	die wir formal nach $I$ auflösen können:
 	\begin{align}
-		(\ref{eq:op.STG}) \Leftrightarrow I&=\mathbf{G}\varepsilon + \mathbf{GK}I \nonumber \\
+		I&=\mathbf{G}\varepsilon + \mathbf{GK}I \nonumber \\
 		\Leftrightarrow (\mathbf{1}-\mathbf{GK})I &= \mathbf{G}\varepsilon \nonumber \\
 		\Leftrightarrow I &= (\mathbf{1}-\mathbf{GK})^{-1}\mathbf{G}\varepsilon \label{eq:op.STGinvert} \\
 		\Leftrightarrow I &= \sum_{k=0}^\infty (\mathbf{GK})^k \mathbf{G}\varepsilon \label{eq:op.STGneumann} \\
 		&=\mathbf{G}\varepsilon + \mathbf{GKG}\varepsilon + \mathbf{GKGKG}\varepsilon + \hdots \label{eq:op.STGneumann.explicit} \\
 		\Leftrightarrow I &=\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon \label{eq:op.STGkg}
 	\end{align}
-	Damit ist das Strahlungstransportproblem formal gelöst! Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist dann zulässig wenn die Operatornorm des Operators $\mathbf{GK}$ kleiner als eins ist und damit sichergestellt ist, dass die Neumann--Reihe konvergiert. Für alle praktisch relevanten Probleme ist dies der Fall \citep[s.][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch lässt sich das Gleichgewichts--Strahlungsintensitätsfeld als Summe aus Intensitätsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung mit einem Messinstrument entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei müssen Pfade jeder möglichen Länge (sprich Anzahl an Streuereignissen) berücksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ nach links ausgeklammert um den $\mathbf{KG}$--Operator herauszustellen.
+	Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist zulässig, wenn $\|\mathbf{GK}\|<1$ gilt und damit die Konvergenz der Neumann--Reihe sichergestellt ist. Für alle praktisch relevanten Probleme ist diese Bedingung erfüllt \citep[s.][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch lässt sich das Strahlungsintensitätsfeld im Gleichgewicht als Summe aus Intensitätsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei müssen Pfade jeder möglichen Länge, also Anzahl an Streuereignissen, berücksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ ausgeklammert um den zusammengesetzten $\mathbf{KG}$--Operator herauszustellen.
 	
 	
 	\section{KG--Operator in Volumenform}
-	Schauen wir uns den $\mathbf{KG}$--Operator genauer an. Nachdem $\mathbf{KG}$ ein Emissivitätsfeld durch Fortpflanzung zu einem Intensitätsfeld aufintegriert hat, wird dieses durch die anschliessende Streuung erneut auf ein Emissivitätsfeld abgebildet:
+	Schauen wir uns diesen Operator genauer an. Nachdem $\mathbf{KG}$ ein Emissivitätsfeld durch Fortpflanzung zu einem Intensitätsfeld aufintegriert hat, wird dieses durch die anschließende Streuung erneut auf ein Emissivitätsfeld abgebildet:
 	\begin{equation*}
 		\mathbf{KG} : \varepsilon(\location{r},\omega) \mapsto \varepsilon(\location{r},\omega)
 	\end{equation*}
@@ -263,27 +262,29 @@
 		&=\sigma(\location{r}) \int_{\mathcal{S}^2} \int_{s'=0}^\infty k(\location{r},\omega',\omega) e^{-\tau(\location{r}-s' \omega',\location{r})}\varepsilon(\location{r}-s' \omega',\omega') \underbrace{\text{d}s' \text{d}\omega'}_{=\frac{\text{d}\location{r}'}{s'^2}} \\
 		&=\sigma(\location{r}) \int_{\mathbb{R}^3} k(\location{r},\omega',\omega) \frac{e^{-\tau(\location{r}',\location{r})}}{\|\location{r}-\location{r}'\|^2}\varepsilon(\location{r}',\omega') \,\text{d}\location{r}'
 	\end{align*}
-	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale zugunsten eines Volumenintegrals über den gesamten Raum und einen geometrischen Verdünnungsfaktor tauschen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so um, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
+	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale durch ein Volumenintegral über den gesamten Raum und einen geometrischen Verdünnungsfaktor ersetzen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
 	\begin{multline}
 		\left(\mathbf{KG}\varepsilon\right)(\location{r}_i \rightarrow\location{r}_{i+1})=\\
 		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\varepsilon(\location{r}_{i-1} \rightarrow\location{r}_i)d\location{r}_{i-1}
 		\label{eq:KGvolume_intermediate}
 	\end{multline}
-	Wir führen zusätzlich noch die Abkürzung
+	Wir führen zusätzlich noch die Abkürzungen
 	\begin{align*}
 		\scatter{i}\;&:=\sigma(\location{r}_i)k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\\
-			&=\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})
+			&=\sigma(\location{r}_i)k\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\\
+		\propagate{i-1}{i}&:=\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}
 	\end{align*}
-	ein, so dass wir (\ref{eq:KGvolume_intermediate}) zusammen mit den in Abschnitt \ref{subsec:nomenklatur} eingeführten Schreibweisen noch kompakter als
+	ein, so dass wir (\ref{eq:KGvolume_intermediate})% zusammen mit den in Abschnitt \ref{subsec:nomenklatur} eingeführten Schreibweisen
+	noch kompakter als
 	\begin{equation}
-		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\frac{e^{-\tau_{(i-1,i)}}}{d_{(i-1,i)}^2}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
+		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\propagate{i-1}{i}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
 		\label{eq:KGvolume}
 	\end{equation}
 	schreiben können.
 
 
 	\section{Pfadintegrallösung der Strahlungstransportgleichung}
-	Wir setzen die Neumann--Reihen--Lösung (\ref{eq:op.STGkg}) in die monochromatische Meßgleichung (\ref{eq:messgleichung_mono}) ein und erhalten
+	Wir setzen die Reihenlösung (\ref{eq:op.STGkg}) in die monochromatische Messgleichung (\ref{eq:messgleichung_mono}) ein und erhalten
 	\begin{align}
 		M_\nu&=\int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
 		&=\sum_{k=0}^\infty \int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\mathbf{G} (\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
@@ -293,30 +294,30 @@
 	\end{align}
 	Durch rekursives Einsetzen von (\ref{eq:KGvolume}) in (\ref{eq:STGprepathsolution}) und Neuanordnung der Terme erhalten wir dann als Ergebnis einer monochromatischen Messung:
 	\begin{equation}
-		M_\nu=\sum_{k=0}^\infty \underbrace{\idotsint}_{(k+2)\text{--mal}}\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\frac{e^{-\tau_{\nu,(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{\nu,(k,k+1)}}}{d_{(k,k+1)}^2} W_{\nu,(k,k+1)} \;\text{d}\location{r}_0 \dotsm \text{d}\location{r}_{k+1} .
+		M_\nu=\sum_{k=0}^\infty \underbrace{\idotsint}_{(k+2)\text{--mal}}\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\propagate{i-1}{i}\scatter{i}\right]\propagate{k}{k+1} W_{\nu,(k,k+1)} \;\text{d}\location{r}_0 \dotsm \text{d}\location{r}_{k+1} .
 		\label{eq:STGpathsolution}
 	\end{equation}
-	Das Ergebnis ist eine Summe aus reinen $(k+2)$--fachen Volumenintegralen über den ganzen Raum, wobei über den möglichen Start- und Endpunkt sowie die $k$ Streupunkte innerhalb des Photonenpfades integriert wird.
-	Anschaulich müssen wir also die Beiträge von Pfaden jeder Anzahl an Streupunkten und jeder möglichen Anordnung von Emissions-, Streu- und Mess\-orten aufsummieren. Dies wird vielleicht klarer, wenn wir die ersten Terme der Summe explizit ausformulieren:
+	Das Ergebnis ist eine Summe aus Volumenintegralen über den Raum, wobei über mögliche Start- und Endpunkte sowie $k$ Streupunkte auf dem Photonenpfad integriert wird.
+	Anschaulich müssen wir also Beiträge von Pfaden jeder Anzahl an Streupunkten und jeder möglichen Anordnung von Emissions-, Streu- und Mess\-orten aufsummieren. Dies wird vielleicht klarer, wenn wir die ersten Terme der Summe explizit ausformulieren:
 	\begin{align*}
-		M_\nu&=\iint_{(\mathbb{R}^3)^2}\varepsilon_{\nu,(0,1)}\frac{e^{-\tau_{\nu,(0,1)}}}{d_{(0,1)}^2} W_{\nu,(0,1)} \;\text{d}\location{r}_0\text{d}\location{r}_1 \\
-		&+\iiint_{(\mathbb{R}^3)^3}\varepsilon_{\nu,(0,1)}\frac{e^{-\tau_{\nu,(0,1)}}}{d_{(0,1)}^2}\scatter{1}\frac{e^{-\tau_{\nu,(1,2)}}}{d_{(1,2)}^2} W_{\nu,(1,2)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2 \\
-		&+\iiiint_{(\mathbb{R}^3)^4}\varepsilon_{\nu,(0,1)}\frac{e^{-\tau_{\nu,(0,1)}}}{d_{(0,1)}^2}\scatter{1}\frac{e^{-\tau_{\nu,(1,2)}}}{d_{(1,2)}^2}\scatter{2}\frac{e^{-\tau_{\nu,(2,3)}}}{d_{(2,3)}^2} W_{\nu,(2,3)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2\text{d}\location{r}_3 \\
+		M_\nu&=\iint_{(\mathbb{R}^3)^2}\varepsilon_{\nu,(0,1)}\propagate{0}{1} W_{\nu,(0,1)} \;\text{d}\location{r}_0\text{d}\location{r}_1 \\
+		&+\iiint_{(\mathbb{R}^3)^3}\varepsilon_{\nu,(0,1)}\propagate{0}{1}\scatter{1}\propagate{1}{2} W_{\nu,(1,2)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2 \\
+		&+\iiiint_{(\mathbb{R}^3)^4}\varepsilon_{\nu,(0,1)}\propagate{0}{1}\scatter{1}\propagate{1}{2}\scatter{2}\propagate{2}{3} W_{\nu,(2,3)} \;\text{d}\location{r}_0\text{d}\location{r}_1\text{d}\location{r}_2\text{d}\location{r}_3 \\
 		&+\hdots
 	\end{align*}
 	Diese Form der Lösung des Strahlungstransportproblems hat mehrere Vorteile:
 	\begin{itemize}
 		\item{Die Lösung besitzt eine anschauliche Interpretation}
-		\item{Die Lösung ist explizit, es muss keine implizite Integro--Differentialgleichung wie (\ref{eq:stg_diff}) gelöst werden}
-		\item{Die Lösung ist ein reines Integrationsproblem und somit ein gutes Gegenstück zu hochdimensionalen Monte--Carlo--Integrations--Verfahren, wie wir in Abschnitt \ref{subsec:integrationsproblem_comparison} sehen werden}
+		\item{Die Lösung ist explizit, d.h. es muss keine implizite Integro--Differentialgleichung wie (\ref{eq:stg_diff}) gelöst werden}
+		\item{Die Lösung ist ein reines Integrationsproblem und somit mit Monte--Carlo--Verfahren lösbar, wie wir in Abschnitt \ref{subsec:integrationsproblem_comparison} sehen werden}
 	\end{itemize}
 	Das polychromatische Messergebnis ergibt sich nun einfach durch Einsetzen von (\ref{eq:STGpathsolution}) in (\ref{eq:messgleichung_frommonos}).
 
 
 	\section{Elimination der Neumann--Reihe}\label{sec:neumann_elimination}
-	Unsere Darstellung der Lösung (\ref{eq:STGpathsolution}) des Strahlungstransportproblems besteht bisher aus einer unendlichen Summe von Integralen, was eine direkte Folge der Aufspaltung des Lösungsoperators aus (\ref{eq:op.STGinvert}) in seine Neumann--Reihe (\ref{eq:op.STGneumann}) ist. In dieser Form sind die Pfade in Klassen gleicher Länge (d.h. Anzahl an Streupunkten) eingeteilt, was die mathematische Behandlung vereinfacht, da die Fälle verschiedener Länge getrennt voneinander behandelt werden können. Gleichzeitig verleitet diese Darstellung jedoch dazu zu glauben, es wäre sinnvoll oder läge in der Natur der Sache, die Pfade unterschiedlicher Länge getrennt voneinander zu behandeln. Tatsächlich gibt es aber keinen physikalischen Grund dafür, vielmehr wäre es auch mathematisch hilfreich die Lösung als ein einziges Integral über den Raum aller Pfade darzustellen, da wir es dann formal mit nur noch einem Integrationsproblem zu tun hätten und nicht mehr mit unendlich vielen.
+	Unsere Darstellung der Lösung (\ref{eq:STGpathsolution}) besteht bisher aus einer Reihe von Integralen, was eine direkte Folge der Aufspaltung des Lösungsoperators aus (\ref{eq:op.STGinvert}) in seine Neumann--Reihe (\ref{eq:op.STGneumann}) ist. In dieser Form sind die Pfade in Klassen gleicher Länge (d.h. Anzahl an Streupunkten) eingeteilt, was die mathematische Behandlung vereinfacht, da die Fälle verschiedener Länge getrennt werden können. Allerdings verleitet diese Darstellung jedoch zu der Annahme, es wäre sinnvoll oder läge in der Natur der Sache Pfade unterschiedlicher Länge getrennt voneinander zu behandeln, tatsächlich gibt es hierfür keinen physikalischen Grund. Vielmehr wäre es mathematisch hilfreich die Lösung als ein einziges Integral über den Raum aller Pfade zu formulieren, da wir es dann formal nur noch mit einer Integration zu tun hätten.
 	
-	Daher führen wir nun \citet[][8.2]{Veach:1997p9136} folgend, die Menge aller Pfade sowie ein passendes Integrationsmaß ein, um unsere Lösung (\ref{eq:STGpathsolution}) als Einzelintegral darstellen zu können. Sei dazu $\Omega_{\nu,k}$ die Menge aller Pfade der Frequenz $\nu$ und der Länge $k$, d.h. Pfade der Form
+	Daher führen wir nun \citet[][8.2]{Veach:1997p9136} folgend, die Menge aller Pfade sowie ein passendes Integrationsmaß ein, um unsere Lösung (\ref{eq:STGpathsolution}) als Einzelintegral darstellen zu können. Sei dazu $\Omega_{\nu,k}$ die Menge aller Pfade von Photonen der Frequenz $\nu$ und der Länge $k$, d.h. Pfade der Form
 	$${\overline x}=\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1},$$
 	mit $k\in\{0,1,2,\dots\}$ und $\location{r}_i \in \mathbb{R}^3$ für alle $i$. Wir definieren mittels
 	$$\mu_k(D)=\int_D d\nu d\location{r}_0\cdots d\location{r}_{k+1}$$
@@ -326,7 +327,7 @@
 	$$\mu(D)=\sum_{k=0}^\infty \mu_k(D\cap\Omega_k)$$
 	gegeben, d.h. das Maß für $D$ ist einfach die Summe der Maße von Pfaden aus $D$ entsprechender Länge. Benennen wir nun noch den pfadlängen- und frequenzabhängigen Integranden aus (\ref{eq:STGpathsolution})
 	\begin{equation}
-		f({\overline x}_\nu)=f_\nu(\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1})=\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\frac{e^{-\tau_{\nu,(i-1,i)}}}{d_{(i-1,i)}^2}\scatter{i}\right]\frac{e^{-\tau_{\nu,(k,k+1)}}}{d_{(k,k+1)}^2} W_{\nu,(k,k+1)}
+		f({\overline x}_\nu)=f_\nu(\location{r}_0\location{r}_1\cdots\location{r}_k\location{r}_{k+1})=\varepsilon_{\nu,(0,1)}\left[\prod_{i=1}^k\propagate{i-1}{i}\scatter{i}\right]\propagate{k}{k+1} W_{\nu,(k,k+1)}
 		\label{eq:mcf}
 	\end{equation}
 	als {\em Messbeitragsfunktion} $f$, dann können wir nun die polychromatische Messung (\ref{eq:messgleichung}) einfach als
@@ -334,4 +335,4 @@
 		M=\int_\Omega f({\overline x})d\mu({\overline x})
 		\label{eq:unified_measurementintegral}
 	\end{equation}
-	schreiben. Es ist in dieser Form leichter einzusehen, dass wir die Pfade nicht nach ihrer Länge zusammengefasst behandeln müssen, um anschließend die (unendlich vielen) Ergebnisse aufzusummieren, sondern stattdessen Pfade in beliebiger Weise zur Integration zusammenfassen dürfen. Dies ist insbesondere für die Monte--Carlo--Integration wichtig, da unsere ganze Theorie sich dort auf die Lösung eines Einzelintegrals beschränken wird und wir dadurch dort nahtlos mit der Lösung von Messintegralen der Form (\ref{eq:unified_measurementintegral}) anknüpfen können.
+	schreiben. Es ist in dieser Form leichter zu sehen, dass wir die Pfade nicht ihrer Länge nach separiert behandeln müssen, um anschließend die (unendlich vielen) Ergebnisse aufzusummieren, sondern stattdessen Pfade in beliebiger Weise zusammenfassen dürfen. Dies ist insbesondere für die Monte--Carlo--Integration wichtig, da man sich auf die Lösung eines Einzelintegrals beschränkt und dadurch nahtlos mit der Lösung von Messintegralen der Form (\ref{eq:unified_measurementintegral}) anknüpfen kann.

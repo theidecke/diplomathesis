@@ -22,6 +22,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{mathabx}
 \usepackage{graphicx}
 %\usepackage{wrapfig}
 \usepackage{algorithmic}
@@ -71,7 +72,8 @@
 	%\listoftables		%%Tabellenverzeichnis
 
 	\newcommand{\location}[1]{\mathbf{#1}}
-	\newcommand{\scatter}[1]{\overset{#1}{\leftrightsquigarrow}}
+	\newcommand{\scatter}[1]{\overset{#1}{\blackdiamond}}
+	\newcommand{\propagate}[2]{\overset{(#1,#2)}{\leftrightsquigarrow}}
 	\newcommand{\normalized}[1]{\frac{#1}{||#1||}}
 	\newcommand{\pirate}{\texttt{PIRaTE} }
 	\newcommand{\mctd}{\texttt{MC3D} }
