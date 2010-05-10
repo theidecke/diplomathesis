@@ -1,7 +1,9 @@
 \documentclass[
 	12pt,
 	a4paper,
-	DIV=calc,
+	%DIV=calc,
+	DIV=11,
+	parskip=half,
 	titlepage,
 	twoside,
 	listof=totoc,
@@ -31,8 +33,8 @@
 
 \usepackage[
 	automark,		% Kapitelangaben in Kopfzeile automatisch erstellen
-        headsepline,		% Trennlinie unter Kopfzeile
-%        footsepline,
+  headsepline,		% Trennlinie unter Kopfzeile
+	%footsepline,
 	ilines			% Trennlinie linksbündig ausrichten
 ]{scrpage2}
 \pagestyle{scrheadings}
@@ -59,11 +61,10 @@
 	\titlehead{Christian--Albrechts--Universität zu Kiel\\ Institut für Theoretische Physik und Astrophysik}
 	\subject{Diplomarbeit}
 	\title{Lösung des Strahlungstransportproblems in Pfadintegralform mit effizienten Monte--Carlo--Verfahren}
-	\author{vorgelegt von Thies Heidecke\\(theidecke@astrophysik.uni-kiel.de)}
+	\author{vorgelegt von Thies Heidecke\\(geboren am 14.03.1983 in Eutin)}
 	\publishers{betreut durch Prof. Dr. Sebastian Wolf}
-	\date{Version vom \today}
+	\date{im Mai 2010}
 	\maketitle
-	% standard-titelblatt verfügbar?
 
 	\tableofcontents	%%Inhaltsverzeichnis
 	%\listoffigures	%%Abbildungsverzeichnis
