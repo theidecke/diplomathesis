@@ -7,9 +7,9 @@
 	\section{Programmiersprache}
 	\pirate ist in der rein funktionalen Programmiersprache {\em Haskell} geschrieben. Funktionale Programmiersprachen bauen auf der Idee auf, Programme als Aneinanderreihung vieler kleiner Funktionen darzustellen, von denen jede Funktion eine bestimmte Aufgabe erfüllt. Das Ergebnis einer Funktion hängt dabei nur von den Eingabeparametern ab, d.h. gleiche Eingabewerte führen immer zum gleichen Rückgabewert, was genau der mathematischen Idee einer Funktion entspricht. Funktionen sind somit nebeneffektfrei, d.h. sie können weder auf Zustände (wie z.B. die Uhrzeit oder der Inhalt einer Datei) ausserhalb ihrer Eingabeparameter zurückgreifen, noch kann die Funktion selber, vom Rückgabewert abgesehen, Einfluß auf den ``Zustand der Welt'' (d.h. den Inhalt von Dateien oder eine Ausgabe auf dem Bildschirm) nehmen.
 	
-	Da der Sinn eines Programmes letztendlich in seinen Nebeneffekten (d.h. Ein- und Ausgabe) liegt, lässt sich dieses Paradigma natürlich nicht beliebig weit treiben. Haskell bietet also auch Möglichkeiten zur Ein- und Ausgabe. Es wird jedoch als guter Stil angesehen, diese auf ein Minimum zu beschränken.
+	Da der Sinn eines Programms letztendlich in seinen Nebeneffekten (d.h. Ein- und Ausgabe) liegt, lässt sich dieses Paradigma natürlich nicht beliebig weit treiben. Haskell bietet also auch Möglichkeiten zur Ein- und Ausgabe. Es wird jedoch als guter Stil angesehen, diese auf ein Minimum zu beschränken.
 	
-	In Haskell existieren ausserdem keine Variablen, sondern nur lokale Konstanten, d.h. Programme der Art
+	In Haskell existieren außerdem keine Variablen, sondern nur lokale Konstanten, d.h. Programme der Art
 		\begin{algorithmic}
 			\STATE $x\leftarrow 41$
 			\STATE $x\leftarrow x+1$
@@ -19,7 +19,7 @@
 			\STATE $x\leftarrow 41$
 			\STATE $y\leftarrow x+1$
 		\end{algorithmic}
-	eine gültige Alternative. Was sich zunächst wie ein unverschmerzlicher Nachteil anhört, vermeidet automatisch eine Vielzahl häufig auftretender Programmierfehler, deren Ursache letztendlich darin liegt, dass die Möglichkeit einer Variablen einen neuen Wert zuzuweisen zwangsläufig mit sich bringt, dass die Ausführungsreihenfolge der Instruktionen die Bedeutung des Programmes ändern kann. In Haskell wird hingegen die Ausführungsreihenfolge nicht durch den Programmierer spezifiziert, sondern lediglich die Abhängigkeiten der verschiedenen Berechnungen voneinander. Der Compiler kann die Aus\-führ\-ungs\-rei\-hen\-fol\-ge dann durch Auflösen der Abhängigkeiten selbst bestimmen.
+	eine gültige Alternative. Was sich zunächst wie ein unverschmerzlicher Nachteil anhört, vermeidet automatisch eine Vielzahl häufig auftretender Programmierfehler, deren Ursache letztendlich darin liegt, dass die Möglichkeit einer Variablen einen neuen Wert zuzuweisen zwangsläufig mit sich bringt, dass die Ausführungsreihenfolge der Instruktionen die Bedeutung des Programms ändern kann. In Haskell wird hingegen die Ausführungsreihenfolge nicht durch den Programmierer spezifiziert, sondern lediglich die Abhängigkeiten der verschiedenen Berechnungen voneinander. Der Compiler kann die Aus\-führ\-ungs\-rei\-hen\-fol\-ge dann durch Auflösen der Abhängigkeiten selbst bestimmen.
 	
 	Eine weitere Besonderheit von Haskell besteht darin, dass standardmäßig Funktionen nur nach Bedarf ausgewertet werden, d.h. nicht dann wenn sie aufgerufen werden, sondern erst dann wenn der Wert später im Verlauf der Rechnung gebraucht wird. Dies erlaubt u.a. das Arbeiten mit unendlich großen Datenstrukturen (wie unendlich langen Listen) und eine einfachere Trennung des  Programmcodes in Teile zum ausschließlichen Generieren bzw. Konsumieren von Daten.
 		
