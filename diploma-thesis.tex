@@ -10,14 +10,18 @@
 ]{scrbook}
 
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\setkomafont{captionlabel}{\small\bfseries}
+%\usepackage[justification=justified,singlelinecheck=false,labelfont={small,sf},font={small,bf}]{caption}
 \usepackage[utf8]{inputenc}     %% dt. Umlaute mit utf-8, 
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
+\addto\captionsngerman{\renewcommand{\figurename}{Abb.}\renewcommand{\tablename}{Tab.}}
 \usepackage{bibgerm}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{algorithmic}
 \algsetup{indent=1.7em}
 \usepackage{url}
@@ -29,7 +33,7 @@
 	automark,		% Kapitelangaben in Kopfzeile automatisch erstellen
         headsepline,		% Trennlinie unter Kopfzeile
 %        footsepline,
-	ilines			% Trennlinie linksb√ºndig ausrichten
+	ilines			% Trennlinie linksbündig ausrichten
 ]{scrpage2}
 \pagestyle{scrheadings}
 
