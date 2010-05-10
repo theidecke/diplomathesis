@@ -3,11 +3,11 @@
 	
 	%TODO: Programmbeschreibung in Worten bzw. Pseudocode, Modulbeschreibung, Details in evtl. Anhang auslagern, Erhöhte Modularität beim robusten MH-Algo durch feste Mutationen, die über die Sample--Generierungsmethode adaptiv angepasst werden.
 	
-	%\section{Allgemeines}
-	\section{Programmiersprache}
-	\pirate ist in der rein funktionalen Programmiersprache {\em Haskell} geschrieben. Funktionale Programmiersprachen bauen auf der Idee auf, Programme als Aneinanderreihung vieler kleiner Funktionen darzustellen, von denen jede Funktion eine bestimmte Aufgabe erfüllt. Das Ergebnis einer Funktion hängt dabei nur von den Eingabeparametern ab, d.h. gleiche Eingabewerte führen immer zum gleichen Rückgabewert, was genau der mathematischen Idee einer Funktion entspricht. Funktionen sind somit nebeneffektfrei, d.h. sie können weder auf Zustände (wie z.B. die Uhrzeit oder der Inhalt einer Datei) ausserhalb ihrer Eingabeparameter zurückgreifen, noch kann die Funktion selber, vom Rückgabewert abgesehen, Einfluß auf den ``Zustand der Welt'' (d.h. den Inhalt von Dateien oder eine Ausgabe auf dem Bildschirm) nehmen.
+	\section{Allgemeines}
+	\subsection{Programmiersprache}
+	\pirate ist in der rein funktionalen Programmiersprache {\em Haskell} geschrieben. Funktionale Programmiersprachen bauen auf der Idee auf, Programme als Aneinanderreihung vieler kleiner Funktionen darzustellen, von denen jede Funktion eine bestimmte Aufgabe erfüllt. Das Ergebnis einer Funktion hängt dabei nur von den Eingabeparametern ab, d.h. gleiche Eingabewerte führen immer zum gleichen Rückgabewert, was genau der mathematischen Idee einer Funktion entspricht. Funktionen sind somit nebeneffektfrei, d.h. sie können weder auf Zustände (wie z.B. die Uhrzeit oder der Inhalt einer Datei) außerhalb ihrer Eingabeparameter zurückgreifen, noch können sie, vom Rückgabewert abgesehen, Einfluss auf den ``Zustand der Welt'' (d.h. den Inhalt von Dateien oder eine Ausgabe auf dem Bildschirm) nehmen.
 	
-	Da der Sinn eines Programms letztendlich in seinen Nebeneffekten (d.h. Ein- und Ausgabe) liegt, lässt sich dieses Paradigma natürlich nicht beliebig weit treiben. Haskell bietet also auch Möglichkeiten zur Ein- und Ausgabe. Es wird jedoch als guter Stil angesehen, diese auf ein Minimum zu beschränken.
+	Die Hauptroutine stellt somit die übergeordnete Funktion dar, die Benutzereingaben oder Kommandozeilenargumente als Funktionsparameter bekommt und deren Rückgabewert die Programmausgabe ist.
 	
 	In Haskell existieren außerdem keine Variablen, sondern nur lokale Konstanten, d.h. Programme der Art
 		\begin{algorithmic}
@@ -27,14 +27,17 @@
 	
 	\url{http://www.haskell.org}
 	
-	verwiesen. Ein lesenswerter Essay von John Hughes zur Motivation hinter funktionaler Programmierung ist:
+	verwiesen. Ein lesenswerter Essay von John Hughes zu den Vorteilen funktionaler Programmierung ist:
 	
 	{\em Why Functional Programming Matters}
 	
 	(\url{http://www.md.chalmers.se/~rjmh/Papers/whyfp.html}).
 	
 	
-	%\subsection{Funktionsumfang}
+	\subsection{Funktionsumfang}
+	\pirate ist in der Lage die relative Intensitätsverteilung über Pixel zu simulieren, die ein virtueller monochromatischer CCD--Sensor messen würde. Dazu nutzt es die in Abschnitt \ref{sec:robustmetropolis} vorgestellte Abwandlung des Metropolis--Hastings--Algorithmus um mit einer Häufigkeit proportional zum Messbeitrag Photonenpfade zu ziehen.
+	
+	Für zukünftige Versionen ist geplant, den absoluten Fluss durch Monte--Carlo--Integration zu schätzen und zur Normierung der relativen Intensitätsverteilung über die Pixel zu nutzen. Ausserdem soll \pirate auch polychromatische Probleme und Spektren berechnen können. Dies sollte mit relativ geringem Aufwand möglich sein.
 	
 	\section{Modulbeschreibung}
 	
@@ -67,7 +70,7 @@
 			\hline\hline
 			SensationPointSampler & SensationDirectionSampler & SensorDistanceSampler \\
 			ScatteringPointSampler & ScatteringDirectionSampler & ScattererDistanceSampler \\
-			EmissionPointSampler & EmissionDirectionSampler & EmitterDistanceSampeler \\
+			EmissionPointSampler & EmissionDirectionSampler & EmitterDistanceSampler \\
 			\hline
 		\end{tabular}
 		\end{center}
