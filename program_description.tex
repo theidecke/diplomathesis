@@ -27,7 +27,7 @@
 	
 	\url{http://www.haskell.org}
 	
-	verwiesen. Ein lesenswerter Essay von John Hughes zu den Vorteilen funktionaler Programmierung ist:
+	verwiesen. Ein lesenswerter Essay von John Hughes zu den Vorteilen funktionaler Programmiersprachen ist:
 	
 	{\em Why Functional Programming Matters}
 	
@@ -37,11 +37,11 @@
 	\subsection{Funktionsumfang}
 	\pirate ist in der Lage die relative Intensitätsverteilung über Pixel zu simulieren, die ein virtueller monochromatischer CCD--Sensor messen würde. Dazu nutzt es die in Abschnitt \ref{sec:robustmetropolis} vorgestellte Abwandlung des Metropolis--Hastings--Algorithmus um mit einer Häufigkeit proportional zum Messbeitrag Photonenpfade zu ziehen.
 	
-	Für zukünftige Versionen ist geplant, den absoluten Fluss durch Monte--Carlo--Integration zu schätzen und zur Normierung der relativen Intensitätsverteilung über die Pixel zu nutzen. Ausserdem soll \pirate auch polychromatische Probleme und Spektren berechnen können. Dies sollte mit relativ geringem Aufwand möglich sein.
+	Für zukünftige Versionen ist geplant, den absoluten Fluss durch Monte--Carlo--Integration zu schätzen und zur Normierung der relativen Intensitätsverteilung über die Pixel zu nutzen. Ausserdem soll \pirate auch polychromatische Probleme und Spektren berechnen können. Dies sollte mit relativ geringem Aufwand möglich sein. Interessant wäre darüber hinaus die von \citet{Liu:2000p8427} vorgeschlagene Erweiterung des Metropolis--Algorithmus zu implementieren, bei der mehrere Vorschlagssamples gezogen werden.
 	
 	\section{Modulbeschreibung}
 	
-	\pirate ist in verschiedene Module unterteilt. Die wichtigsten Module und ihre Abhängigkeiten sind in Abb.~\ref{fig:moduleoverview} dargestellt.
+	\pirate ist in verschiedene Module unterteilt. Die wichtigsten Module und ihre Ab\-hän\-gig\-kei\-ten sind in Abb.~\ref{fig:moduleoverview} dargestellt.
 		\begin{figure}
 				\centering
 				\includegraphics[height=0.3\textheight]{moduleoverview.eps}

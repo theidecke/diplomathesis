@@ -54,9 +54,9 @@
 	
 	%Das Ergebnis ist für vier Kugelradien beispielhaft in Abb. \ref{fig:analytical_tau_comparison} dargestellt.
 	
-	\vfill
-	\pagebreak
-	\subsection{schnelle Monte--Carlo--Lösung}
+	%\vfill
+	%\pagebreak
+	\subsection{Schnelle Monte--Carlo--Lösung}
 	Eine andere Methode, schnell die radiale Intensitätsverteilung zu bestimmen, ist durch folgendes Monte--Carlo--Schema gegeben:
 	\begin{algorithmic}
 		\STATE $M\leftarrow$ Anzahl Ringe
@@ -101,7 +101,7 @@
 		\end{figure}
 		
 	Die drei zur Simulation gewählten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken den optisch dünnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \mctd und \pirate gewonnene radiale Intensitätsprofile abgebildet.
-	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen Lösung überein. Dabei ist zu bedenken, dass bei kleineren Radien über weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort größer ausfällt.
+	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen Lösung überein. Dabei ist zu bedenken, dass bei kleineren Radien über weniger Pixel gemittelt wird und somit der statistische Fehler dort größer ausfällt.
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{methodcomparisongraphics.eps}
@@ -109,7 +109,7 @@
 			\label{fig:methodcomparisongraphics}
 		\end{figure}
 	
-	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (s. Abb.~\ref{fig:sphere_image_cuts}) fällt auf, das \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem Öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur Klärung bedarf es aber einer genaueren Fehleranalyse.
+	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (s. Abb.~\ref{fig:sphere_image_cuts}) fällt auf, dass \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichts falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem Öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur Klärung bedarf es aber einer genaueren Fehleranalyse.
 	
 		\begin{figure}
 			\centering
