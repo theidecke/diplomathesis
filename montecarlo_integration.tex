@@ -1,12 +1,12 @@
 	\chapter{Monte--Carlo--Integration}\label{chapter:mc_integration}
 	Monte--Carlo--Verfahren liegt die Idee zugrunde, zu einem numerischen Problem ein passendes Zufallsexperiment so zu konstruieren, so dass der Erwartungswert einer Zufallsvariable des Experiments das numerische Problem löst.
 	
-	Die Idee ist nicht neu, so führte {\em Buffon} 1777 folgendes Experiment durch: Eine Nadel der Länge $L$ wird wiederholt auf eine plane Fläche mit parallelen Linien im Abstand $d>L$ fallengelassen und jeweils notiert, ob die Nadel eine der Linien kreuzt. Er zeigte, dass der Erwartungswert für die Wahrscheinlichkeit der Nadel, die Linie zu kreuzen $$p=\frac{2L}{\pi d}$$ beträgt. Laplace wies später darauf hin, dass  man die Häufigkeit, mit der die Nadeln die Linien kreuzen, auch Nutzen kann, um den Wert von $\pi$ zu schätzen (siehe Abb. \ref{fig:buffon}): $$\pi=\frac{2L}{p d}\approx \frac{2L}{\frac{k}{N}d}$$
+	Die Idee ist nicht neu. So führte {\em Buffon} 1777 folgendes Experiment durch: Eine Nadel der Länge $L$ wird wiederholt auf eine plane Fläche mit parallelen Linien im Abstand $d>L$ fallengelassen und jeweils notiert, ob die Nadel eine der Linien kreuzt. Er zeigte, dass der Erwartungswert für die Wahrscheinlichkeit der Nadel, die Linie zu kreuzen $$p=\frac{2L}{\pi d}$$ beträgt. Laplace wies später darauf hin, dass  man die Häufigkeit, mit der die Nadeln die Linien kreuzen, auch Nutzen kann um $\pi$ zu schätzen (siehe Abb. \ref{fig:buffon}): $$\pi=\frac{2L}{p d}\approx \frac{2L}{\frac{k}{N}d}$$
 	(\text{N Experimente, davon k mal eine Linie gekreuzt}).
 	\begin{figure}
 		\centering
 		\includegraphics[height=0.3\textheight]{buffonsneedles.eps}
-		\caption{Beispiel für eine Realisierung des Buffon--Nadel--Experiments mit 100 geworfenen Nadeln. Der erhaltene Schätzwert für $\pi$ ist bei so wenigen Nadeln nicht sehr genau.}
+		\caption{Realisierung des Buffon--Experiments mit 100 geworfenen Nadeln. Der Schätzwert für $\pi$ ist bei so wenigen Nadeln nicht sehr genau.}
 		\label{fig:buffon}
 	\end{figure}
 	
@@ -16,9 +16,9 @@
 		I=\int_\Omega f(x) d\mu(x),
 		\label{eq:integration_problem}
 	\end{equation}
-	wobei $\Omega$ das Integrationsgebiet, $f : \Omega \to \mathbb{R}$ eine reellwertige Funktion und $\mu$ ein Ma"s auf $\Omega$ ist. Für die folgende Darstellung nehmen wir an, dass $$\Omega=[0,1]^d$$ der $d$--dimensionale Einheitswürfel und $I_d$ das zugehörige Integral ist.
+	wobei $\Omega$ das Integrationsgebiet, $f : \Omega \to \mathbb{R}$ eine reellwertige, messbare Funktion und $\mu$ ein Ma"s auf $\Omega$ ist. Für die folgende Darstellung nehmen wir an, dass $$\Omega=[0,1]^d$$ der $d$--dimensionale Einheitswürfel und $I_d$ das zugehörige Integral ist.
 	\subsection{Klassische numerische Quadraturverfahren}
-	Die klassische numerische Herangehensweise (wenn keine analytische Lösung möglich oder praktikabel ist) sind {\em Tensor--Produkt--Verfahren}. Die Idee dabei ist, für jede Dimension ein eindimensionales Quadratur--Verfahren zu wählen (verschiedene oder das gleiche) und diese zu einem mehrdimensionalen Verfahren zu kombinieren. Ein eindimensionales Verfahren stellt eine gewichtete Summe von Funktionswerten an $M$ (vor dem Auswerten der Funktion) festgelegten Stützstellen dar:
+	Die klassische Herangehensweise, wenn keine analytische Lösung möglich oder praktikabel ist, sind {\em Tensor--Produkt--Verfahren}. Dabei wird für jede Dimension ein eindimensionales Quadratur--Verfahren  gewählt und zu einem mehrdimensionalen Verfahren kombiniert. Ein eindimensionales Verfahren stellt eine gewichtete Summe von Funktionswerten an $M$ Stützstellen dar:
 	$${\tilde I}_1=\sum_{i=1}^M w_i\,f(x_i).$$
 	Bekannte Vertreter dieser eindimensionalen Quadraturregeln sind z.B. die {\em Newton--Cotes}- und {\em Gauss--Legendre}--Verfahren. Ein hieraus konstruiertes Tensor--Produkt--Verfahren (wobei wir der Einfachheit halber für alle Dimensionen dasselbe eindimensionale Verfahren zugrundelegen) hat dann die Form:
 	$${\tilde I}_d^{\,\text{TP}}=\sum_{i_1}^M\cdots\sum_{i_d}^M w_{i_1}w_{i_2}\cdots w_{i_d}f(x_{i_1},\cdots,x_{i_d}).$$
@@ -31,14 +31,14 @@
 	\end{figure}
 	
 	\subsection{einfache Monte--Carlo--Integration}
-	Bei der Monte--Carlo--Integration ziehen wir $N$ zufällige, gemä"s einer Wahrscheinlichkeitsdichte $p$ verteilte Stützstellen $[X_i|i\in\{1,\dots,N\}]$ in $\Omega$ und schätzen dann den Wert des Integrals (\ref{eq:integration_problem}) mit
+	Bei der Monte--Carlo--Integration ziehen wir $N$ zufällige, gemä"s einer Wahrscheinlichkeitsdichte $p$ verteilte Stützstellen $[X_i|i\in\{1,\dots,N\}]$ in $\Omega$ und schätzen den Wert des Integrals (\ref{eq:integration_problem}) mit
 	\begin{equation}
 		{\tilde I}_d^{\,\text{MC}}=\frac{1}{N}\sum_{i=0}^{N-1} \frac{f(X_i)}{p(X_i)}
 		\label{eq:mc_integral}
 	\end{equation}
-	ab. Im Falle unseres $d$--dimensionalen Einheitswürfels $\Omega=[0,1]^d$ können wir besipielsweise jede Stützstelle aus $d$ gleichförmig auf dem Einheitsintervall $[0,1]$ verteilten Zufallszahlen $U_i$ durch einfache Tupelbildung
+	ab. Im Falle des $d$--dimensionalen Einheitswürfels $\Omega=[0,1]^d$ können wir z.B. jede Stützstelle aus $d$ gleichförmig auf dem Einheitsintervall $[0,1]$ verteilten Zufallszahlen $U_i$ durch Bildung der Tupel
 	$$X_i:=(U_{d i},\dots,U_{d(i+1)-1})$$
-	gewinnen. Aber auch für allgemeine Integrationsgebiete $\Omega$ kann das Verfahren genauso angewandt werden, solange ein passendes Integrationsma"s $\mu$ und ein Wahrscheinlichkeitsma"s $P$ existieren, so dass $$P(D)=\text{Pr}(x\in D)$$ für jede messbare Menge $D\subset\Omega$ gilt. Die entsprechende Wahrscheinlichkeitsdichte $p$ lässt sich mit Hilfe der {\em Radon--Nikodym--Ableitung} $$p(x)=\frac{dP}{d\mu}(x)$$
+	gewinnen. Auch für allgemeine Integrationsgebiete $\Omega$ kann das Verfahren angewandt werden, solange ein passendes Integrationsma"s $\mu$ und ein Wahrscheinlichkeitsma"s $P$ existieren, so dass $$P(D)=\text{Pr}(x\in D)$$ für jede messbare Menge $D\subset\Omega$ gilt. Die entsprechende Wahrscheinlichkeitsdichte $p$ lässt sich mit Hilfe der {\em Radon--Nikodym--Ableitung} $$p(x)=\frac{dP}{d\mu}(x)$$
 	einführen, wobei $p$ dann einfach eine Funktion ist, für die $$P(D)=\int_D p(x)d\mu(x)$$ gilt.
 	Von der Erwartungstreue des Schätzers (\ref{eq:mc_integral}) für unser Integral (\ref{eq:integration_problem}) können wir uns mit \citep[][2.4]{Veach:1997p9136}
 	\begin{align*}
@@ -72,7 +72,7 @@
 		V[Y_i]=E[(Y_i-E[Y_i])^2]=E[Y_i^2]-E[Y_i]^2=\int_\Omega \frac{f(x)^2}{p(x)}d\mu(x)-I^2.
 		\label{eq:mc_variance}
 	\end{equation}
-	Da die Werte unabhängig gezogen sind, gilt für die Varianz des Schätzer mit $N$ Werten
+	Da die Werte unabhängig gezogen sind, gilt für die Varianz des Schätzers mit $N$ Werten
 	$$V[F_N]=V\left[\frac{1}{N}\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}V\left[\sum_{i=0}^{N-1}Y_i\right]=\frac{1}{N^2}\sum_{i=0}^{N-1}V[Y_i]=\frac{1}{N}V[Y_i],$$
 	d.h. die Varianz des Schätzers sinkt invers mit der Anzahl $N$ an gezogenen Werten. Daraus folgt sofort die Standardabweichung
 	\begin{equation}

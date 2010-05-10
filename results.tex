@@ -1,24 +1,24 @@
 	\chapter{Testfälle und Resultate}
-	In diesem Abschnitt sollen die Ergebnisse und die Effizienz des in Abschnitt \ref{cha:program_description} vorgestellten Programms anhand von zwei unterschiedlichen Testfällen analysiert werden. Als Referenz dient dabei das Programm \mctd \citep{Wolf:2003p12974}, sowohl für die berechneten Bilder als auch für die Geschwindigkeit der Berechnung. Für den ersten Testfall wurde zur Berechnung einer Referenzlösung zusätzlich zum einen ein geschlossener Ausdruck für die Lösung hergeleitet und zum anderen ein einfaches Monte--Carlo--Verfahren erdacht, das sehr schnell konvergiert.
+	In diesem Abschnitt sollen die Ergebnisse und die Effizienz des in Abschnitt \ref{cha:program_description} vorgestellten Programms anhand von zwei unterschiedlichen Testfällen analysiert werden. Als Referenz dient dabei das Programm \mctd \citep{Wolf:2003p12974}, sowohl für berechnete Bilder als auch für die Geschwindigkeit der Berechnung. Für den ersten Testfall wurde eine Referenzlösung mit einem geschlossenen Ausdruck für die Lösung hergeleitet und zum anderen ein einfaches Monte--Carlo--Verfahren erdacht, das sehr schnell konvergiert.
 	
 	\section{Homogene streuende Kugel}
-	Um die Korrektheit der vom Monte--Carlo--Code produzierten Lösung zu verifizieren ist es von erheblichem Nutzen eine unabhängig gewonnene, vielleicht sogar analytisch hergeleitete Lösung eines konstruierten Testproblems berechnen zu können. Das Problem sollte dabei nicht so trivial sein, dass komplexe Effekte wie Mehrfachstreuung keinen Einfluss auf das Ergebnis haben. Gleichzeitig sollte es aber nicht so komplex sein, dass keine elegante, leicht berechenbare Lösung gefunden werden kann.
+	Um die Korrektheit der vom Code produzierten Lösung zu verifizieren ist es nützlich eine unabhängige, am besten analytisch hergeleitete Lösung eines Testproblems berechnen zu können. Das Problem sollte dabei nicht trivial sein, damit Effekte wie Mehrfachstreuung Einfluss auf das Ergebnis haben. Gleichzeitig sollte es nicht zu komplex sein, damit eine leicht berechenbare Lösung gefunden werden kann.
 	Mit dieser Motivation konstruieren wir folgendes Testproblem:
 		
-	Gegeben sei eine Kugel mit Radius $R$, die mit homogenem, isotrop streuendem Material mit Volumenstreuquerschnitt $\sigma=1$ gefüllt ist, sowie eine punktförmige Lichtquelle im Zentrum der Kugel. Zu berechnen ist nun die radiale Abhängigkeit der Intensität, die eine ausserhalb der Kugel platzierte orthographische Kamera, die zum Zentrum der Kugel ausgerichtet ist, misst. Die feste Wahl von $\sigma$ und Variation des Kugelradius $R$ dient ausschliesslich der einfacheren Berechnung, da die Wegstrecken dadurch automatisch in freien optischen  Weglängen $\lambda=1/\sigma$ vorliegen. Das Problem ist gleichwertig zu jeder anderen Kombination aus Radius und Volumenstreuquerschnitt für welche sich die gleiche optische Tiefe $\tau_\text{center}=\sigma R=R/\lambda$ vom Zentrum bis zum Rand der Kugel ergibt.
+	Gegeben sei eine homogene Kugel mit Radius $R$, die mit einem isotrop streuenden Material gefüllt ist, sowie eine punktförmige Lichtquelle im Zentrum der Kugel. Zu berechnen ist die radiale Abhängigkeit der Intensität, die eine zum Zentrum der Kugel ausgerichtete orthographische Kamera misst. Die feste Wahl von $\sigma$ und Variation des Kugelradius $R$ dient ausschließlich der einfacheren Berechnung, da Wegstrecken in freien optischen  Weglängen $\lambda=1/\sigma$ angegeben werden können. Das Problem ist gleichwertig zu jeder Kombination von Radius und Streuquerschnitt für welche sich die gleiche optische Tiefe $\tau_\text{center}=\sigma R=R/\lambda$ zwischen Zentrum und Rand der Kugel ergibt.
 	
 	\begin{figure}
 			\centering
 			\includegraphics[height=0.3\textheight]{testproblem_illustration.eps}
-			\caption{Illustration des Testproblems. Gezeigt ist ein Photonenpfad der zweimal gestreut wird und in einem ringförmigen Bin der orthographischen Kamera auftrifft}
+			\caption{Illustration des Testproblems mit einem Pfad auf dem das Photon zweimal gestreut wird bevor es in einem ringförmigen Bin der orthographischen Kamera auftrifft.}
 			\label{fig:testproblem_sketch}
 	\end{figure}
 
 	
 	\subsection{analytische Lösung}\label{subsec:homsphere_analytic_solution}
-	\subsubsection{Green'sche Funktion für den Photonentransport zwischen Kugelschalen}
-	Um die korrekte radiale Intensitätsverteilung zu berechnen, bestimmen wir zunächst in Form der Green'schen Funktion $g$, wie sich die Photonen radial nach einem Streuvorgang ausgebreitet haben.
-	Genauer gibt $g$ an, wie groß der Anteil der Photonen, die auf einer Kugelschale mit Radius $r_0$ starten, beim Radius $r_1$ während des nächsten Streuvorgangs ist (siehe Abb. \ref{fig:radial_greens_function_pdfcdf}):
+	\subsubsection{Greensche Funktion für den Photonentransport zwischen Kugelschalen}
+	Um die radiale Intensitätsverteilung zu berechnen, bestimmen wir zunächst die Greensche Funktion $g$, die beschreibt wie sich Photonen nach einem Streuvorgang radial ausgebreitet haben.
+	Genauer gibt $g$ die Wahrscheinlichkeit an, mit der ein Photon, das auf einer Kugelschale mit Radius $r_0$ startet, nach einer Streuung die Kugelschale mit Radius $r_1$erreicht (s. Abb. \ref{fig:radial_greens_function_pdfcdf}):
 	\begin{align*}
 		g(r_0,r_1) =& 2 \pi \int_0^\pi r_1^2 \sin(\theta) \frac{\exp\left(-\sqrt{r_0^2-2 r_0 r_1 \cos(\theta)+r_1^2}\right)}{4 \pi (r_0^2-2 r_0 r_1 \cos(\theta)+r_1^2)} \text{d}\theta \\
 		=& \frac{1}{2}\frac{r_1}{r_0} \int_{|r_0-r_1|}^{r_0+r_1} \frac{e^{-t}}{t} dt \\
@@ -38,7 +38,7 @@
 		\caption{radiale Photonenverteilung nach n Streuvorgängen. Die freie optische Weglänge ist dabei mit $\lambda=1/\sigma$ bezeichnet.}
 		\label{fig:gnlist}
 	\end{figure}
-	Als nächstes diskretisieren wir die Green'sche Funktion: wir legen ein gleichmäßiges Gitter in $r_0$ und $r_1$ über $g$, das sich bis zum Radius der Kugel $R$ erstreckt, und mitteln innerhalb jeder Gitterzelle $g$ in $r_0$--Richtung und integrieren in $r_1$--Richtung auf um anschließend die Ergebnisse in einer Matrix $\mathbf{g}$ zu speichern. Wenn wir nun einen Startvektor, der nur in der innersten Zelle von Null verschieden ist, $n$--mal mit $\mathbf{g}$ multiplizieren, bekommen wir die diskretisierte Photonenverteilung innerhalb der Kugelschalen beim $n$--ten Streuvorgang (siehe Abb. \ref{fig:gnlist}). Um die Emissivität $\varepsilon(r)$ jeder Kugelschale auszurechnen, summieren wir die Photonenverteilungen vom 1--ten bis zum $n$--ten Streuvorgang auf und teilen das Ergebnis in jeder Kugelschale durch ihr jeweiliges Volumen und den bestrahlten Raumwinkel $4\pi$. Die Intensitäten können nun numerisch gemäß
+	Als nächstes diskretisieren wir die Green'sche Funktion indem ein gleichmäßiges Gitter in $r_0$ und $r_1$ über $g$ gelegt wird, das sich bis zum Radius der Kugel $R$ erstreckt. Man mittelt innerhalb jeder Gitterzelle $g$ in $r_0$--Richtung und integriert in $r_1$--Richtung auf und speichert die Ergebnisse in einer Matrix $\mathbf{g}$. Wenn wir nun einen Startvektor, der nur in der innersten Zelle von Null verschieden ist, $n$--mal mit $\mathbf{g}$ multiplizieren, bekommen wir die diskretisierte Photonenverteilung innerhalb der Kugelschalen beim $n$--ten Streuvorgang (s. Abb. \ref{fig:gnlist}). Um die Emissivität $\varepsilon(r)$ jeder Kugelschale auszurechnen, summieren wir die Photonenverteilungen vom 1--ten bis zum $n$--ten Streuvorgang auf und teilen das Ergebnis in jeder Kugelschale durch ihr jeweiliges Volumen und den bestrahlten Raumwinkel $4\pi$. Die Intensitäten können nun numerisch gemäß
 	\begin{equation}
 		I(r) = \int_{z=-h}^h \varepsilon\left(\sqrt{r^2+z^2}\right) e^{-(z+h)}\text{d}z\,,\quad h=\sqrt{R^2-r^2}
 		\label{eq:testprob_intensity_calculation}
@@ -87,11 +87,11 @@
 		\ENDFOR
 		\RETURN $C[\cdots]$
 	\end{algorithmic}
-	Dabei starten wir mit einem Photon im Ursprung und berechnen dann von der aktuellen Position solange die Position des nächsten Streuereignisses, bis dieses ausserhalb der Kugel liegt. Damit kennen wir den letzten Streupunkt und die Richtung in die das Photon das Streuvolumen verlässt. Da wir nur an der radialen Intensitätsverteilung interessiert sind können wir die Symmetrie des Problems ausnutzen indem wir die Kamera immer so hindrehen, dass das entfliehende Photon senkrecht auf den (gedachten) Sensor auftrifft. Das bedeutet, dass nicht die genaue Entweichrichtung sondern nur der Stoßparameter entscheidend ist. Mit diesem Trick können wir jedes entweichende Photon zählen, sodass dieses Verfahren sehr schnell konvergiert.
+	Dabei starten wir mit einem Photon im Ursprung und berechnen solange Streuprozesse, bis das Photon die Kugel verlässt. Damit kennen wir den letzten Streupunkt und die Richtung mit der das Photon das Streuvolumen verlässt. Da wir nur an der radialen Intensitätsverteilung interessiert sind können wir die Symmetrie des Problems nutzen und die Kamera immer so drehen, dass das entfliehende Photon senkrecht auf den (gedachten) Sensor auftrifft. Das bedeutet, dass nur der Stoßparameter entscheidend ist. Mit diesem Trick trägt jedes entweichende Photon zum Ergebnis bei, sodass dieses Verfahren sehr schnell konvergiert.
 	
 	
 	\subsection{Resultate}
-	Um die korrekte Berechnung des Strahlungstransports überprüfen zu können, simulieren wir das vorgestellte Problem der homogen streuenden Kugel für drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzlösung benutzen. Dieselben Konfigurationen berechnen wir außerdem mit \mctd und \texttt{PIRaTE}. Von \mctd lassen wir hierfür $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit Öffnungswinkel von $\alpha=5^\circ$ für eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kameraöffnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. \pirate benutzt eine einzige Kamera deren Empfindlichkeitskegel einen Öffnungswinkel von $30'$ besitzt. Hier generieren wir die Bilder in mehreren unabhängigen Läufen mit Pfadanzahlen zwischen $10^5$ und $10^7$.
+	Um die korrekte Berechnung des Strahlungstransports überprüfen zu können, simulieren wir das vorgestellte Problem der homogen streuenden Kugel für drei verschiedene Radien (und damit optische Tiefen) jeweils mit der in Abschnitt~\ref{subsec:homsphere_analytic_solution} vorgestellten Methode, die wir als Referenzlösung benutzen. Diese Konfigurationen berechnen wir ebenfalls mit \mctd und \texttt{PIRaTE}. Von \mctd lassen wir hierfür $3.6\cdot10^8$ Photonen generieren und von 72 virtuellen Kameras, die auf einem Kreis auf das Zentrum blickend im Abstand von 5 Grad verteilt sind, beobachten. Jede Kamera ist dabei in einem Kegel mit Öffnungswinkel von $\alpha=5^\circ$ für eintreffende Photonen empfindlich\footnote{In Abb.~\ref{fig:alphacomparison} ist der Effekt unterschiedlicher Kameraöffnungswinkel $\alpha$ bei gleicher Photonenanzahl gezeigt.}. Da die Photonen zufällig über die Kameraebenen verteilt sind enthält jede Kameraebene im Mittel ein $72$tel aller aufgefangenen Photonen und entspricht somit einer unabhängigen Simulation mit derselben Anzahl simulierter Photonen aber nur einer Kameraebene. Durch Summation von $i$ Kameraebenen lässt sich das Ergebnis einer Simulation mit $k (i/72) N$ ausgesandten Photonen simulieren in der $k$ Kameraebenen zum Summieren benutzt wurden. Wir nutzen dies, indem wir die Ergebnisse der durchgeführten Simulation als Simulationen mit unterschiedlich vielen ausgesandten Photonen ($i\in\{1,2,4,9,18,36,72\}$) und entweder einer oder 72 Kameraebenen interpretieren. \pirate benutzt eine einzige Kamera deren Empfindlichkeitskegel einen Öffnungswinkel von $30'$ besitzt. Hier generieren wir die Bilder in mehreren unabhängigen Läufen mit Pfadanzahlen zwischen $10^5$ und $10^7$.
 	
 		\begin{figure}
 			\centering
@@ -101,7 +101,7 @@
 		\end{figure}
 		
 	Die drei zur Simulation gewählten optischen Tiefen $\tau\in\{0.01,1,10\}$ decken den optisch dünnen, mittleren und dicken Fall ab.	In Abb.~\ref{fig:methodcomparisongraphics} sind mit der analytischen Methode, \mctd und \pirate gewonnene radiale Intensitätsprofile abgebildet.
-	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen Lösung überein. Dabei ist zu bedenken, dass bei kleineren Radien über weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort naturgemäß größer ausfällt.
+	Im dargestellten Bereich stimmen die Ergebnisse beider Programme im Rahmen des statistischen Fehlers gut mit der analytischen Lösung überein. Dabei ist zu bedenken, dass bei kleineren Radien über weniger Pixel der zugrundeliegenden Bilder gemittelt wird und somit der statistische Fehler dort größer ausfällt.
 		\begin{figure}
 			\centering
 			\includegraphics[height=1.0\textheight]{methodcomparisongraphics.eps}
@@ -109,7 +109,7 @@
 			\label{fig:methodcomparisongraphics}
 		\end{figure}
 	
-	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (siehe Abb.~\ref{fig:sphere_image_cuts}) fällt auf, das \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem Öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur endgültigen Klärung bedarf es aber einer genaueren Fehleranalyse.
+	Bei Betrachtung von horizontalen Schnitten durch die Streubilder (s. Abb.~\ref{fig:sphere_image_cuts}) fällt auf, das \pirate den Anteil des direkt von der Punktlichtquelle kommenden Lichtes falsch schätzt. Dies liegt vermutlich an den Sensorparametern (insbesondere dem Öffnungswinkel), da im Unterschied zu \mctd in \pirate keine punktförmigen sondern nur ausgedehnte Lichtquellen existieren, die bei kleinen Ausmaßen mit der jetzigen Pfadgenerierungsmethode schwer zu samplen sein können. Zur Klärung bedarf es aber einer genaueren Fehleranalyse.
 	
 		\begin{figure}
 			\centering
@@ -118,8 +118,8 @@
 			\label{fig:sphere_image_cuts}
 		\end{figure}
 	
-	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu müssen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder %(siehe Abb.~\ref{fig:sphere_reference_images}) 
-	werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \mctd erzeugten Streubildern generiert. Zusätzlich mitteln wir innerhalb des Bildes über alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum% (siehe Abb.~\ref{fig:polaraveragingsymmetry})
+	Um nicht komplett auf einen Vergleich der Konvergenzraten beider Programme verzichten zu müssen, verwenden wir zur Berechnung der Abweichung vom Referenzbild maskierte Bilder, bei denen die Lichtquelle in der Mitte des Bildes ausgeblendet ist.	 Die Referenzbilder %(s. Abb.~\ref{fig:sphere_reference_images}) 
+	werden dabei aus den, aus allen 72 Kameraebenen akkumulierten, von \mctd erzeugten Streubildern generiert. Zusätzlich mitteln wir innerhalb des Bildes über alle Pixelgruppen mit exakt gleichem Abstand vom Zentrum% (s. Abb.~\ref{fig:polaraveragingsymmetry})
 	. Dies führt im Durchschnitt zu einer Mittelung über 11 Pixel wodurch das Rauschen ungefähr gedrittelt wird, was insbesondere bei dem Bild der optisch dünnen Kugel, welches das stärkste Rauschen besitzt, hilfreich ist.
 	
 		%\begin{figure}
@@ -136,9 +136,9 @@
 		%	\label{fig:sphere_reference_images}
 		%\end{figure}
 	
-	Eine Auswahl der generierten Streubilder ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} dargestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der zum generieren benötigten Rechenzeit versehen. Die \texttt{MC3D}--Rechenzeiten sind trotz unterschiedlicher Photonenzahlen konstant. Dies liegt daran, dass die Bilder nur unterschiedlich viele aufsummierte Kameraebenen desselben Simulationslaufes darstellen und nicht die Summe der Ergebnisse verschiedener Simulationen.
+	Eine Auswahl von Streubildern ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} zusammengestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der Rechenzeit versehen.
 	
-	Aufgrund der unterschiedlichen zugrundeliegenden Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme objektiv zu vergleichen. Während \mctd eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gezählt werden oder nicht, generiert \pirate eine feste Zahl Pfade, die den Sensor erreicht haben aber unterschiedlich stark gewichtet in das Ergebnis eingehen. Während \mctd immer von einer inhomogenen Dichteverteilung ausgeht und aufintegriert, um optische Tiefen zu bestimmen, kann \pirate die optischen Tiefen im homogenen Fall direkt berechnen. \mctd generierte die Ergebnisse auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \pirate auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sollten die Ergebnisse als Größenordnungsabschätzungen und nicht als absolut unumstößliche Messergebnisse interpretiert werden.
+	Aufgrund der unterschiedlichen Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme direkt zu vergleichen. Während \mctd eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gezählt werden oder nicht, generiert \pirate eine feste Zahl Pfade, die den Sensor erreichen aber unterschiedlich stark gewichtet werden. Während \mctd immer von einer inhomogenen Dichteverteilung ausgeht und summiert, um optische Tiefen zu bestimmen, kann \pirate die optischen Tiefen im homogenen Fall direkt berechnen. \mctd lief auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \pirate auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sind die Ergebnisse als Abschätzung der Größenordnung zu interpretieren.
 	
 		\begin{figure}
 			\centering
@@ -154,11 +154,13 @@
 		\end{figure}
 	
 	
-	In Abb.~\ref{fig:sphere_errors} ist für die verschiedenen optischen Tiefen der absolute Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als mittlerer quadratischer Fehler aller Pixel berechnet. Da bei \mctd die verschiedenen Streubilder nicht durch mehrere Simulationsläufe sondern mehrere Kameraebenen erzeugt wurden, sind für \mctd zwei Kurven eingezeichnet. Beide Kurven fassen die Summation unterschiedlich vieler Kameraebenen der durchgeführten Simulation als die Ergebnisse verschiedener Simulationen mit unterschiedlicher Anzahl generierter Photonen aber konstanter Kameraebenenanzahl auf. Die linke Kurve interpretiert sie als die Ergebnisse einer Simulation mit 72, die rechte als Ergebnis einer Simulation mit nur einer Kameraebene.
+	In Abb.~\ref{fig:sphere_errors} ist für die verschiedenen optischen Tiefen der absolute Fehler zum Referenzbild gegen die Anzahl berechneter Photonen/Pfade bzw. die Rechenzeit aufgetragen. Der absolute Fehler wird als Summe der quadratischen Fehler aller $N$ Pixel
+	$$\sum_i^N (x_i-x_i^\text{ref})^2$$
+	berechnet. Wie oben erwähnt, werden die Daten der \texttt{MC3D}--Simulationen als Ergebnisse von Simulationen mit entweder 72 oder genau einer Kameraebene interpretiert. Daher sind für \mctd zwei Kurven eingezeichnet.
 	
-	In Bezug auf die Rechenzeit ist \pirate in allen drei optischen Tiefen gleichwertig oder (besonders im optisch dünnen Fall) um mehrere Größenordnungen schneller. Dabei muß aber auch berücksichtigt werden, dass \pirate den homogenen Fall speziell behandelt und dadurch effizienter berechnen kann, wohingegen \mctd immer von inhomogenen Dichteverteilungen ausgeht.
+	Die Rechenzeit von \pirate ist stets gleichwertig oder um Größenordnungen schneller. Dabei muss berücksichtigt werden, dass \pirate im homogenen Fall effizienter rechnen kann, \mctd jedoch immer von inhomogenen Dichteverteilungen ausgeht und dadurch keinen Vorteil daraus ziehen kann.
 	
-	Im optisch dünnen Fall ($\tau=0.01$) erzeugt \pirate mit einer Größenordnung weniger Pfaden Bilder gleichen Fehlers. Bei nur einer Kameraebene sind es sogar drei Größenordnungen. Die Abflachung der Konvergenzrate von \pirate liegt daran, dass dort der Fehler der Simulationen unter den Rauschpegel der Referenzbilder fällt. Zur höheren Effizienz trägt vermutlich zum Großteil der verwendete Distanzsampler (siehe Gleichung \ref{eq:enforced_scattering_distancesampler}) bei, der eine mögliche Streuung erzwingt.
+	Im optisch dünnen Fall ($\tau=0.01$) benötigt \pirate eine Größenordnung weniger Pfade um Bilder gleichen Fehlers zu erzeugen, bei nur einer Kameraebene sind es sogar drei Größenordnungen! Die Abflachung der Konvergenzrate von \pirate liegt daran, dass dort der Fehler der Simulationen unter den Rauschpegel der Referenzbilder fällt. Zur höheren Effizienz trägt vermutlich zum Großteil der verwendete Distanzsampler (s. Gleichung \ref{eq:enforced_scattering_distancesampler}) bei, der eine Streuung erzwingt.
 	
 	Bei einer optischer Tiefe von $\tau=1$ liegt die Effizienz von \pirate bezogen auf die Anzahl generierter Pfade zwischen der Effizienz von \mctd mit 72 Kameraebenen und \mctd mit nur einer Kameraebene.
 	
@@ -179,7 +181,7 @@
 		\Sigma(r)&=\Sigma_0 / (a^2+s^2) \label{eq:disk_model} \\
 		s_\text{in}&=0.01, s_\text{out}=1, r_\text{out}=1, a=0.25, \epsilon=0.1 \nonumber
 	\end{align}
-	gegeben ist (siehe Abb.~\ref{fig:diskdensity}).	Dabei wählen wir $\Sigma_0$ so, daß die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ beträgt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
+	gegeben ist (s. Abb.~\ref{fig:diskdensity}).	Dabei wählen wir $\Sigma_0$ so, daß die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ beträgt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
 	
 		\begin{figure}
 			\centering
@@ -200,7 +202,7 @@
 	
 	Wie beim ersten Testfall bestimmen wir auch hier die absoluten Fehler der Streubilder. Als Referenzbild dient die Summe aller 72 Kameraebenen der \texttt{MC3D}--Simulation, die wir noch jeweils horizontal, vertikal und am Ursprung spiegeln und anschließend über die vier Variationen mitteln.
 
-	In Abbildung \ref{fig:disk_contours}	lässt sich erkennen, dass die Ergebnisse qualitativ gut übereinstimmen. Durch erzwungene Streuung und Berücksichtigung nichtangenommener Pfade (siehe Abschnitt \ref{cha:program_description}) reicht der konvergierte Bereich im \texttt{PIRaTE}--Bild weiter nach oben und unten hinaus als im \texttt{MC3D}--Bild. Dies erlaubt es, auch Streuereignisse zu berücksichtigen die sehr selten auftreten und daher mit ``natürlicher'' Simulation von Photonen schwer zu erfassen sind.
+	In Abbildung \ref{fig:disk_contours}	lässt sich erkennen, dass die Ergebnisse qualitativ gut übereinstimmen. Durch erzwungene Streuung und Berücksichtigung nichtangenommener Pfade (s. Abschnitt \ref{cha:program_description}) reicht der konvergierte Bereich im \texttt{PIRaTE}--Bild weiter nach oben und unten hinaus als im \texttt{MC3D}--Bild. Dies erlaubt es, auch Streuereignisse zu berücksichtigen die sehr selten auftreten und daher mit ``natürlicher'' Simulation von Photonen schwer zu erfassen sind.
 	
 		\begin{figure}
 			\centering
@@ -209,7 +211,7 @@
 			\label{fig:disk_contours}
 		\end{figure}
 	
-	Schauen wir uns die absoluten Fehler, aufgetragen über die Anzahl generierter Pfade bzw. Photonen, an (siehe Abb.~\ref{fig:disk_error}), schneidet \pirate anfangs vergleichbar gut ab wie \mctd mit 72 Kameraebenen. In Bezug auf die Rechenzeit sogar um eine Größenordnung besser.
+	Schauen wir uns die absoluten Fehler, aufgetragen über die Anzahl generierter Pfade bzw. Photonen, an (s. Abb.~\ref{fig:disk_error}), schneidet \pirate anfangs vergleichbar gut ab wie \mctd mit 72 Kameraebenen. In Bezug auf die Rechenzeit sogar um eine Größenordnung besser.
 	
 		\begin{figure}
 			\centering
@@ -229,5 +231,5 @@
 	
 
 	\section{Einordnung der Resultate}
-	Fassen wir die Resultate der beiden Testfälle zusammen, können wir feststellen, dass \pirate für moderate optische Tiefen ($\tau < 10$) häufig eine Größenordnung weniger Pfade braucht, um einen ähnlichen Rauschpegel wie \mctd mit 72 Kameraebenen zu erreichen. Bei kleinen optischen Tiefen ist die Effizienz, bedingt durch erzwungene Streuung und das Zählen nichtangenommener Pfade, sogar noch erheblich größer. In Bezug auf die Rechenzeit ist die Effizienz im Vergleich zu \mctd mindestens ebensogut wie in Bezug auf die Anzahl der Pfade. Dies prädestiniert \pirate insbesondere für irreguläre Dichteverteilungen, bei denen die Verwendung mehrerer Kameraebenen bei der Berechnung eines Bildes aus einem bestimmten Blickwinkel nicht möglich ist. Auf der negativen Seite ist zu erwähnen, dass die momentan implementierte Pfadgenerierungsmethode bei großen, nicht umgehbaren, optischen Tiefen ($\tau>10$) ineffizient wird. Hier wäre es interessant, andere Pfadgenerierungsmethoden, die auf den optisch dicken Fall optimiert sind, zu entwickeln. Ein hierfür vielversprechnender Ansatz findet sich bei \citet{Laszlo:2005p11056}\footnote{siehe hierzu auch \citep{DAldous:1994p11528} und \citep{Grassberger:2002p10876}}. Die Berechnung des direkten Lichtanteils in \pirate ist außerdem noch nicht fehlerfrei. Hier muss genauer geklärt werden, ob es sich um ein Undersamplingproblem, einen falsch definierten Sensor oder um ein anderes Problem handelt. Auch die Abweichungen im inneren Bereich der Scheibe bedürfen einer genaueren Betrachtung und evtl. nötiger Korrekturen. Des Weiteren kann das unnatürlichere Rauschen im Vergleich zu \mctd ein Nachteil sein. Ein besseres Rauschverhalten lässt sich durch Parametertuning der Mutationsstärke und des Anteils an frisch gezogenen Samples verhältnismäßig leicht erreichen.
+	Fassen wir die Resultate der beiden Testfälle zusammen, können wir feststellen, dass \pirate für moderate optische Tiefen ($\tau < 10$) häufig eine Größenordnung weniger Pfade braucht, um einen ähnlichen Rauschpegel wie \mctd mit 72 Kameraebenen zu erreichen. Bei kleinen optischen Tiefen ist die Effizienz, bedingt durch erzwungene Streuung und das Zählen nichtangenommener Pfade, erheblich größer. In Bezug auf Rechenzeit ist die Effizienz im Vergleich zu \mctd mindestens ebensogut wie in Bezug auf die Anzahl der Pfade. Dies prädestiniert \pirate insbesondere für unsymmetrische Dichteverteilungen, bei denen die Verwendung mehrerer Kameraebenen zur Effizienzsteigerung bei der Bildberechnung für einen bestimmten Blickwinkel nicht möglich ist. Auf der negativen Seite ist zu erwähnen, dass die momentan implementierte Pfadgenerierungsmethode bei großen, nicht umgehbaren, optischen Tiefen ($\tau>10$) ineffizient wird. Hier wären andere Pfadgenerierungsmethoden interessant, die auf den optisch dicken Fall optimiert sind. Ein vielversprechnender Ansatz  hierfür findet sich in den Arbeiten \citep{Laszlo:2005p11056,DAldous:1994p11528,Grassberger:2002p10876}. Die Berechnung des direkten Lichtanteils in \pirate ist außerdem noch nicht fehlerfrei. Hier muss genauer geklärt werden, ob es sich um ein Undersamplingproblem, einen falsch definierten Sensor oder um ein anderes Problem handelt. Auch die Abweichungen im inneren Bereich der Scheibe bedürfen einer genaueren Betrachtung und evtl. nötiger Korrekturen. Des Weiteren kann das unnatürlichere Rauschen im Vergleich zu \mctd ein Nachteil sein. Ein besseres Rauschverhalten lässt sich durch Parametertuning der Mutationsstärke und des Anteils an frisch gezogenen Samples verhältnismäßig leicht erreichen.
 	
