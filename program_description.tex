@@ -4,7 +4,7 @@
 	TODO: Programmbeschreibung in Worten bzw. Pseudocode, Modulbeschreibung, Details in evtl. Anhang auslagern, Erhöhte Modularität beim robusten MH-Algo durch feste Mutationen, die über die Sample--Generierungsmethode adaptiv angepasst werden.
 	
 	\section{Allgemeines}
-	\subsection{Haskell}
+	\subsection{Programmiersprache}
 	\pirate ist in der rein funktionalen Programmiersprache {\em Haskell} geschrieben. Funktionale Programmiersprachen bauen auf der Idee auf, Programme als Aneinanderreihung vieler kleiner Funktionen darzustellen, von denen jede Funktion eine bestimmte Aufgabe erfüllt. Das Ergebnis einer Funktion hängt dabei nur von den Eingabeparametern ab, d.h. gleiche Eingabewerte führen immer zum gleichen Rückgabewert, was genau der mathematischen Idee einer Funktion entspricht. Funktionen sind somit nebeneffektfrei, d.h. sie können weder auf Zustände (wie z.B. die Uhrzeit oder der Inhalt einer Datei) ausserhalb ihrer Eingabeparameter zurückgreifen, noch kann die Funktion selber, vom Rückgabewert abgesehen, Einfluß auf den ``Zustand der Welt'' (d.h. den Inhalt von Dateien oder eine Ausgabe auf dem Bildschirm) nehmen.
 	
 	Da der Sinn eines Programmes letztendlich in seinen Nebeneffekten (d.h. Ein- und Ausgabe) liegt, lässt sich dieses Paradigma natürlich nicht beliebig weit treiben. Haskell bietet also auch Möglichkeiten zur Ein- und Ausgabe. Es wird jedoch als guter Stil angesehen, diese auf ein Minimum zu beschränken.
@@ -34,7 +34,52 @@
 	(\url{http://www.md.chalmers.se/~rjmh/Papers/whyfp.html}).
 	
 	
+	\subsection{Funktionsumfang}
+	
 	\section{Modulbeschreibung}
+	
+	\pirate ist in verschiedene Module unterteilt. Die wichtigsten Module und ihre Abhängigkeiten sind in Abb.~\ref{fig:moduleoverview} dargestellt.
+		%\begin{figure}
+		%		\centering
+		%		\includegraphics[height=0.2\textheight]{moduleoverview.eps}
+		%		\caption{Illustration der Modulhierarchie in \texttt{PIRaTE}.}
+		%		\label{fig:moduleoverview}
+		%\end{figure}
+		\begin{wrapfigure}{r}{0.6\textwidth}
+			\centering
+			\includegraphics[height=0.2\textheight]{moduleoverview.eps}
+			\caption{Modulhierarchie in \texttt{PIRaTE}.}
+			\label{fig:moduleoverview}
+		\end{wrapfigure}
+	Das Modul \textbf{Scene} erlaubt die Beschreibung eines konkreten Strahlungstransportproblems (im Folgenden Szene genannt) und stellt ein Interface zur Abfrage von Informationen innerhalb der Szene bereit. Eine Szene besteht dabei aus einer Liste von Containern, die mit einem oder mehreren Materialien gefüllt sein können. Ein Container repräsentiert ein (meist abgeschlossenes) Raumgebiet wie z.B. eine Kugel oder ein Quader. Für jeden Container müssen dabei Funktionen implementiert sein, die angeben, ob ein Raumpunkt innerhalb des Containers liegt, ob und wo ein Strahl den Container schneidet, sowie eine Abbildung aus dem dreidimensionalen Einheitswürfel auf Raumpunkte innerhalb des Containers. Ein Material besteht aus Skalarfeldern für Absorptionquerschnitt, Streuquerschnitt, Emissivität und Sensitivität sowie getrennten Phasenfunktionen für Emission, Streuung und Sensation. Skalarfelder sind im Modul \textbf{Texture} definiert und erlauben sowohl homogene Skalarfelder mit einem konstanten Wert als auch inhomogene Skalarfelder, die durch eine beliebige Funktion aus $\mathbb{R}^3\to\mathbb{R}$ jedem Raumpunkt einen Wert zuordnen. Phasenfunktionen sind im Modul \textbf{Phasefunction} definiert. Wie bei Containern muss zur Definition einer Phasenfunktion eine Abbildung aus $[0,1]^2\to\mathcal{S}^2$ angegeben werden, die zwei Zahlen aus dem Einheitsintervall auf eine Raumrichtung abbilden. Nach der Definition einer Szene durch Kombination von Materialien und Containern stellt \textbf{Scene} ein Interface bereit, mit dem sich punktuelle Eigenschaften, wie der Absorptionsquerschnitt, die Albedo, Emissivität oder eine Liste aller Streuphasenfunktionen an einem Ort abfragen lassen. Ausserdem lassen sich optische Tiefen abfragen, entweder zwischen zwei Punkten oder von einem Punkt aus in eine bestimmte Raumrichtung, bis ein festgelegtes Distanz- oder optisches Tiefenziel erreicht ist. Zur Berechnung der optischen Tiefen wird entlang des Strahls eine Liste disjunkter Intervalle gefüllt mit homogenem Material berechnet. Ist eines der beteiligten Materialien inhomogen, wird es stückweise durch homogene Intervalle ersetzt, deren Werte durch Mittelung der inhomogenen Funktion mittels eines Gauss--Legendre--Verfahrens bestimmt werden.
+	
+	Auf dieses Interface baut das Modul \textbf{PathSamplerAtoms} auf. Es stellt Methoden zum Samplen von Punkten, Richtungen und Distanzen für Emission, Streuung und Sensation bereit (s. Tab.~\ref{tab:pathsampleratoms}).
+	\begin{table}[htdp]
+		\caption{Alle neun vom Modul \textbf{PathSamplerAtoms} bereitgestellten Methoden. Der Pfeil beschreibt aus welchen Eingangswerten welches Ergebnis gezogen wird.}
+		\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Punkt--Sampler & Richtungs--Sampler & Distanz--Sampler \\
+			\hline
+			Szene & (Szene,einfallender Strahl) & (Szene,ausgehender Strahl) \\
+			$\downarrow$ & $\downarrow$ & $\downarrow$ \\
+			Punkt & ausgehende Richtung & Distanz \\
+			\hline\hline
+			SensationPointSampler & SensationDirectionSampler & SensorDistanceSampler \\
+			ScatteringPointSampler & ScatteringDirectionSampler & ScattererDistanceSampler \\
+			EmissionPointSampler & EmissionDirectionSampler & EmitterDistanceSampeler \\
+			\hline
+		\end{tabular}
+		\end{center}
+		\label{tab:pathsampleratoms}
+	\end{table}%
+	So erlaubt z.B. der {\em SensationPointSampler} aus einer Szene einen zufälligen Raumpunkt zu ziehen, der innerhalb einer der Container liegt, die ein sensitives Material beinhalten. Der {\em ScatteringDistanceSampler} erlaubt, aus einer Szene und einem einfallenden Strahl (d.h. einem Streuort und einer Richtung aus der das Photon kommt) eine ausgehende Richtung zu samplen, in die das Photon gestreut wird. Mithilfe des {\em EmitterDistanceSampler} lässt sich aus einer Szene einem Ort und einer ausgehenden Richtung eine zufällige Distanz bis zum nächsten Emissionspunkt ziehen. Dabei werden beim Ziehen aus einem Punkt--Sampler die von den Containern bereitgestellten, obengenannten Abbildungen auf Punkte in ihrem Volumen benutzt. Ebenso greifen die Richtungs--Sampler auf die von den Phasenfunktionen am spezifizierten Ort bereitgestellten Abbildungen auf eine Richtung zurück. Der {\em ScatteringDirectionSampler} berücksichtigt ausserdem die angegebene einfallende Richtung, {\em EmissionDirectionSampler} sowie {\em SensationDirectionSampler} können diese ignorieren, da Emission und Sensation terminale Prozesse sind, so dass nur eine Richtung in die jeweiligen Phasenfunktionen eingeht. {\em EmitterDistanceSampler} und {\em SensorDistanceSampler} implementieren den in Abschnitt \ref{subsubsec:distancesampler}  vorgestellten Distanzsampler $P_1$, {\em ScattererDistanceSampler} implementiert den Distanzsampler $P_3$.
+	
+	Mithilfe der in \textbf{PathSamplerAtoms} bereitgestellten Grundbausteine werden im Modul \textbf{PathGenerators} Verfahren zum Generieren kompletter Pfade implementiert.
+	
+	
+	
+	
 	
 	
 	
