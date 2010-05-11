@@ -3,16 +3,15 @@
 	Menschen sind schon immer fasziniert von der Frage nach ihrer eigenen Herkunft und des Universums in dem sie Leben. Eine Facette dieser Frage ist der Wunsch, ein besseres Verständnis des kosmischen Zyklus von der Entstehung und dem Vergehen von Sternen zu erlangen. Dieses Thema ist insbesondere deshalb interessant, weil mit ihm die Entstehung von Planetensystemen verknüpft ist und es somit unsere eigene Herkunft berührt.
 	
 	In der Astrophysik lassen sich dabei zwei Wege einschlagen um sich diesem Verständnis zu nähern. Der eine Weg führt über die Beobachtung der Sternentstehungsgebiete am Himmel, in denen nebeneinander verschiedene Entwicklungsstadien der Sternentstehung von Molekülwolken über Globulen, junge stellare Objekte (YSOs) mit protoplanetarer Scheibe, Vorhauptreihensterne und schließlich Hauptreihensterne beobachtet werden können.
-	
-	\begin{wrapfigure}{l}{0.382\textwidth}
-		\centering
-		\vspace{-1em}
-		\includegraphics[width=0.382\textwidth]{Stellar_Gestation_and_Birth_in_the_Milky_Way.eps}
-		\caption{Stern\-ent\-steh\-ungs\-ge\-biet im Ad\-ler\-ne\-bel. Auf\-ge\-nom\-men mit Her\-schel bei 70, 160 und 250$\mu$m im Dezember 2009.}
+	%\begin{wrapfigure}{l}{0.382\textwidth}
+	%	\centering
+	%	\vspace{-1em}
+	%	\includegraphics[width=0.382\textwidth]{Stellar_Gestation_and_Birth_in_the_Milky_Way.eps}
+	%	\caption{Stern\-ent\-steh\-ungs\-ge\-biet im Ad\-ler\-ne\-bel. Auf\-ge\-nom\-men mit Her\-schel bei 70, 160 und 250$\mu$m im Dezember 2009.}
 		% ($18^\text{h}46^\text{m}5.22^\text{s}$ / $+2^\circ 36'32.88"$)
-		\vspace{-2em}
-		\label{fig:starformingregion}
-	\end{wrapfigure}
+	%	\vspace{-2em}
+	%	\label{fig:starformingregion}
+	%\end{wrapfigure}
 	Auf den verschiedenen Beobachtungen lassen sich empirisch Theorien der Stern- und Planetenentstehung gründen. Der andere Weg führt von etablierten allgemeinen Theorien ausgehend über mathematische Herleitungen oder ``first--principles''--Simulationen zu Vorhersagen oder dem Nachvollzug der verschiedenen Phasen der Stern- und Planetenentstehung. Beide Wege sind nicht unabhängig voneinander sondern bilden vielmehr Abschnitte auf einem spiralförmigen Weg auf dem sich Empirie und Theorie abwechseln und durch Induktion und Deduktion gegenseitig eine bessere Ausgangslage schaffen.
 	
 	Im Bereich protoplanetarer Scheiben bildet Strahlungstransport den Teil der Theorie, der Vorhersagen über das Verhalten von Licht in einer vorgegebenen Anordnung von Materie macht. Strahlungstransport ist im Bereich protostellarer Scheiben somit einerseits wichtig für ein vollständiges Modell ihres Aufbaus, und andererseits wichtig, um ihr Aussehen vorherzusagen. Eine Simulation des Strahlungstransports erlaubt den direkten Vergleich von Bildern aus Scheibenmodellen und mithilfe von Teleskopen aufgenommener Bilder und stellt somit das direkte Bindeglied zwischen Theorie und Beobachtung dar.
@@ -23,7 +22,11 @@
 	
 	Daher sollen in dieser Arbeit neue Ansätze zur effizienten Lösung des Strahlungstransportproblems vorgestellt, erprobt und diskutiert werden.
 	
-	Dabei fangen wir in Kapitel 2 mit einer Einführung des Strahlungstransportproblems über ein allgemeines Teilchentransportproblem an, welches wir anschließend durch Spezialisierung der Teilchen auf Photonen auf die klassische Strahlungstransportgleichung zurückführen. Außerdem stellen wir einen allgemeinen Formalismus für Messungen des Strahlungsfeldes vor.
+	\section{Ziele der Arbeit}
+	In dieser Arbeit wird eine Pfadintegraldarstellung der Lösung des Strahlungstransportgleichung hergeleitet, sowie dessen Nutzen für Monte--Carlo--Verfahren zur Lösung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt.
+		
+	\section{Übersicht}
+	Wir fangen in Kapitel 2 mit einer Einführung des Strahlungstransportproblems über ein allgemeines Teilchentransportproblem an, welches wir anschließend durch Spezialisierung der Teilchen auf Photonen auf die klassische Strahlungstransportgleichung zurückführen. Außerdem stellen wir einen allgemeinen Formalismus für Messungen des Strahlungsfeldes vor.
 	
 	In Kapitel 3 überführen wir die klassische Strahlungstransportgleichung über den Umweg einer Integraldarstellung in eine Operatorform, in der das Problem anschaulich und formal leicht lösbar ist. Die gewonnene Lösung stellen wir dann als Integral über den Raum aller möglichen Lichtpfade dar.
 	
@@ -38,9 +41,6 @@
 	In Kapitel 8 vergleichen wir dann die Ergebnisse und die Geschwindigkeit von \pirate mit dem Referenzprogramm \texttt{MC3D}.
 	
 	Schließlich fassen wir in Kapitel 9 die Arbeit zusammen und geben einen Ausblick, wie die vorgestellten Ideen und das Programm \pirate weiterentwickelt und eingesetzt werden können.
-
-	\section{Ziele der Arbeit}
-	In dieser Arbeit wird eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet, sowie dessen Nutzen für Monte--Carlo--Verfahren zur Lösung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt.
 	
 	\section{Nomenklatur}\label{subsec:nomenklatur}
 	Im folgenden Text werden die in Tabelle \ref{tab:nomenklatur} angegebenen Schreibweisen benutzt.
