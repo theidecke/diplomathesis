@@ -1,6 +1,33 @@
 	\chapter{Einleitung}
 	\section{Motivation}
-	TODO: astrophysikalischer Kontext $\rightarrow$ Begründung der in Sektion (\ref{sec:radiative_transfer}) gemachten Annahmen
+	Menschen sind schon immer fasziniert von der Frage nach ihrer eigenen Herkunft und des Universums in dem sie Leben. Eine Facette dieser Frage ist der Wunsch, ein besseres Verständnis des kosmischen Zyklus von der Entstehung und dem Vergehen von Sternen zu erlangen. Dieses Thema ist insbesondere deshalb interessant, weil mit ihm die Entstehung von Planetensystemen verknüpft ist und somit unsere eigene Herkunft berührt.
+	
+	In der Astrophysik lassen sich dabei zwei Wege einschlagen um sich diesem Verständnis zu nähern. Der eine Weg führt über die Beobachtung der Sternentstehungsgebiete am Himmel, in denen nebeneinander verschiedene Entwicklungsstadien der Sternentstehung von Molekülwolken über Globulen, junge stellare Objekte (YSOs) mit protoplanetarer Scheibe, Vorhauptreihensterne und schließlich Hauptreihensterne beobachtet werden können. Auf den verschiedenen Beobachtungen lassen sich empirisch Theorien der Stern- und Planetenentstehung gründen. Der andere Weg führt von etablierten allgemeinen Theorien ausgehend über mathematische Herleitungen oder ``first--principles''--Simulationen zu Vorhersagen oder dem Nachvollzug der verschiedenen Phasen der Stern- und Planetenentstehung. Beide Wege sind nicht unabhängig voneinander sondern bilden vielmehr Abschnitte auf einem spiralförmigen Weg auf dem sich Empirie und Theorie abwechseln und durch Induktion und Deduktion gegenseitig eine bessere Ausgangslage schaffen.
+	
+	Im Bereich protoplanetarer Scheiben bildet Strahlungstransport den Teil der Theorie, der Vorhersagen über das Verhalten von Licht in einer vorgegebenen Anordnung von Materie macht. Strahlungstransport ist somit einerseits wichtig für ein vollständiges Modell vom Aufbau protostellarer Scheiben, und andererseits wichtig um das Aussehen von protostellaren Scheiben vorherzusagen. Dies erlaubt den direkten Vergleich von Scheibenmodellen und mit Teleskopen aufgenommenen Bildern und stellt somit das direkte Bindeglied zwischen Theorie und Beobachtung dar.
+	
+	Wir leben dabei in einer spannenden Zeit, in der die aktuelle und kommende Generation von Großteleskopen auf der Erde und im Weltraum detailreichere Daten von protostellaren Scheiben aufnehmen als je zuvor. Dies stellt auch höhere Anforderungen an Strahlungstransportsimulationen, von denen feinere und genauere Bilder und Spektren gebraucht werden um beim Vergleich mit Beobachtungsdaten von Nutzen zu sein.
+	
+	Dabei stellt sich häufig nicht das Problem, das Aussehen einer vorgegebenen Scheibenkonfiguration zu simulieren, sondern das inverse Problem, aus gegebenen Beobachtungsdaten unter physikalischen Nebenbedingungen die wahrscheinlichste Materieanordnung zu finden um die Beobachtung zu erklären. Das direkte Lösen dieses Problems ist i.A. nicht möglich. Daher ist der praktisch gegangene Ausweg das mehr oder weniger intelligente Raten von möglichst passenden Scheibenkonfigurationen, die nach einer Strahlungstransportsimulation mit den Beobachtungsdaten verglichen werden können. In dieser Situation ist eine effiziente Simulation umso nützlicher und u.U. entscheidend für den Unterschied zwischen dem Raten eines spezifischen Modells aufgrund einiger weniger Modellrechnungen und einer abdeckenden, statistisch signifikanten Schätzung der Modellparameter.
+	
+	Daher sollen in dieser Arbeit neue Ansätze zur effizienten Lösung des Strahlungstransportproblems vorgestellt, erprobt und diskutiert werden.
+	
+	Dabei fangen wir in Kapitel 2 mit einer Einführung des Strahlungstransportproblems über ein allgemeines Teilchentransportproblem an, welches wir anschließend durch Spezialisierung der Teilchen auf Photonen auf die klassische Strahlungstransportgleichung zurückführen. Außerdem stellen wir einen allgemeinen Formalismus für Messungen des Strahlungsfeldes vor.
+	
+	In Kapitel 3 überführen wir die klassische Strahlungstransportgleichung über den Umweg einer Integraldarstellung in eine Operatorform, in der das Problem anschaulich und formal leicht lösbar ist. Die gewonnene Lösung stellen wir dann als Integral über den Raum aller möglichen Lichtpfade dar.
+	
+	In Kapitel 4 beschäftigen wir uns dann mit dem Problem der numerischen Integration und den Vor- und Nachteilen der Monte--Carlo--Integration im Vergleich zu klassischen numerischen Quadraturverfahren.
+	
+	In Kapitel 5 stellen wir ein weiteres Monte--Carlo--Verfahren vor, mit dem sich aus beliebigen statistischen Verteilungen Stichproben erzeugen lassen und erklären, wozu dies im Zusammenhang mit der Lösung des Strahlungstransportproblems nützlich ist.
+	
+	In Kapitel 6 führen wir die bis dahin behandelten Themen Strahlungstransport und Monte--Carlo--Verfahren zusammen. Wir zeigen, wie sich die in Kapitel 3 hergeleitete Pfadintegrallösung des Strahlungstransportproblems als Integrationsproblem darstellen lassen, auf die unsere Monte--Carlo--Integrationsverfahren aus Kapitel 4 direkt anwendbar sind. Ergänzend dazu stellen wir Methoden vor, um die Konvergenz der Integration durch eine gehäuftere Berücksichtigung der für den Strahlungstransport wesentlichen Pfade zu verbessern.
+	
+	In Kapitel 7 stellen wir das Programm \pirate vor, in dem ein Teil dieser Ideen implementiert sind.
+	
+	In Kapitel 8 vergleichen wir dann die Ergebnisse und die Geschwindigkeit von \pirate mit dem Referenzprogramm \texttt{MC3D}.
+	
+	Schließlich fassen wir in Kapitel 9 die Arbeit zusammen und geben einen Ausblick, wie die vorgestellten Ideen und das Programm \pirate weiterentwickelt und eingesetzt werden können.
+
 	\section{Ziele der Arbeit}
 	In dieser Arbeit wird eine Pfadintegraldarstellung der Strahlungstransportgleichung hergeleitet, sowie dessen Nutzen für Monte--Carlo--Verfahren zur Lösung des Strahlungstransportproblems theoretisch und praktisch in Form eines Computerprogrammes gezeigt.
 	
