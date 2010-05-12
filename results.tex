@@ -136,7 +136,7 @@
 		%	\label{fig:sphere_reference_images}
 		%\end{figure}
 	
-	Eine Auswahl von Streubildern ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} zusammengestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der Rechenzeit versehen.
+	Eine Auswahl von Streubildern ist in den Abbildungen \ref{fig:mc3d_sphere_imageoverview} und \ref{fig:pirate_sphere_imageoverview} zusammengestellt und jeweils mit der Anzahl an generierten Photonen bzw. Pfaden sowie der Rechenzeit versehen. Größere Versionen der Bilder sind im Anhang in den Abb.~\ref{fig:mc3dsphere_image_overview1} bis \ref{fig:piratesphere_image_overview3} zu finden.
 	
 	Aufgrund der unterschiedlichen Algorithmen, Programmiersprachen, Compiler und Computer mit denen die Ergebnisse erzeugt wurden, ist es schwierig die beiden Programme direkt zu vergleichen. Während \mctd eine feste Zahl von Photonen simuliert, die entweder in einer Kameraebene aufgefangen und gezählt werden oder nicht, generiert \pirate eine feste Zahl Pfade, die den Sensor erreichen aber unterschiedlich stark gewichtet werden. Während \mctd immer von einer inhomogenen Dichteverteilung ausgeht und summiert, um optische Tiefen zu bestimmen, kann \pirate die optischen Tiefen im homogenen Fall direkt berechnen. \mctd lief auf einem Intel Xeon E5405 (2000 MHz) Prozessor--Kern, \pirate auf einem AMD Opteron 8354 (2200 MHz) Prozessor--Kern. Daher sind die Ergebnisse als Abschätzung der Größenordnung zu interpretieren.
 	
@@ -168,8 +168,8 @@
 
 		\begin{figure}
 			\centering
-			\includegraphics[width=1.0\textwidth]{sphereerrorplots.eps}
-			\caption{Die rote Linie repräsentiert \pirate--Simulationen. Die blauen Linien repräsentieren \mctd. Die linke Linie steht für Simulationen mit 72, die rechte für Simulationen mit einer Kameraebene.}
+			\includegraphics[width=1.1\textwidth]{sphereerrorplots.eps}
+			\caption{Darstellung des totalen quadratischen Fehlers in Abhängigkeit der gerechneten Photonen/Pfade bzw. der Rechenzeit. Die rote Linie repräsentiert \pirate--Simulationen. Die blauen Linien repräsentieren \mctd. Die linke Linie steht für Simulationen mit 72, die rechte für Simulationen mit einer Kameraebene.}
 			\label{fig:sphere_errors}
 		\end{figure}
 
@@ -191,7 +191,7 @@
 		\end{figure}
 	
 	\subsection{Resultate}
-		Nach Durchführung von Simulationen mit $10^5$--$3\cdot 10^7$ Pfaden in \pirate und einer Simulation mit $7.2\cdot 10^8$ Photonen und 72 Kameraebenen in \mctd mit der Dichteverteilung (\ref{eq:disk_model}) erhalten wir die in Abb.~\ref{fig:disk_image_overview} gezeigten (und weitere) Streubilder.
+		Nach Durchführung von Simulationen mit $10^5$--$3\cdot 10^7$ Pfaden in \pirate und einer Simulation mit $7.2\cdot 10^8$ Photonen und 72 Kameraebenen in \mctd mit der Dichteverteilung (\ref{eq:disk_model}) erhalten wir die in Abb.~\ref{fig:disk_image_overview} gezeigten (und weitere) Streubilder. Größere Versionen der Bilder sind im Anhang in den Abb.~\ref{fig:mc3ddiskimageoverview} und \ref{fig:piratediskimageoverview} zu finden.
 		
 		\begin{figure}
 			\centering
@@ -206,7 +206,7 @@
 	
 		\begin{figure}
 			\centering
-			\includegraphics[width=1.0\textwidth]{diskcontourplots.eps}
+			\includegraphics[width=1.02\textwidth]{diskcontourplots.eps}
 			\caption{Konturplots des Referenzbildes und des von \pirate generierten Bildes.}
 			\label{fig:disk_contours}
 		\end{figure}
@@ -215,8 +215,8 @@
 	
 		\begin{figure}
 			\centering
-			\includegraphics[width=1.0\textwidth]{diskerrorplot.eps}
-			\caption{Die rote Linie repräsentiert \pirate--Simulationen. Die blauen Linien repräsentieren \mctd. Die linke Linie steht für Simulationen mit 72, die rechte für Simulationen mit einer Kameraebene.}
+			\includegraphics[height=0.94\textheight]{diskerrorplot.eps}
+			\caption{Darstellung des totalen quadratischen Fehlers in Abhängigkeit der gerechneten Photonen/Pfade bzw. der Rechenzeit. Die rote Linie repräsentiert \pirate--Simulationen. Die blauen Linien repräsentieren \mctd. Die linke Linie steht für Simulationen mit 72, die rechte für Simulationen mit einer Kameraebene.}
 			\label{fig:disk_error}
 		\end{figure}
 	
@@ -225,7 +225,7 @@
 		\begin{figure}
 			\centering
 			\includegraphics[width=1.0\textwidth]{resdiskplot.eps}
-			\caption{Darstellung der Abweichung zwischen dem mit \pirate erzeugten Streubild und dem \texttt{MC3D}--Referenzbild. Rot bedeutet kleinere Werte als im Referenzbild, grün größere.}
+			\caption{Qualitative Darstellung der Abweichung zwischen dem mit \pirate erzeugten Streubild und dem \texttt{MC3D}--Referenzbild. Rot bedeutet kleinere Werte als im Referenzbild, grün größere.}
 			\label{fig:resdiskplot}
 		\end{figure}
 	

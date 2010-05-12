@@ -59,7 +59,7 @@
 		&= \underbrace{\frac{1}{\|\location{r}_i - \location{r}_{i-1}\|^2}}_{\text{geometrische}\atop\text{Verdünnung}} \cdot\underbrace{\frac{\text{d}P}{\text{d}\omega}\left(\normalized{\location{r}_i - \location{r}_{i-1}}\right)}_{\text{Richtungs--PDF}} \cdot \underbrace{\frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i-1}\|)}_{\text{Entfernungs--PDF}},
 	\end{align*}
 	wobei PDF für Wahrscheinlichkeitsdichte (engl. {\em probability density function}) steht.
-	
+
 	Mit dieser Methode lässt sich der Zufallspfad eines Photons in ``natürlicher Weise'' (d.h. mit gleicher Wahrscheinlichkeitsverteilung) nachvollziehen, wenn wir bei einem zufällig aus der Lichtquelle gezogenen Punkt starten und von dort aus rekursiv Streupunkte und zum Schluss den Sensorpunkt ziehen. Wir haben aber z.B. auch die Freiheit, die Pfadgenerierung bei einem zufällig gezogenen Sensorpunkt zu beginnen und uns ``rückwärts'' zur Lichtquelle vorzuarbeiten (siehe Abschnitt~\ref{subsec:sensor_based_raycasting}).
 	
 	\subsubsection{Richtungssampler}
@@ -128,6 +128,6 @@
 		p(\nu,\location{r}_0\cdots\location{r}_{k+1})=p_\text{grow}^k(1-p_\text{grow})\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1}) \cdot \\
 	\cdot \prod_{i=1}^k \frac{1}{\|\location{r}_i - \location{r}_{i+1}\|^2} \frac{\text{d}P}{\text{d}\omega}\left(\normalized{\location{r}_i - \location{r}_{i+1}}\right) \frac{\text{d}P}{\text{d}s}(\|\location{r}_i-\location{r}_{i+1}\|)
 	\end{multline*}
-	ist das Produkt aus der Wahrscheinlichkeitsdichte für die Photonenfrequenz, aus den beiden Wahrscheinlichkeitsdichten für die aus dem Volumen gezogenen Emissions- und Sensorpunkte, den Ray\-casting\-wahr\-schein\-lich\-keits\-dich\-ten für die Streupunkte sowie aller Wahrscheinlichkeiten für bzw. gegen die Entscheidung einen neuen Streupunkt zu erzeugen. Diese diskreten Wahrscheinlichkeiten entsprechen zusammengenommen einer geometrischen Wahrscheinlichkeitsverteilung.
+	ist das Produkt aus der Wahrscheinlichkeitsdichte für die Photonenfrequenz, aus den beiden Wahrscheinlichkeitsdichten für die aus dem Volumen gezogenen Emis\-sions- und Sen\-sor\-punkte, den Ray\-casting\-wahr\-schein\-lich\-keits\-dich\-ten für die Streupunkte sowie aller Wahrscheinlichkeiten für bzw. gegen die Entscheidung einen neuen Streupunkt zu erzeugen. Diese diskreten Wahrscheinlichkeiten entsprechen zusammengenommen einer geometrischen Wahrscheinlichkeitsverteilung.
 	
 	% P_L(k)\frac{dP}{d\nu}(\nu)\frac{dP}{d\location{r}_0}(\location{r}_0)\cdots\frac{dP}{d\location{r}_{k+1}}(\location{r}_{k+1})
