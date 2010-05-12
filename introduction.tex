@@ -53,22 +53,26 @@
 		\begin{tabular}{rll}
 			Schreibweise & Bedeutung & Einheit \\
 			\hline
-			$\kappa$ & Volumenabsorptionsquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
-			$\sigma$ & Volumenstreuquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
-			$\xi$ & Volumenextinktionsquerschnitt & $\left[\text{m}^2/\text{m}^3\right]$ \\
-			$\varepsilon$ & Volumenemissivität & $\left[\text{W}/(\text{m}^3\,\text{sr})\right]$ \\
+			$\kappa(\location{r})$ & Volumenabsorptionsquerschnitt am Ort $\location{r}$& $\left[\text{m}^2/\text{m}^3\right]$ \\
+			$\sigma(\location{r})$ & Volumenstreuquerschnitt am Ort $\location{r}$ & $\left[\text{m}^2/\text{m}^3\right]$ \\
+			$\xi(\location{r})$ & Volumenextinktionsquerschnitt am Ort $\location{r}$ & $\left[\text{m}^2/\text{m}^3\right]$ \\
+			$\varepsilon(\location{r},\omega)$ & Volumenemissivität am Ort $\location{r}$ in Richtung $\omega$ & $\left[\text{W}/(\text{m}^3\,\text{sr})\right]$ \\
 			$I(\location{r},\omega)$ & Intensität am Ort $\location{r}$ in Richtung $\omega$& $\left[\text{W}/(\text{m}^2\,\text{sr})\right]$ \\
 			$W(\location{r},\omega)$ & Sensitivität am Ort $\location{r}$ in Richtung $\omega$ & $\left[(\text{m}^2\,\text{sr})/\text{W}\right]$ \\
 			$k(\location{r},\omega',\omega)$ & Phasenfunktion am Ort $\location{r}$ für ein Teilchen, & $\left[1/\text{sr}\right]$ \\
 				&das sich vor der Streuung in Richtung $\omega'$&\\
 				&und nach der Streuung in Richtung $\omega$ bewegt& \\
+			$\tau(\location{r}_i,\location{r}_j)$ & Optische Tiefe zwischen $\location{r}_i$ und $\location{r}_j$ & \\
+			$\varepsilon_{(i,j)}$ & Emissivität am Ort $\location{r}_i$ in Richtung $\normalized{\location{r}_j-\location{r}_i}$ & \\
+			$W_{(i,j)}$ & Sensitivität am Ort $\location{r}_j$ für Strahlung in Richtung $\normalized{\location{r}_j-\location{r}_i}$ & \\
 			$\scatter{i}$ & Produkt aus Volumenstreuquerschnitt und&\\
 			  & Streuphasenfunktion am Ort $\location{r}_i$ für ein aus Richtung $\location{r}_{i-1}$&\\ 
 				&kommendes und in Richtung $\location{r}_{i+1}$ gestreutes Teilchen&\\
 				&(äquivalent zu $\sigma(\location{r}_i)k(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i})$)& \\
-			$\tau_{(i,j)}$ & Optische Tiefe zwischen $\location{r}_i$ und $\location{r}_j$ & \\
-			$\varepsilon_{(i,j)}$ & Emissivität am Ort $\location{r}_i$ in Richtung $\location{r}_j$ & \\
-			$W_{(i,j)}$ & Sensitivität am Ort $\location{r}_j$ für Strahlung in Richtung $\normalized{\location{r}_j-\location{r}_i}$ &
+			$\propagate{i}{j}$ & Produkt aus Abschwächungsfaktor aufgrund optischer Tiefe&\\
+			  &und geometrischem Verdünnungsfaktor zwischen $\location{r}_i$ und $\location{r}_{j}$&\\ 
+				&(äquivalent zu $\frac{e^{-\tau(\location{r}_{i},\location{r}_j)}}{\|\location{r}_j-\location{r}_{i}\|^2}$)& \\
+			
 		\end{tabular}
 		\end{center}
 		\label{tab:nomenklatur}

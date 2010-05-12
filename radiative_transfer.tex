@@ -264,18 +264,17 @@
 	\end{align*}
 	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale durch ein Volumenintegral über den gesamten Raum und einen geometrischen Verdünnungsfaktor ersetzen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
 	\begin{multline}
-		\left(\mathbf{KG}\varepsilon\right)(\location{r}_i \rightarrow\location{r}_{i+1})=\\
-		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\varepsilon(\location{r}_{i-1} \rightarrow\location{r}_i)d\location{r}_{i-1}
+		\left(\mathbf{KG}\varepsilon\right)(\normalized{\location{r}_{i+1}-\location{r}_i})=\\
+		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k\hspace{-1 mm}\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\,\varepsilon\hspace{-1 mm}\left(\location{r}_{i-1},\normalized{\location{r}_i-\location{r}_{i-1}}\right)d\location{r}_{i-1}
 		\label{eq:KGvolume_intermediate}
 	\end{multline}
 	Wir führen zusätzlich noch die Abkürzungen
 	\begin{align*}
-		\scatter{i}\;&:=\sigma(\location{r}_i)k(\location{r}_{i-1}\rightarrow\location{r}_i\rightarrow\location{r}_{i+1})\\
-			&=\sigma(\location{r}_i)k\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\\
+		\scatter{i}\;&:=\sigma(\location{r}_i)k\hspace{-1 mm}\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\\
 		\propagate{i-1}{i}&:=\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}
 	\end{align*}
 	ein, so dass wir (\ref{eq:KGvolume_intermediate}) % zusammen mit den in Abschnitt \ref{subsec:nomenklatur} eingeführten Schreibweisen
-	noch kompakter als
+	kompakter als
 	\begin{equation}
 		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\propagate{i-1}{i}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
 		\label{eq:KGvolume}
@@ -289,7 +288,7 @@
 		M_\nu&=\int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
 		&=\sum_{k=0}^\infty \int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \left(\mathbf{G} (\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \,\text{d}\omega \,\text{d}\location{r} \nonumber \\
 		&=\sum_{k=0}^\infty \int_{\mathbb{R}^3}\int_{\mathcal{S}^2}W_\nu(\location{r},\omega) \int_{s'=0}^\infty e^{-\tau_\nu(\location{r}-s' \omega,\location{r})} \left((\mathbf{KG})^k \varepsilon_\nu\right)(\location{r},\omega) \underbrace{\text{d}s' \,\text{d}\omega}_{=\frac{\text{d}\location{r}'}{s'^2}} \,\text{d}\location{r} \nonumber \\
-		&=\sum_{k=0}^\infty \int_{\mathbb{R}^3}\int_{\mathbb{R}^3}W_\nu(\location{r}'\rightarrow\location{r}) \frac{e^{-\tau_\nu(\location{r}',\location{r})}}{\|\location{r}'-\location{r}\|^2} \left((\mathbf{KG})^k \varepsilon_\nu\right)(\location{r}'\rightarrow\location{r}) \,\text{d}\location{r}' \,\text{d}\location{r}.
+		&=\sum_{k=0}^\infty \int_{\mathbb{R}^3}\int_{\mathbb{R}^3}W_\nu\hspace{-1 mm}\left(\location{r},\normalized{\location{r}'-\location{r}}\right) \frac{e^{-\tau_\nu(\location{r},\location{r}')}}{\|\location{r}'-\location{r}\|^2} \left((\mathbf{KG})^k \varepsilon_\nu\right)\hspace{-1 mm}\left(\location{r},\normalized{\location{r}'-\location{r}}\right) \,\text{d}\location{r}' \,\text{d}\location{r}.
 		\label{eq:STGprepathsolution}
 	\end{align}
 	Durch rekursives Einsetzen von (\ref{eq:KGvolume}) in (\ref{eq:STGprepathsolution}) und Neuanordnung der Terme erhalten wir dann als Ergebnis einer monochromatischen Messung:
