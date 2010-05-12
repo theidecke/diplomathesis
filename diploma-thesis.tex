@@ -17,7 +17,7 @@
 %\usepackage[justification=justified,singlelinecheck=false,labelfont={small,sf},font={small,bf}]{caption}
 \usepackage[normal]{caption} %,font={small}
 \usepackage[utf8]{inputenc}     %% dt. Umlaute mit utf-8, 
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 \addto\captionsngerman{\renewcommand{\figurename}{Abb.}\renewcommand{\tablename}{Tab.}}
 \usepackage{bibgerm}
@@ -30,8 +30,8 @@
 \usepackage{algorithmic}
 \algsetup{indent=1.7em}
 \usepackage{url}
-\usepackage{natbib}
-\setcitestyle{round}
+
+\usepackage{natbib}\setcitestyle{round}
 %\bibpunct{(}{)}{;}{a}{}{,} % to follow the A&A style
 
 \usepackage[
@@ -42,21 +42,24 @@
 ]{scrpage2}
 \pagestyle{scrheadings}
 
-\usepackage[a4paper, bookmarks, colorlinks]{hyperref}	%%farbige Hyperlinks 
-\hypersetup{%
-	pdfkeywords = {},
-	linkcolor = black,
-	urlcolor = black,
-	menucolor=black,
-	citecolor = black,
-	pagecolor=black,
-	bookmarksopen = true, 
-	bookmarksnumbered = true,
-	pdfpagemode = {UseNone}, % UseNone, UseThumbs,UseOutlines, FullScreen
-	pdfstartview = {} % ohne (nicht None), Fit, FitB
+%\usepackage{hyperref}
+%\usepackage{breakurl}
+%\usepackage[a4paper, bookmarks, colorlinks]{hyperref}	%%farbige Hyperlinks 
+%\hypersetup{%
+%	pdfkeywords = {},
+%	linkcolor = black,
+%	urlcolor = black,
+%	menucolor=black,
+%	citecolor = black,
+%	pagecolor=black,
+%	bookmarksopen = true, 
+%	bookmarksnumbered = true,
+%	pdfpagemode = {UseNone}, % UseNone, UseThumbs,UseOutlines, FullScreen
+%	pdfstartview = {} % ohne (nicht None), Fit, FitB
 	%pdfcreator = {Adobe-Acrobat-Distiller},
 	%pdfproducer = {LaTeX with hyperref and thumbpdf}
-}
+%}
+
 
 \newcommand{\location}[1]{\mathbf{#1}}
 \newcommand{\scatter}[1]{\overset{#1}{\blackdiamond}}
@@ -92,6 +95,22 @@
 	\input{conclusions}
 	
 \backmatter
+	\chapter{Danksagung}
+	{\centering\Large
+	\textsl{Ich danke allen, die mich beim Anfertigen dieser Diplomarbeit unterstützt haben.}
+	
+	\vspace{1em}
+	\textsl{Insbesondere danke ich Prof.~Sebastian Wolf für die Möglichkeit, ein selbstgewähltes Thema mit einem großen Maß an Freiheit umsetzen zu können.}
+
+	\vspace{1em}
+	\textsl{Ich danke David Madlener für viele fruchtbare Diskussionen über mein Diplomthema und Verschwörungstheorien aller Art!}
+
+	\vspace{1em}
+	\textsl{Weiterhin danke ich allen Mitgliedern der Abteilung Astrophysik für die gemütliche, heitere und manchmal nerdige Atmosphäre :)}
+
+	\vspace{1em}
+	\textsl{Zu guter Letzt danke ich Prof.~Wolfgang J. Duschl für die Möglichkeit bei ihm Miniforschung machen zu können und dadurch meinen Spaß am eigenständigen Arbeiten und der Astrophysik zu beflügeln.}\vfill\par}
+	
 	\mdqoff
 	\bibliographystyle{plainnat}
 	\bibliography{bibliography}
