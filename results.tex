@@ -56,7 +56,7 @@
 	
 	%\vfill
 	%\pagebreak
-	\subsection{Schnelle Monte--Carlo--Lösung}
+	\subsection{Schnelle Monte--Carlo--Lösung}\ref{subsec:homspherefastmcscheme}
 	Eine andere Methode, schnell die radiale Intensitätsverteilung zu bestimmen, ist durch folgendes Monte--Carlo--Schema gegeben:
 	\begin{algorithmic}
 		\STATE $M\leftarrow$ Anzahl Ringe
@@ -175,13 +175,13 @@
 
 
 	\section{Einfaches Scheibenmodell}
-	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenhöhe, die durch die Dichteverteilung (in zylindrischen Koordinaten $(s,\phi,z)$ und mit dem radialen Abstand $r=\sqrt{s^2+z^2}$)
+	Als zweiten Testfall benutzen wir eine inhomogene Verteilung mit einer Scheibenstruktur mit Gauss'schem Vertikalprofil und linear steigender Skalenhöhe. Da die Strahlungstransportgleichung durch Benutzung freier optischer Weglängen als Längeneinheit dimensionslos gemacht werden kann und in diesem Testfall kein real existierendes Objekt simuliert werden soll, verwenden wir für Längenangaben dimensionslose Größen. Die Scheibenstruktur ist durch die Dichteverteilung (in zylindrischen Koordinaten $(s,\phi,z)$ und mit dem radialen Abstand $r=\sqrt{s^2+z^2}$)
 	\begin{align}
 		\rho(s,z)&=\Sigma(r)\text{exp}\left[-\frac{1}{2}\left(\frac{z}{\epsilon\,s}\right)^2\right],\quad s_\text{in}<s<s_\text{out}\land r<r_\text{out} \nonumber\\
 		\Sigma(r)&=\Sigma_0 / (a^2+s^2) \label{eq:disk_model} \\
 		s_\text{in}&=0.01, s_\text{out}=1, r_\text{out}=1, a=0.25, \epsilon=0.1 \nonumber
 	\end{align}
-	gegeben ist (s. Abb.~\ref{fig:diskdensity}).	Dabei wählen wir $\Sigma_0$ so, daß die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ beträgt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
+	gegeben (s. Abb.~\ref{fig:diskdensity}).	Dabei wählen wir $\Sigma_0$ so, daß die optische Tiefe in der Mittelebene vom Zentrum bis zum Rand der Scheibe $\tau=97.7$ beträgt. Als Materialeigenschaften nehmen wir idealisierend wieder isotrop streuendes Material mit einer Albedo von eins an.
 	
 		\begin{figure}
 			\centering

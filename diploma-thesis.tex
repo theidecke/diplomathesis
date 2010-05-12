@@ -1,8 +1,9 @@
 \documentclass[
 	12pt,
 	a4paper,
+	pagesize=auto,
 	%DIV=calc,
-	DIV=11,
+	DIV=10,
 	parskip=half,
 	titlepage,
 	twoside,
@@ -14,7 +15,7 @@
 %\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
 \setkomafont{captionlabel}{\small\bfseries}
 %\usepackage[justification=justified,singlelinecheck=false,labelfont={small,sf},font={small,bf}]{caption}
-\usepackage[normal,font={small}]{caption}
+\usepackage[normal]{caption} %,font={small}
 \usepackage[utf8]{inputenc}     %% dt. Umlaute mit utf-8, 
 %\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
@@ -57,28 +58,29 @@
 	%pdfproducer = {LaTeX with hyperref and thumbpdf}
 }
 
+\newcommand{\location}[1]{\mathbf{#1}}
+\newcommand{\scatter}[1]{\overset{#1}{\blackdiamond}}
+\newcommand{\propagate}[2]{\overset{(#1,#2)}{\leftrightsquigarrow}}
+\newcommand{\normalized}[1]{\frac{#1}{||#1||}}
+\newcommand{\pirate}{\texttt{PIRaTE} }
+\newcommand{\mctd}{\texttt{MC3D} }
+	
 \begin{document}
 
 \frontmatter
-	\titlehead{Christian--Albrechts--Universität zu Kiel\\ Institut für Theoretische Physik und Astrophysik}
+	\titlehead{Christian--Albrechts--Universität zu Kiel\\Institut für Theoretische Physik und Astrophysik}
 	\subject{Diplomarbeit}
 	\title{Lösung des Strahlungstransportproblems in Pfadintegralform mit effizienten Monte--Carlo--Verfahren}
-	\author{vorgelegt von Thies Heidecke\\(geboren am 14.03.1983 in Eutin)}
+	\author{vorgelegt von Thies Heidecke}%\\(geboren am 14.03.1983 in Eutin)}
+	\date{Kiel, im Mai 2010}
 	\publishers{betreut durch Prof. Dr. Sebastian Wolf}
-	\date{im Mai 2010}
+	%\dedication{für Alle}
 	\maketitle
 
 	\tableofcontents	%%Inhaltsverzeichnis
 	%\listoffigures	%%Abbildungsverzeichnis
 	%\listoftables		%%Tabellenverzeichnis
-
-	\newcommand{\location}[1]{\mathbf{#1}}
-	\newcommand{\scatter}[1]{\overset{#1}{\blackdiamond}}
-	\newcommand{\propagate}[2]{\overset{(#1,#2)}{\leftrightsquigarrow}}
-	\newcommand{\normalized}[1]{\frac{#1}{||#1||}}
-	\newcommand{\pirate}{\texttt{PIRaTE} }
-	\newcommand{\mctd}{\texttt{MC3D} }
-
+	
 \mainmatter
 	\input{introduction}
 	\input{radiative_transfer}
