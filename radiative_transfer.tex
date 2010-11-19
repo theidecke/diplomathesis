@@ -115,7 +115,7 @@
 	schreiben können.
 	Außerdem definieren wir die dimensionslose {\em optische Tiefe}
 	\begin{equation*}
-		\tau_\nu(\location{r}_1,\location{r}_2):=\int_{s=0}^{\|\location{r}_2-\location{r}_1\|} \xi_\nu(\location{r}_1+s(\location{r}_2 - \location{r}_1))\,ds,
+		\tau_\nu(\location{r}_1,\location{r}_2):=\int_{s=0}^{\|\location{r}_2-\location{r}_1\|} \xi_\nu\left(\location{r}_1+s\normalized{\location{r}_2 - \location{r}_1}\right)\,ds,
 	\end{equation*}
 	als Maß für die Undurchsichtigkeit des Mediums bei der Frequenz $\nu$ zwischen zwei Orten $\location{r}_1$ und $\location{r}_2$. Vereinfachen wir Gleichung (\ref{eq:stg_diff2}), indem wir Quellen zu Null setzen und eine beliebige Richtung $\omega$ wählen, so gelangen wir zur gewöhnlichen Differentialgleichung
 	$$I_\nu'(s)+\xi_\nu(s)I_\nu(s)=0,$$
@@ -207,14 +207,14 @@
 	leicht nach ${\hat I}(0)$ auflösen lässt. Obwohl ${\hat Q}(s)$ lokal die Intensität $I$ über alle Raumrichtungen integriert, dürfen wir die Lösung von (\ref{eq:diff.STGhatted}) $Q$ als unabhängig von $I$ behandeln, da die Schnittmenge zwischen der Geraden im Raum, auf der wir die Differentialgleichung lösen, und der Menge aller Raumrichtungen $\mathcal{S}^2$ bei der Integration über alle Raumrichtungen eine Nullmenge ist und somit für physikalisch relevante Strahlungsintensitätsfelder (d.h. solche, die hinreichend stetig/beschränkt bzw. keine Delta--Distribution sind) keinen Beitrag zum Integral leistet.
 	Setzen wir in (\ref{eq:diff.STGpreintegral}) die ursprünglichen Ausdrücke ein, erhalten wir die {\em Strahlungstransportgleichung in integraler Form}:
 	\begin{multline}
-		I(\location{r},\omega) = e^{-\tau(\location{r},\location{r}-s\,\omega)} {\hat I}(\location{r},\location{r}-s\,\omega) + \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s\,\omega)} \;\cdot \\
+		I(\location{r},\omega) = e^{-\tau(\location{r},\location{r}-s\,\omega)} I(\location{r}-s\,\omega,\omega) + \int_{s'=0}^s e^{-\tau(\location{r},\location{r}-s'\,\omega)} \;\cdot \\
 		\quad\cdot\left( \varepsilon(\location{r}-s'\,\omega,\omega) + \sigma(\location{r}-s'\,\omega)
 		\left[ \int_{\mathcal{S}^2} k(\location{r}-s'\,\omega,\omega',\omega)I(\location{r}-s'\,\omega,\omega') \text{d}\omega'\right] \right) \text{d}s'
 		\label{eq:int.STG}
 	\end{multline}
 	Nehmen wir nun als Randbedingungen an, dass in unendlich großer Entfernung keine Lichtquellen existieren, d.h. $\forall \omega \in \mathcal{S}^2 : I(\location{r}=-\infty\cdot\omega,\omega)=0$, dann vereinfacht sich (\ref{eq:int.STG}) zu
 	\begin{multline}
-		I(\location{r},\omega) = \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s\,\omega)} \;\cdot \\
+		I(\location{r},\omega) = \int_{s'=0}^\infty e^{-\tau(\location{r},\location{r}-s'\,\omega)} \;\cdot \\
 		\quad\cdot\left( \varepsilon(\location{r}-s'\,\omega,\omega) + \sigma(\location{r}-s'\,\omega)
 		\left[ \int_{\mathcal{S}^2} k(\location{r}-s'\,\omega,\omega',\omega)I(\location{r}-s'\,\omega,\omega') \text{d}\omega'\right] \right) \text{d}s'
 		\label{eq:int.STGdarkbg}
@@ -247,7 +247,7 @@
 		&=\mathbf{G}\varepsilon + \mathbf{GKG}\varepsilon + \mathbf{GKGKG}\varepsilon + \hdots \label{eq:op.STGneumann.explicit} \\
 		\Leftrightarrow I &=\sum_{k=0}^\infty \mathbf{G} (\mathbf{KG})^k \varepsilon \label{eq:op.STGkg}
 	\end{align}
-	Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist zulässig, wenn $\|\mathbf{GK}\|<1$ gilt und damit die Konvergenz der Neumann--Reihe sichergestellt ist. Für alle praktisch relevanten Probleme ist diese Bedingung erfüllt \citep[s.][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch lässt sich das Strahlungsintensitätsfeld im Gleichgewicht als Summe aus Intensitätsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei müssen Pfade jeder möglichen Länge, also Anzahl an Streuereignissen, berücksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ ausgeklammert um den zusammengesetzten $\mathbf{KG}$--Operator herauszustellen.
+	Dabei haben wir den auftretenden invertierten Operator (\ref{eq:op.STGinvert}) durch eine Neumann--Reihe (\ref{eq:op.STGneumann}) ersetzt. Dies ist zulässig, wenn $\|\mathbf{GK}\|<1$ gilt und damit die Konvergenz der Neumann--Reihe sichergestellt ist. Für alle praktisch relevanten Probleme ist diese Bedingung erfüllt \citep[s.][Theorem 12 und 13]{Arvo:1995p9257}. Physikalisch lässt sich das Strahlungsintensitätsfeld im Gleichgewicht als Summe aus Intensitätsfeldern verstehen, die durch Photonen mit unterschiedlich vielen Streuereignissen auf ihrem Weg von der Emission aus einer Lichtquelle bis zu ihrer Messung entstanden sind (wie in Schritt (\ref{eq:op.STGneumann.explicit}) deutlich wird). Dabei müssen Pfade jeder möglichen Länge, also Anzahl an Streuereignissen, berücksichtigt werden. Zwischen Emission und Messung wechseln sich dabei Fortpflanzung $\mathbf{G}$ und Streuung $\mathbf{K}$ ab. Im letzen Schritt (\ref{eq:op.STGkg}) haben wir $\mathbf{G}$ nach links ausgeklammert um den zusammengesetzten $\mathbf{KG}$--Operator herauszustellen.
 	
 	
 	\section{KG--Operator in Volumenform}
