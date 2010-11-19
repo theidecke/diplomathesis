@@ -132,7 +132,7 @@
 	$$I:\mathbb{R}_+\times\mathbb{R}^3\times\mathcal{S}^2\to\mathbb{R}_+\;,\qquad (\nu,\location{r},\omega)\mapsto I_\nu(\location{r},\omega),$$
 	die vom 6--dimensionalen Raum aller Frequenzen, Orte und Raumrichtungen auf die lokale spezifische Intensität abbildet.
 	
-	Funktionen dieser Art bilden einen Skalarproduktraum. Das Null--Element ist die konstant auf Null abbildende Funktion. Zwei Funktionen lassen sich punktweise addieren und ergeben so eine neue Funktion, die auch nach $\mathbb{R}_{\geq 0}$ abbildet. Das Skalarprodukt zwischen zwei Funktionen $f$ und $g$ ist schließlich mit
+	Funktionen dieser Art bilden einen Skalarproduktraum. Das Null--Element ist die konstant auf Null abbildende Funktion. Zwei Funktionen lassen sich punktweise addieren und ergeben so eine neue Funktion, die auch nach $\mathbb{R}_+$ abbildet. Das Skalarprodukt zwischen zwei Funktionen $f$ und $g$ ist schließlich mit
 	$$\langle f,g\rangle=\int_{\mathbb{R}_+} \int_{\mathbb{R}^3} \int_{\mathcal{S}^2} f(\nu,\location{r},\omega)g(\nu,\location{r},\omega)\,d\omega\,d\location{r}\,d\nu$$
 	gegeben.
 	
@@ -264,8 +264,8 @@
 	\end{align*}
 	Da wir durch Kombination der Integration über alle Raumrichtungen $\omega'$ und alle Entfernungen $s'$ den gesamten Raum abdecken, können wir die beiden Integrale durch ein Volumenintegral über den gesamten Raum und einen geometrischen Verdünnungsfaktor ersetzen. Mit dem Ziel, später alle Integrationen zu Volumenintegralen zusammenzufassen, schreiben wir den $\mathbf{KG}$--Operator so, dass alle expliziten Angaben von Entfernungen und Raumrichtungen durch eine raumpunktorientierte Notation ersetzt werden:
 	\begin{multline}
-		\left(\mathbf{KG}\varepsilon\right)(\normalized{\location{r}_{i+1}-\location{r}_i})=\\
-		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k\hspace{-1 mm}\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\,\varepsilon\hspace{-1 mm}\left(\location{r}_{i-1},\normalized{\location{r}_i-\location{r}_{i-1}}\right)d\location{r}_{i-1}
+		\left(\mathbf{KG}\varepsilon\right)\left(\normalized{\location{r}_{i+1}-\location{r}_i}\right)=\\
+		\sigma(\location{r}_i) \int_{\mathbb{R}^3} k\hspace{-1 mm}\left(\location{r}_i,\normalized{\location{r}_i-\location{r}_{i-1}},\normalized{\location{r}_{i+1}-\location{r}_i}\right)\frac{e^{-\tau(\location{r}_{i-1},\location{r}_i)}}{\|\location{r}_i-\location{r}_{i-1}\|^2}\,\varepsilon\hspace{-1 mm}\left(\location{r}_{i-1},\normalized{\location{r}_i-\location{r}_{i-1}}\right)\text{d}\location{r}_{i-1}
 		\label{eq:KGvolume_intermediate}
 	\end{multline}
 	Wir führen zusätzlich noch die Abkürzungen
@@ -276,7 +276,7 @@
 	ein, so dass wir (\ref{eq:KGvolume_intermediate}) % zusammen mit den in Abschnitt \ref{subsec:nomenklatur} eingeführten Schreibweisen
 	kompakter als
 	\begin{equation}
-		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\propagate{i-1}{i}\varepsilon_{(i-1,i)}d\location{r}_{i-1}.
+		\left(\mathbf{KG}\varepsilon\right)_{(i,i+1)}=\int_{\mathbb{R}^3} \scatter{i}\propagate{i-1}{i}\varepsilon_{(i-1,i)}\text{d}\location{r}_{i-1}.
 		\label{eq:KGvolume}
 	\end{equation}
 	schreiben können.
