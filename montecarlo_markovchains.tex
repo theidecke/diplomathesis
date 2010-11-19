@@ -17,7 +17,7 @@
 	\section{Metropolis--Hastings--Algorithmus}
 	Unter den MCMC--Verfahren ist eines der bekanntesten der {\em Metropolis--Hastings--Algorithmus} (MH), der durch eine Arbeit in der statistischen Physik von \citet{Metropolis:1953p3364} in einer einfachen Form vorgestellt und später durch \citet{Hastings:1970p3387} verallgemeinert wurde.
 
-	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gemäß der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_{\geq 0}$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir verändern dazu den aktuellen Zustand $x$ nach einem frei wählbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
+	Beim MH--Algorithmus ziehen wir aus einem Zustandsraum $\Omega$ Elemente $x \in \Omega$ gemäß der (nicht notwendigerweise normierten!) Wahrscheinlichkeitsdichte $f : \Omega \rightarrow \mathbb{R}_+$. Die Elemente werden dabei mit einem Zufallspfad durch den Zustandsraum generiert. Wir verändern dazu den aktuellen Zustand $x$ nach einem frei wählbaren Schema (im Folgenden Mutation genannt) in einen neuen Zustand $x'$.
 	Dabei stellen wir folgende Bedingungen an eine Mutation:
 	\begin{itemize}
 		\item{wenn der Übergang von Zustand $x$ nach $x'$ möglich ist, muss auch der Übergang zurück von $x'$ nach $x$ möglich sein}
